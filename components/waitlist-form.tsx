@@ -2,7 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 
-export default function WaitlistForm() {
+export default function WaitlistForm({ fullWidth = false }: { fullWidth?: boolean }) {
   const [email, setEmail] = useState('');
   const [state, setState] = useState<'idle' | 'loading' | 'success'>('idle');
   const [message, setMessage] = useState('');
@@ -47,7 +47,7 @@ export default function WaitlistForm() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto">
+      <form onSubmit={handleSubmit} className={`flex flex-col sm:flex-row items-center gap-3${fullWidth ? '' : ' max-w-md mx-auto'}`}>
         <input
           type="email"
           placeholder="Enter your email"
