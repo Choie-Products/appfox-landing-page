@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { AgentationWrapper } from "@/components/agentation-wrapper";
 
 export const metadata: Metadata = {
   title: "Appfox - Find the Best Mobile App Deals",
@@ -21,8 +22,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body className="antialiased">
         {children}
+        <AgentationWrapper />
       </body>
     </html>
   );

@@ -6,38 +6,37 @@ import {
   Heart,
   Filter,
   Zap,
+  ArrowRight,
   TrendingUp,
-  Users,
   Shield,
-  Smartphone
+  Users
 } from 'lucide-react';
+import WaitlistForm from '@/components/waitlist-form';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-orange-50 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-white">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/80 dark:bg-gray-900/80 backdrop-blur-md z-50 border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50">
+        <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
-              <div className="w-10 h-10 bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl flex items-center justify-center shadow-lg">
-                <span className="text-2xl">🦊</span>
-              </div>
-              <span className="text-2xl font-bold gradient-text">Appfox</span>
+              <span className="text-xl">🦊</span>
+              <span className="text-lg font-semibold text-gray-900 tracking-tight font-heading">Appfox</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
-              <Link href="#features" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition">
+              <Link href="#features" className="text-sm text-gray-500 hover:text-gray-900 transition">
                 Features
               </Link>
-              <Link href="#how-it-works" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition">
+              <Link href="#how-it-works" className="text-sm text-gray-500 hover:text-gray-900 transition">
                 How It Works
               </Link>
-              <Link href="#developers" className="text-gray-600 dark:text-gray-300 hover:text-orange-600 dark:hover:text-orange-400 transition">
+              <Link href="#developers" className="text-sm text-gray-500 hover:text-gray-900 transition">
                 For Developers
               </Link>
               <Link
                 href="https://partners.appfox.app"
-                className="px-4 py-2 bg-orange-600 text-white rounded-lg hover:bg-orange-700 transition shadow-md hover:shadow-lg"
+                className="text-sm px-5 py-2 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition"
               >
                 Partner Portal
               </Link>
@@ -47,146 +46,110 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <div className="inline-flex items-center space-x-2 bg-orange-100 dark:bg-orange-900/30 text-orange-800 dark:text-orange-300 px-4 py-2 rounded-full text-sm font-medium mb-8">
-              <Sparkles className="w-4 h-4" />
-              <span>Discover the best mobile app deals</span>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-bold text-gray-900 dark:text-white mb-6">
-              The clever fox that
-              <br />
-              <span className="gradient-text">hunts down deals</span>
-            </h1>
-            <p className="text-xl md:text-2xl text-gray-600 dark:text-gray-300 mb-12 max-w-3xl mx-auto">
-              Save money on premium mobile apps with curated lifetime deals,
-              deep discounts, and limited-time offers — all in one native app.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 mb-12">
-              <button className="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-orange-500 to-orange-600 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition flex items-center justify-center space-x-2">
-                <Smartphone className="w-5 h-5" />
-                <span>Download on iOS</span>
-              </button>
-              <button className="w-full sm:w-auto px-8 py-4 bg-gray-900 dark:bg-gray-700 text-white rounded-xl font-semibold shadow-xl hover:shadow-2xl transform hover:scale-105 transition flex items-center justify-center space-x-2">
-                <Smartphone className="w-5 h-5" />
-                <span>Get it on Android</span>
-              </button>
-            </div>
-            <div className="flex items-center justify-center space-x-8 text-sm text-gray-600 dark:text-gray-400">
-              <div className="flex items-center space-x-2">
-                <Users className="w-5 h-5 text-orange-600" />
-                <span>100% Free to use</span>
-              </div>
-              <div className="flex items-center space-x-2">
-                <Shield className="w-5 h-5 text-orange-600" />
-                <span>Curated & verified</span>
-              </div>
-            </div>
+      <section className="pt-36 pb-24 px-6 lg:px-8">
+        <div className="max-w-3xl mx-auto text-center">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-900 tracking-tight leading-[1.1] mb-6">
+            The clever fox that
+            <br />
+            hunts down deals
+          </h1>
+          <p className="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl mx-auto leading-relaxed">
+            We&apos;re building the best way to find lifetime deals and deep discounts
+            on premium mobile apps. Be the first to know when we launch.
+          </p>
+          <div className="mb-12">
+            <WaitlistForm />
           </div>
-
-          {/* Hero Image Placeholder */}
-          <div className="mt-16 max-w-5xl mx-auto">
-            <div className="bg-gradient-to-br from-orange-100 to-orange-200 dark:from-orange-900/30 dark:to-orange-800/30 rounded-3xl shadow-2xl p-8 aspect-video flex items-center justify-center border border-orange-300 dark:border-orange-700">
-              <div className="text-center">
-                <div className="text-6xl mb-4">📱</div>
-                <p className="text-gray-600 dark:text-gray-300 font-medium">App Preview Coming Soon</p>
-              </div>
-            </div>
+          <div className="flex items-center justify-center gap-6 text-sm text-gray-400">
+            <span>Join 500+ others on the waitlist</span>
+            <span className="w-1 h-1 rounded-full bg-gray-300" />
+            <span>Launching soon</span>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-20 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+      <section id="features" className="py-24 px-6 lg:px-8 bg-gray-50/70">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-2xl mb-16">
+            <p className="text-sm font-medium text-orange-600 mb-3">Features</p>
+            <h2 className="text-3xl md:text-4xl font-normal text-gray-900 tracking-tight mb-4">
               Everything you need to find great deals
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-              A mobile-first experience designed for serious deal hunters
+            <p className="text-lg text-gray-500">
+              A mobile-first experience designed for serious deal hunters.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Feature Cards */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
             <FeatureCard
-              icon={<Timer className="w-8 h-8" />}
+              icon={<Timer className="w-5 h-5" />}
               title="Time-Sensitive Deals"
-              description="Never miss out with real-time expiration countdowns on every deal"
-              color="orange"
+              description="Never miss out with real-time expiration countdowns on every deal."
             />
             <FeatureCard
-              icon={<Sparkles className="w-8 h-8" />}
+              icon={<Sparkles className="w-5 h-5" />}
               title="Lifetime Access"
-              description="Find apps offering lifetime premium unlocks and one-time purchases"
-              color="orange"
+              description="Find apps offering lifetime premium unlocks and one-time purchases."
             />
             <FeatureCard
-              icon={<Bell className="w-8 h-8" />}
+              icon={<Bell className="w-5 h-5" />}
               title="Push Notifications"
-              description="Get instant alerts for new deals and expiring favorites"
-              color="orange"
+              description="Get instant alerts for new deals and expiring favorites."
             />
             <FeatureCard
-              icon={<Filter className="w-8 h-8" />}
+              icon={<Filter className="w-5 h-5" />}
               title="Smart Filters"
-              description="Search by discount percentage, ratings, category, and expiration"
-              color="orange"
+              description="Search by discount percentage, ratings, category, and expiration."
             />
             <FeatureCard
-              icon={<Heart className="w-8 h-8" />}
+              icon={<Heart className="w-5 h-5" />}
               title="Wishlist & Favorites"
-              description="Save deals and get notified when prices drop even further"
-              color="orange"
+              description="Save deals and get notified when prices drop even further."
             />
             <FeatureCard
-              icon={<Zap className="w-8 h-8" />}
+              icon={<Zap className="w-5 h-5" />}
               title="Native Performance"
-              description="True iOS & Android native experience, not a wrapped website"
-              color="orange"
+              description="True iOS & Android native experience, not a wrapped website."
             />
           </div>
         </div>
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-20 bg-gradient-to-b from-orange-50 to-white dark:from-gray-800 dark:to-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-              How Appfox works
+      <section id="how-it-works" className="py-24 px-6 lg:px-8 border-t border-gray-100">
+        <div className="max-w-6xl mx-auto">
+          <div className="max-w-2xl mb-16">
+            <p className="text-sm font-medium text-orange-600 mb-3">How it works</p>
+            <h2 className="text-3xl md:text-4xl font-normal text-gray-900 tracking-tight mb-4">
+              Start saving in three steps
             </h2>
-            <p className="text-xl text-gray-600 dark:text-gray-300">
-              Start saving in three simple steps
-            </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-12">
             <StepCard
-              number="1"
+              number="01"
               title="Browse Curated Deals"
-              description="Explore hand-picked deals across all categories, from productivity to games"
+              description="Explore hand-picked deals across all categories, from productivity to games."
             />
             <StepCard
-              number="2"
+              number="02"
               title="Find Your Perfect App"
-              description="Use smart filters and search to discover apps you'll love at unbeatable prices"
+              description="Use smart filters and search to discover apps you'll love at unbeatable prices."
             />
             <StepCard
-              number="3"
+              number="03"
               title="Redeem & Enjoy"
-              description="Tap to open in App Store or Google Play, redeem your deal, and start saving"
+              description="Tap to open in App Store or Google Play, redeem your deal, and start saving."
             />
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-20 bg-white dark:bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 text-center">
+      <section className="py-24 px-6 lg:px-8 border-t border-gray-100">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <StatCard number="500+" label="Active Deals" />
             <StatCard number="50-90%" label="Avg. Discount" />
             <StatCard number="100K+" label="Downloads" />
@@ -196,33 +159,58 @@ export default function Home() {
       </section>
 
       {/* Developers Section */}
-      <section id="developers" className="py-20 bg-gradient-to-b from-orange-50 to-white dark:from-gray-800 dark:to-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-3xl p-12 md:p-16 text-white shadow-2xl">
-            <div className="max-w-3xl mx-auto text-center">
-              <TrendingUp className="w-16 h-16 mx-auto mb-6" />
-              <h2 className="text-4xl md:text-5xl font-bold mb-6">
+      <section id="developers" className="py-24 px-6 lg:px-8 border-t border-gray-100">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <div>
+              <p className="text-sm font-medium text-orange-600 mb-3">For developers</p>
+              <h2 className="text-3xl md:text-4xl font-normal text-gray-900 tracking-tight mb-4">
                 Promote Your App
               </h2>
-              <p className="text-xl md:text-2xl mb-8 text-orange-100">
+              <p className="text-lg text-gray-500 mb-8 leading-relaxed">
                 Reach thousands of engaged users looking for their next favorite app.
                 Submit your app and get featured on Appfox.
               </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+              <div className="flex flex-wrap gap-3 mb-8">
                 <Link
                   href="https://partners.appfox.app"
-                  className="w-full sm:w-auto px-8 py-4 bg-white text-orange-600 rounded-xl font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition"
+                  className="px-7 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition inline-flex items-center space-x-2"
                 >
-                  Submit Your App
+                  <span>Submit Your App</span>
+                  <ArrowRight className="w-4 h-4" />
                 </Link>
-                <button className="w-full sm:w-auto px-8 py-4 bg-orange-700 text-white rounded-xl font-semibold hover:bg-orange-800 transition">
+                <button className="px-7 py-3 text-gray-600 rounded-full font-medium border border-gray-200 hover:border-gray-300 transition">
                   Learn More
                 </button>
               </div>
-              <div className="mt-8 flex items-center justify-center space-x-8 text-sm text-orange-100">
-                <div>✓ Manual review process</div>
-                <div>✓ Quality-focused curation</div>
-                <div>✓ Performance analytics</div>
+            </div>
+            <div className="space-y-4">
+              <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
+                <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
+                  <Shield className="w-5 h-5 text-gray-900" />
+                </div>
+                <div>
+                  <h3 className="text-base font-medium text-gray-900 mb-1">Manual review process</h3>
+                  <p className="text-sm text-gray-500">Every app is reviewed by our team to ensure quality and trust.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
+                <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
+                  <TrendingUp className="w-5 h-5 text-gray-900" />
+                </div>
+                <div>
+                  <h3 className="text-base font-medium text-gray-900 mb-1">Performance analytics</h3>
+                  <p className="text-sm text-gray-500">Track impressions, clicks, and conversions in real time.</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
+                <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
+                  <Users className="w-5 h-5 text-gray-900" />
+                </div>
+                <div>
+                  <h3 className="text-base font-medium text-gray-900 mb-1">Quality-focused curation</h3>
+                  <p className="text-sm text-gray-500">Your app is shown to users who are actively looking for deals.</p>
+                </div>
               </div>
             </div>
           </div>
@@ -230,59 +218,57 @@ export default function Home() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300 py-12">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-4 gap-8 mb-8">
+      <footer className="border-t border-gray-100 py-12 px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div>
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-gradient-to-br from-orange-500 to-orange-600 rounded-lg flex items-center justify-center">
-                  <span className="text-lg">🦊</span>
-                </div>
-                <span className="text-xl font-bold text-white">Appfox</span>
+              <div className="flex items-center space-x-2 mb-3">
+                <span className="text-lg">🦊</span>
+                <span className="font-semibold text-gray-900">Appfox</span>
               </div>
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-gray-400 leading-relaxed">
                 The clever fox that hunts down the best mobile app deals.
               </p>
             </div>
 
             <div>
-              <h3 className="font-semibold text-white mb-4">Product</h3>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="#features" className="hover:text-orange-400 transition">Features</Link></li>
-                <li><Link href="#how-it-works" className="hover:text-orange-400 transition">How It Works</Link></li>
-                <li><Link href="#" className="hover:text-orange-400 transition">Pricing</Link></li>
-                <li><Link href="#" className="hover:text-orange-400 transition">Download</Link></li>
+              <h3 className="text-sm font-medium text-gray-900 mb-4">Product</h3>
+              <ul className="space-y-2.5 text-sm">
+                <li><Link href="#features" className="text-gray-400 hover:text-gray-600 transition">Features</Link></li>
+                <li><Link href="#how-it-works" className="text-gray-400 hover:text-gray-600 transition">How It Works</Link></li>
+                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Pricing</Link></li>
+                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Download</Link></li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-white mb-4">Developers</h3>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="https://partners.appfox.app" className="hover:text-orange-400 transition">Partner Portal</Link></li>
-                <li><Link href="#" className="hover:text-orange-400 transition">Submit App</Link></li>
-                <li><Link href="#" className="hover:text-orange-400 transition">API Documentation</Link></li>
-                <li><Link href="#" className="hover:text-orange-400 transition">Guidelines</Link></li>
+              <h3 className="text-sm font-medium text-gray-900 mb-4">Developers</h3>
+              <ul className="space-y-2.5 text-sm">
+                <li><Link href="https://partners.appfox.app" className="text-gray-400 hover:text-gray-600 transition">Partner Portal</Link></li>
+                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Submit App</Link></li>
+                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">API Documentation</Link></li>
+                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Guidelines</Link></li>
               </ul>
             </div>
 
             <div>
-              <h3 className="font-semibold text-white mb-4">Company</h3>
-              <ul className="space-y-2 text-sm">
-                <li><Link href="#" className="hover:text-orange-400 transition">About</Link></li>
-                <li><Link href="#" className="hover:text-orange-400 transition">Blog</Link></li>
-                <li><Link href="#" className="hover:text-orange-400 transition">Careers</Link></li>
-                <li><Link href="#" className="hover:text-orange-400 transition">Contact</Link></li>
+              <h3 className="text-sm font-medium text-gray-900 mb-4">Company</h3>
+              <ul className="space-y-2.5 text-sm">
+                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">About</Link></li>
+                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Blog</Link></li>
+                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Careers</Link></li>
+                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Contact</Link></li>
               </ul>
             </div>
           </div>
 
-          <div className="border-t border-gray-800 pt-8">
+          <div className="border-t border-gray-100 pt-8">
             <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
               <p>&copy; 2026 Appfox. All rights reserved.</p>
               <div className="flex space-x-6 mt-4 md:mt-0">
-                <Link href="#" className="hover:text-orange-400 transition">Privacy Policy</Link>
-                <Link href="#" className="hover:text-orange-400 transition">Terms of Service</Link>
-                <Link href="#" className="hover:text-orange-400 transition">Cookie Policy</Link>
+                <Link href="#" className="hover:text-gray-600 transition">Privacy</Link>
+                <Link href="#" className="hover:text-gray-600 transition">Terms</Link>
+                <Link href="#" className="hover:text-gray-600 transition">Cookies</Link>
               </div>
             </div>
           </div>
@@ -292,72 +278,65 @@ export default function Home() {
   );
 }
 
-// Component: Feature Card
 function FeatureCard({
   icon,
   title,
   description,
-  color
 }: {
   icon: React.ReactNode;
   title: string;
   description: string;
-  color: string;
 }) {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg hover:shadow-xl transition border border-gray-100 dark:border-gray-700">
-      <div className={`w-14 h-14 bg-${color}-100 dark:bg-${color}-900/30 text-${color}-600 dark:text-${color}-400 rounded-xl flex items-center justify-center mb-4`}>
+    <div>
+      <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 text-gray-900 flex items-center justify-center mb-4">
         {icon}
       </div>
-      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+      <h3 className="text-base font-medium text-gray-900 mb-1.5">
         {title}
       </h3>
-      <p className="text-gray-600 dark:text-gray-300">
+      <p className="text-sm text-gray-500 leading-relaxed">
         {description}
       </p>
     </div>
   );
 }
 
-// Component: Step Card
 function StepCard({
   number,
   title,
-  description
+  description,
 }: {
   number: string;
   title: string;
   description: string;
 }) {
   return (
-    <div className="text-center">
-      <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 text-white rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-6 shadow-lg">
-        {number}
-      </div>
-      <h3 className="text-2xl font-semibold text-gray-900 dark:text-white mb-3">
+    <div>
+      <span className="text-sm font-mono text-orange-600 mb-3 block">{number}</span>
+      <h3 className="text-xl font-normal text-gray-900 mb-2">
         {title}
       </h3>
-      <p className="text-gray-600 dark:text-gray-300 text-lg">
+      <p className="text-gray-500 leading-relaxed">
         {description}
       </p>
     </div>
   );
 }
 
-// Component: Stat Card
 function StatCard({
   number,
-  label
+  label,
 }: {
   number: string;
   label: string;
 }) {
   return (
     <div>
-      <div className="text-5xl font-bold gradient-text mb-2">
+      <div className="text-4xl font-normal text-gray-900 mb-1">
         {number}
       </div>
-      <div className="text-gray-600 dark:text-gray-400 font-medium">
+      <div className="text-sm text-gray-400">
         {label}
       </div>
     </div>
