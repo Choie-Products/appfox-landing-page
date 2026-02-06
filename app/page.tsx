@@ -11,36 +11,25 @@ import {
   Users
 } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
+import Navbar from '@/components/navbar';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-2">
-              <span className="text-xl">🦊</span>
-              <span className="text-lg font-semibold text-gray-900 tracking-tight font-heading">Appfox</span>
-            </div>
-            <div className="hidden md:flex items-center space-x-8">
-              <Link href="#features" className="text-sm text-gray-500 hover:text-gray-900 transition">
-                Features
-              </Link>
-              <Link href="#how-it-works" className="text-sm text-gray-500 hover:text-gray-900 transition">
-                How It Works
-              </Link>
-              <Link href="#developers" className="text-sm text-gray-500 hover:text-gray-900 transition">
-                For Developers
-              </Link>
-            </div>
-          </div>
-        </div>
-      </nav>
-
       {/* Hero Section */}
-      <section className="pt-36 pb-24 px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center">
+      <section className="relative pb-24">
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage:
+              "radial-gradient(125% 125% at 50% 90%, #ffffff 40%, #f59e0b 100%)",
+            backgroundSize: "100% 100%",
+          }}
+        />
+
+        <Navbar />
+
+        <div className="relative z-10 max-w-3xl mx-auto text-center pt-24 px-6 lg:px-8">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-900 tracking-tight leading-[1.1] mb-6">
             The clever fox that
             <br />
@@ -62,7 +51,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 px-6 lg:px-8 bg-gray-50/70">
+      <section id="features" className="py-24 px-6 lg:px-8 bg-gray-100">
         <div className="max-w-6xl mx-auto">
           <div className="max-w-2xl mb-16">
             <p className="text-sm font-medium text-orange-600 mb-3">Features</p>
@@ -164,7 +153,7 @@ export default function Home() {
                 Reach thousands of engaged users looking for their next favorite app.
                 Join the waitlist and we&apos;ll notify you when the partner portal opens.
               </p>
-              <WaitlistForm />
+              <WaitlistForm fullWidth />
             </div>
             <div className="space-y-4">
               <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
@@ -204,9 +193,8 @@ export default function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div>
-              <div className="flex items-center space-x-2 mb-3">
-                <span className="text-lg">🦊</span>
-                <span className="font-semibold text-gray-900">Appfox</span>
+              <div className="mb-3">
+                <img src="/logo.svg" alt="Appfox" className="h-6" />
               </div>
               <p className="text-sm text-gray-400 leading-relaxed">
                 The clever fox that hunts down the best mobile app deals.
