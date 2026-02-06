@@ -19,30 +19,28 @@ export default function Home() {
       {/* Hero Section */}
       <section className="relative pb-24">
         <div
-          className="absolute inset-0 z-0"
+          className="absolute inset-0 z-0 bg-cover bg-bottom"
           style={{
-            backgroundImage:
-              "radial-gradient(125% 125% at 50% 90%, #ffffff 40%, #f59e0b 100%)",
-            backgroundSize: "100% 100%",
+            backgroundImage: "url('/hero-bg.jpeg')",
           }}
         />
 
         <Navbar />
 
-        <div className="relative z-10 max-w-3xl mx-auto text-center pt-24 px-6 lg:px-8">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-900 tracking-tight leading-[1.1] mb-6">
+        <div className="relative z-10 max-w-6xl mx-auto text-left pt-40 px-6 lg:px-8">
+          <h1 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-900 tracking-tight leading-[1.1] mb-6 max-w-3xl">
             The clever fox that
             <br />
             hunts down deals
           </h1>
-          <p className="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl leading-relaxed">
             We&apos;re building the best way to find lifetime deals and deep discounts
             on premium mobile apps. Be the first to know when we launch.
           </p>
-          <div className="mb-12">
+          <div className="mb-12 max-w-md">
             <WaitlistForm />
           </div>
-          <div className="flex items-center justify-center gap-6 text-sm text-gray-400">
+          <div className="flex items-center gap-6 text-sm text-gray-400">
             <span>Join 500+ others on the waitlist</span>
             <span className="w-1 h-1 rounded-full bg-gray-300" />
             <span>Launching soon</span>
