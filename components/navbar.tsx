@@ -29,19 +29,19 @@ export default function Navbar() {
         <div className="hidden md:flex items-center space-x-8">
           <Link
             href="#features"
-            className="text-sm text-gray-700 hover:text-gray-900 transition"
+            className="text-sm font-medium text-gray-700 hover:text-gray-900 transition"
           >
             Features
           </Link>
           <Link
             href="#how-it-works"
-            className="text-sm text-gray-700 hover:text-gray-900 transition"
+            className="text-sm font-medium text-gray-700 hover:text-gray-900 transition"
           >
             How It Works
           </Link>
           <Link
             href="#developers"
-            className="text-sm text-gray-700 hover:text-gray-900 transition"
+            className="text-sm font-medium text-gray-700 hover:text-gray-900 transition"
           >
             For Developers
           </Link>

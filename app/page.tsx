@@ -37,10 +37,10 @@ export default function Home() {
             We&apos;re building the best way to find lifetime deals and deep discounts
             on premium mobile apps. Be the first to know when we launch.
           </p>
-          <div className="mb-12 max-w-md">
+          <div className="mb-3 max-w-md">
             <WaitlistForm />
           </div>
-          <div className="flex items-center gap-6 text-sm text-gray-400">
+          <div className="flex items-center gap-4 text-xs text-gray-400">
             <span>Join 500+ others on the waitlist</span>
             <span className="w-1 h-1 rounded-full bg-gray-300" />
             <span>Launching soon</span>
