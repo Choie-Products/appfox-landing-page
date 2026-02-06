@@ -6,7 +6,6 @@ import {
   Heart,
   Filter,
   Zap,
-  ArrowRight,
   TrendingUp,
   Shield,
   Users
@@ -33,12 +32,6 @@ export default function Home() {
               </Link>
               <Link href="#developers" className="text-sm text-gray-500 hover:text-gray-900 transition">
                 For Developers
-              </Link>
-              <Link
-                href="https://partners.appfox.app"
-                className="text-sm px-5 py-2 bg-gray-900 text-white rounded-full hover:bg-gray-800 transition"
-              >
-                Partner Portal
               </Link>
             </div>
           </div>
@@ -169,20 +162,9 @@ export default function Home() {
               </h2>
               <p className="text-lg text-gray-500 mb-8 leading-relaxed">
                 Reach thousands of engaged users looking for their next favorite app.
-                Submit your app and get featured on Appfox.
+                Join the waitlist and we&apos;ll notify you when the partner portal opens.
               </p>
-              <div className="flex flex-wrap gap-3 mb-8">
-                <Link
-                  href="https://partners.appfox.app"
-                  className="px-7 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition inline-flex items-center space-x-2"
-                >
-                  <span>Submit Your App</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-                <button className="px-7 py-3 text-gray-600 rounded-full font-medium border border-gray-200 hover:border-gray-300 transition">
-                  Learn More
-                </button>
-              </div>
+              <WaitlistForm />
             </div>
             <div className="space-y-4">
               <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
@@ -236,28 +218,28 @@ export default function Home() {
               <ul className="space-y-2.5 text-sm">
                 <li><Link href="#features" className="text-gray-400 hover:text-gray-600 transition">Features</Link></li>
                 <li><Link href="#how-it-works" className="text-gray-400 hover:text-gray-600 transition">How It Works</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Pricing</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Download</Link></li>
+                <li><Link href="/pricing" className="text-gray-400 hover:text-gray-600 transition">Pricing</Link></li>
+                <li><Link href="/download" className="text-gray-400 hover:text-gray-600 transition">Download</Link></li>
               </ul>
             </div>
 
             <div>
               <h3 className="text-sm font-medium text-gray-900 mb-4">Developers</h3>
               <ul className="space-y-2.5 text-sm">
-                <li><Link href="https://partners.appfox.app" className="text-gray-400 hover:text-gray-600 transition">Partner Portal</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Submit App</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">API Documentation</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Guidelines</Link></li>
+                <li><Link href="/partner-portal" className="text-gray-400 hover:text-gray-600 transition">Partner Portal</Link></li>
+                <li><Link href="/submit-app" className="text-gray-400 hover:text-gray-600 transition">Submit App</Link></li>
+                <li><Link href="/api-docs" className="text-gray-400 hover:text-gray-600 transition">API Documentation</Link></li>
+                <li><Link href="/guidelines" className="text-gray-400 hover:text-gray-600 transition">Guidelines</Link></li>
               </ul>
             </div>
 
             <div>
               <h3 className="text-sm font-medium text-gray-900 mb-4">Company</h3>
               <ul className="space-y-2.5 text-sm">
-                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">About</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Blog</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Careers</Link></li>
-                <li><Link href="#" className="text-gray-400 hover:text-gray-600 transition">Contact</Link></li>
+                <li><Link href="/about" className="text-gray-400 hover:text-gray-600 transition">About</Link></li>
+                <li><Link href="/blog" className="text-gray-400 hover:text-gray-600 transition">Blog</Link></li>
+                <li><Link href="/careers" className="text-gray-400 hover:text-gray-600 transition">Careers</Link></li>
+                <li><Link href="/contact" className="text-gray-400 hover:text-gray-600 transition">Contact</Link></li>
               </ul>
             </div>
           </div>
@@ -266,9 +248,9 @@ export default function Home() {
             <div className="flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
               <p>&copy; 2026 Appfox. All rights reserved.</p>
               <div className="flex space-x-6 mt-4 md:mt-0">
-                <Link href="#" className="hover:text-gray-600 transition">Privacy</Link>
-                <Link href="#" className="hover:text-gray-600 transition">Terms</Link>
-                <Link href="#" className="hover:text-gray-600 transition">Cookies</Link>
+                <Link href="/privacy" className="hover:text-gray-600 transition">Privacy</Link>
+                <Link href="/terms" className="hover:text-gray-600 transition">Terms</Link>
+                <Link href="/cookies" className="hover:text-gray-600 transition">Cookies</Link>
               </div>
             </div>
           </div>
