@@ -6,6 +6,9 @@ export const metadata: Metadata = {
   title: "Appfox - Find the Best Mobile App Deals",
   description: "Discover curated discounted mobile apps, lifetime deals, and limited-time offers. The mobile-first platform for app deal hunting.",
   keywords: "mobile apps, app deals, discounts, lifetime deals, iOS apps, Android apps, app store deals",
+  icons: {
+    icon: '/favicon.svg',
+  },
   openGraph: {
     title: "Appfox - Find the Best Mobile App Deals",
     description: "Discover curated discounted mobile apps, lifetime deals, and limited-time offers.",

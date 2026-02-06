@@ -2,6 +2,8 @@ import { NextResponse } from 'next/server';
 import { readFile, writeFile } from 'fs/promises';
 import path from 'path';
 
+export const dynamic = 'force-dynamic';
+
 const WAITLIST_PATH = path.join(process.cwd(), 'waitlist.json');
 
 async function getEmails(): Promise<string[]> {

@@ -43,18 +43,6 @@ const pages: Record<string, { title: string; description: string }> = {
     title: 'Contact',
     description: "A dedicated contact page is on the way. For now, join the waitlist and we'll be in touch.",
   },
-  privacy: {
-    title: 'Privacy Policy',
-    description: "Our privacy policy is being finalized and will be published before launch.",
-  },
-  terms: {
-    title: 'Terms of Service',
-    description: "Our terms of service are being finalized and will be published before launch.",
-  },
-  cookies: {
-    title: 'Cookie Policy',
-    description: "Our cookie policy is being finalized and will be published before launch.",
-  },
 };
 
 export function generateStaticParams() {
@@ -81,9 +69,8 @@ export default async function ComingSoonPage({ params }: { params: Promise<{ slu
       <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50">
         <div className="max-w-6xl mx-auto px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center space-x-2">
-              <span className="text-xl">🦊</span>
-              <span className="text-lg font-semibold text-gray-900 tracking-tight font-heading">Appfox</span>
+            <Link href="/" className="flex items-center">
+              <img src="/logo.svg" alt="Appfox" className="h-7" />
             </Link>
           </div>
         </div>
