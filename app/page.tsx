@@ -12,6 +12,7 @@ import {
 } from 'lucide-react';
 import WaitlistForm from '@/components/waitlist-form';
 import Navbar from '@/components/navbar';
+import FadeIn from '@/components/fade-in';
 
 export default function Home() {
   return (
@@ -27,7 +28,7 @@ export default function Home() {
 
         <Navbar />
 
-        <div className="relative z-10 max-w-6xl mx-auto text-left pt-40 px-6 lg:px-8">
+        <div className="hero-animate relative z-10 max-w-6xl mx-auto text-left pt-40 px-6 lg:px-8">
           <h1 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-900 tracking-tight leading-[1.1] mb-6 max-w-3xl">
             The clever fox that
             <br />
@@ -51,47 +52,61 @@ export default function Home() {
       {/* Features Section */}
       <section id="features" className="py-24 px-6 lg:px-8 bg-gray-100">
         <div className="max-w-6xl mx-auto">
-          <div className="max-w-2xl mb-16">
-            <p className="text-sm font-medium text-orange-600 mb-3">Features</p>
-            <h2 className="text-3xl md:text-4xl font-normal text-gray-900 tracking-tight mb-4">
-              Everything you need to find great deals
-            </h2>
-            <p className="text-lg text-gray-500">
-              A mobile-first experience designed for serious deal hunters.
-            </p>
-          </div>
+          <FadeIn>
+            <div className="max-w-2xl mb-16">
+              <p className="text-sm font-medium text-orange-600 mb-3">Features</p>
+              <h2 className="text-3xl md:text-4xl font-normal text-gray-900 tracking-tight mb-4">
+                Everything you need to find great deals
+              </h2>
+              <p className="text-lg text-gray-500">
+                A mobile-first experience designed for serious deal hunters.
+              </p>
+            </div>
+          </FadeIn>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
-            <FeatureCard
-              icon={<Timer className="w-5 h-5" />}
-              title="Time-Sensitive Deals"
-              description="Never miss out with real-time expiration countdowns on every deal."
-            />
-            <FeatureCard
-              icon={<Sparkles className="w-5 h-5" />}
-              title="Lifetime Access"
-              description="Find apps offering lifetime premium unlocks and one-time purchases."
-            />
-            <FeatureCard
-              icon={<Bell className="w-5 h-5" />}
-              title="Push Notifications"
-              description="Get instant alerts for new deals and expiring favorites."
-            />
-            <FeatureCard
-              icon={<Filter className="w-5 h-5" />}
-              title="Smart Filters"
-              description="Search by discount percentage, ratings, category, and expiration."
-            />
-            <FeatureCard
-              icon={<Heart className="w-5 h-5" />}
-              title="Wishlist & Favorites"
-              description="Save deals and get notified when prices drop even further."
-            />
-            <FeatureCard
-              icon={<Zap className="w-5 h-5" />}
-              title="Native Performance"
-              description="True iOS & Android native experience, not a wrapped website."
-            />
+            <FadeIn delay={0}>
+              <FeatureCard
+                icon={<Timer className="w-5 h-5" />}
+                title="Time-Sensitive Deals"
+                description="Never miss out with real-time expiration countdowns on every deal."
+              />
+            </FadeIn>
+            <FadeIn delay={80}>
+              <FeatureCard
+                icon={<Sparkles className="w-5 h-5" />}
+                title="Lifetime Access"
+                description="Find apps offering lifetime premium unlocks and one-time purchases."
+              />
+            </FadeIn>
+            <FadeIn delay={160}>
+              <FeatureCard
+                icon={<Bell className="w-5 h-5" />}
+                title="Push Notifications"
+                description="Get instant alerts for new deals and expiring favorites."
+              />
+            </FadeIn>
+            <FadeIn delay={240}>
+              <FeatureCard
+                icon={<Filter className="w-5 h-5" />}
+                title="Smart Filters"
+                description="Search by discount percentage, ratings, category, and expiration."
+              />
+            </FadeIn>
+            <FadeIn delay={320}>
+              <FeatureCard
+                icon={<Heart className="w-5 h-5" />}
+                title="Wishlist & Favorites"
+                description="Save deals and get notified when prices drop even further."
+              />
+            </FadeIn>
+            <FadeIn delay={400}>
+              <FeatureCard
+                icon={<Zap className="w-5 h-5" />}
+                title="Native Performance"
+                description="True iOS & Android native experience, not a wrapped website."
+              />
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -99,29 +114,37 @@ export default function Home() {
       {/* How It Works Section */}
       <section id="how-it-works" className="py-24 px-6 lg:px-8 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
-          <div className="max-w-2xl mb-16">
-            <p className="text-sm font-medium text-orange-600 mb-3">How it works</p>
-            <h2 className="text-3xl md:text-4xl font-normal text-gray-900 tracking-tight mb-4">
-              Start saving in three steps
-            </h2>
-          </div>
+          <FadeIn>
+            <div className="max-w-2xl mb-16">
+              <p className="text-sm font-medium text-orange-600 mb-3">How it works</p>
+              <h2 className="text-3xl md:text-4xl font-normal text-gray-900 tracking-tight mb-4">
+                Start saving in three steps
+              </h2>
+            </div>
+          </FadeIn>
 
           <div className="grid md:grid-cols-3 gap-12">
-            <StepCard
-              number="01"
-              title="Browse Curated Deals"
-              description="Explore hand-picked deals across all categories, from productivity to games."
-            />
-            <StepCard
-              number="02"
-              title="Find Your Perfect App"
-              description="Use smart filters and search to discover apps you'll love at unbeatable prices."
-            />
-            <StepCard
-              number="03"
-              title="Redeem & Enjoy"
-              description="Tap to open in App Store or Google Play, redeem your deal, and start saving."
-            />
+            <FadeIn delay={0}>
+              <StepCard
+                number="01"
+                title="Browse Curated Deals"
+                description="Explore hand-picked deals across all categories, from productivity to games."
+              />
+            </FadeIn>
+            <FadeIn delay={120}>
+              <StepCard
+                number="02"
+                title="Find Your Perfect App"
+                description="Use smart filters and search to discover apps you'll love at unbeatable prices."
+              />
+            </FadeIn>
+            <FadeIn delay={240}>
+              <StepCard
+                number="03"
+                title="Redeem & Enjoy"
+                description="Tap to open in App Store or Google Play, redeem your deal, and start saving."
+              />
+            </FadeIn>
           </div>
         </div>
       </section>
@@ -130,10 +153,10 @@ export default function Home() {
       <section className="py-24 px-6 lg:px-8 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            <StatCard number="500+" label="Active Deals" />
-            <StatCard number="50-90%" label="Avg. Discount" />
-            <StatCard number="100K+" label="Downloads" />
-            <StatCard number="15+" label="Categories" />
+            <FadeIn delay={0}><StatCard number="500+" label="Active Deals" /></FadeIn>
+            <FadeIn delay={100}><StatCard number="50-90%" label="Avg. Discount" /></FadeIn>
+            <FadeIn delay={200}><StatCard number="100K+" label="Downloads" /></FadeIn>
+            <FadeIn delay={300}><StatCard number="15+" label="Categories" /></FadeIn>
           </div>
         </div>
       </section>
@@ -142,51 +165,60 @@ export default function Home() {
       <section id="developers" className="py-24 px-6 lg:px-8 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div>
-              <p className="text-sm font-medium text-orange-600 mb-3">For developers</p>
-              <h2 className="text-3xl md:text-4xl font-normal text-gray-900 tracking-tight mb-4">
-                Promote Your App
-              </h2>
-              <p className="text-lg text-gray-500 mb-8 leading-relaxed">
-                Reach thousands of engaged users looking for their next favorite app.
-                Join the waitlist and we&apos;ll notify you when the partner portal opens.
-              </p>
-              <WaitlistForm fullWidth />
-            </div>
+            <FadeIn>
+              <div>
+                <p className="text-sm font-medium text-orange-600 mb-3">For developers</p>
+                <h2 className="text-3xl md:text-4xl font-normal text-gray-900 tracking-tight mb-4">
+                  Promote Your App
+                </h2>
+                <p className="text-lg text-gray-500 mb-8 leading-relaxed">
+                  Reach thousands of engaged users looking for their next favorite app.
+                  Join the waitlist and we&apos;ll notify you when the partner portal opens.
+                </p>
+                <WaitlistForm fullWidth />
+              </div>
+            </FadeIn>
             <div className="space-y-4">
-              <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
-                <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
-                  <Shield className="w-5 h-5 text-gray-900" />
+              <FadeIn delay={100}>
+                <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
+                  <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
+                    <Shield className="w-5 h-5 text-gray-900" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-medium text-gray-900 mb-1">Manual review process</h3>
+                    <p className="text-sm text-gray-500">Every app is reviewed by our team to ensure quality and trust.</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-base font-medium text-gray-900 mb-1">Manual review process</h3>
-                  <p className="text-sm text-gray-500">Every app is reviewed by our team to ensure quality and trust.</p>
+              </FadeIn>
+              <FadeIn delay={200}>
+                <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
+                  <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
+                    <TrendingUp className="w-5 h-5 text-gray-900" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-medium text-gray-900 mb-1">Performance analytics</h3>
+                    <p className="text-sm text-gray-500">Track impressions, clicks, and conversions in real time.</p>
+                  </div>
                 </div>
-              </div>
-              <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
-                <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
-                  <TrendingUp className="w-5 h-5 text-gray-900" />
+              </FadeIn>
+              <FadeIn delay={300}>
+                <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
+                  <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
+                    <Users className="w-5 h-5 text-gray-900" />
+                  </div>
+                  <div>
+                    <h3 className="text-base font-medium text-gray-900 mb-1">Quality-focused curation</h3>
+                    <p className="text-sm text-gray-500">Your app is shown to users who are actively looking for deals.</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 className="text-base font-medium text-gray-900 mb-1">Performance analytics</h3>
-                  <p className="text-sm text-gray-500">Track impressions, clicks, and conversions in real time.</p>
-                </div>
-              </div>
-              <div className="flex items-start gap-4 p-5 rounded-2xl border border-gray-100">
-                <div className="w-10 h-10 rounded-full bg-gray-50 border border-gray-100 flex items-center justify-center shrink-0">
-                  <Users className="w-5 h-5 text-gray-900" />
-                </div>
-                <div>
-                  <h3 className="text-base font-medium text-gray-900 mb-1">Quality-focused curation</h3>
-                  <p className="text-sm text-gray-500">Your app is shown to users who are actively looking for deals.</p>
-                </div>
-              </div>
+              </FadeIn>
             </div>
           </div>
         </div>
       </section>
 
       {/* Footer */}
+      <FadeIn>
       <footer className="border-t border-gray-100 py-12 px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
@@ -242,6 +274,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      </FadeIn>
     </div>
   );
 }
