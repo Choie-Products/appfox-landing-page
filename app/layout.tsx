@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import "./globals.css";
 import { AgentationWrapper } from "@/components/agentation-wrapper";
+
+const GA_ID = "G-5H68LE3WEB";
 
 const SITE_URL = "https://appfox.app";
 
@@ -109,6 +112,13 @@ export default function RootLayout({
         <script type="application/ld+json">{jsonLdString}</script>
       </head>
       <body className="antialiased">
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="gtag-init" strategy="afterInteractive">
+          {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
+        </Script>
         {children}
         <AgentationWrapper />
       </body>
