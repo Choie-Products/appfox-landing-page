@@ -13,44 +13,40 @@ import {
 import WaitlistForm from '@/components/waitlist-form';
 import Navbar from '@/components/navbar';
 import FadeIn from '@/components/fade-in';
+import Scroll3DOverlay from '@/components/scroll-3d-overlay';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative pb-24">
-        <div
-          className="absolute inset-0 z-0 bg-cover bg-bottom"
-          style={{
-            backgroundImage: "url('/hero-bg.jpeg')",
-          }}
-        />
-
+      <section data-scroll-section="hero" className="relative pb-24">
         <Navbar />
 
-        <div className="hero-animate relative z-10 max-w-6xl mx-auto text-left pt-40 px-6 lg:px-8">
-          <h1 className="text-5xl md:text-6xl lg:text-7xl font-normal text-gray-900 tracking-tight leading-[1.1] mb-6 max-w-3xl">
-            The clever fox that
-            <br />
-            hunts down deals
-          </h1>
-          <p className="text-lg md:text-xl text-gray-500 mb-12 max-w-2xl leading-relaxed">
-            We&apos;re building the best way to find lifetime deals and deep discounts
-            on premium mobile apps. Be the first to know when we launch.
-          </p>
-          <div className="mb-3 max-w-md">
-            <WaitlistForm />
-          </div>
-          <div className="flex items-center gap-4 text-xs text-gray-400">
-            <span>Join 500+ others on the waitlist</span>
-            <span className="w-1 h-1 rounded-full bg-gray-300" />
-            <span>Launching soon</span>
+        <div className="relative z-10 max-w-6xl mx-auto pt-40 px-6 lg:px-8">
+          <div className="hero-animate text-left max-w-2xl">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-normal text-gray-900 tracking-tight leading-[1.1] mb-6 max-w-3xl">
+              The clever fox that
+              <br />
+              hunts down deals
+            </h1>
+            <p className="text-base md:text-lg text-gray-500 mb-10 max-w-2xl leading-relaxed">
+              We&apos;re building the best way to find lifetime deals and deep discounts
+              on premium mobile apps. Be the first to know when we launch.
+            </p>
+            <div className="mb-3 max-w-md">
+              <WaitlistForm />
+            </div>
+            <div className="flex items-center gap-4 text-xs text-gray-400">
+              <span>Join 500+ others on the waitlist</span>
+              <span className="w-1 h-1 rounded-full bg-gray-300" />
+              <span>Launching soon</span>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Features Section */}
-      <section id="features" className="py-24 px-6 lg:px-8 bg-gray-100">
+      <section id="features" data-scroll-section="features" className="py-24 px-6 lg:px-8 bg-gray-100">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <div className="max-w-2xl mb-16">
@@ -112,7 +108,7 @@ export default function Home() {
       </section>
 
       {/* How It Works Section */}
-      <section id="how-it-works" className="py-24 px-6 lg:px-8 border-t border-gray-100">
+      <section id="how-it-works" data-scroll-section="how-it-works" className="py-24 px-6 lg:px-8 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
           <FadeIn>
             <div className="max-w-2xl mb-16">
@@ -150,7 +146,7 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-24 px-6 lg:px-8 border-t border-gray-100">
+      <section data-scroll-section="stats" className="py-24 px-6 lg:px-8 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             <FadeIn delay={0}><StatCard number="500+" label="Active Deals" /></FadeIn>
@@ -162,7 +158,7 @@ export default function Home() {
       </section>
 
       {/* Developers Section */}
-      <section id="developers" className="py-24 px-6 lg:px-8 border-t border-gray-100">
+      <section id="developers" data-scroll-section="developers" className="py-24 px-6 lg:px-8 border-t border-gray-100">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <FadeIn>
@@ -219,7 +215,7 @@ export default function Home() {
 
       {/* Footer */}
       <FadeIn>
-      <footer className="border-t border-gray-100 py-12 px-6 lg:px-8">
+      <footer data-scroll-section="footer" className="border-t border-gray-100 py-12 px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-12">
             <div>
@@ -275,6 +271,8 @@ export default function Home() {
         </div>
       </footer>
       </FadeIn>
+
+      <Scroll3DOverlay />
     </div>
   );
 }
