@@ -8,6 +8,11 @@
   --font-heading: 'Clash Display', -apple-system, BlinkMacSystemFont, sans-serif;
 }
 
+::selection {
+  background-color: #ea580c;
+  color: #ffffff;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
