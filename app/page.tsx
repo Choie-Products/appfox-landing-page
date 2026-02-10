@@ -14,10 +14,13 @@ import WaitlistForm from '@/components/waitlist-form';
 import Navbar from '@/components/navbar';
 import FadeIn from '@/components/fade-in';
 import Scroll3DOverlay from '@/components/scroll-3d-overlay';
+import FaqJsonLd from '@/components/faq-json-ld';
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-white">
+      <FaqJsonLd />
+      <main>
       {/* Hero Section */}
       <section data-scroll-section="hero" className="relative pb-24">
         <Navbar />
@@ -212,6 +215,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      </main>
 
       {/* Footer */}
       <FadeIn>
