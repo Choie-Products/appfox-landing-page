@@ -91,6 +91,15 @@ export async function POST(request: Request) {
     const message = error instanceof Error ? error.message : "";
     if (message === "missing_resend_key") {
       console.error("RESEND_API_KEY is not set");
+      if (process.env.NODE_ENV !== "production") {
+        return NextResponse.json(
+          {
+            error: "server_error",
+            message: "Add RESEND_API_KEY to .env.local (AppFox Resend account) and restart the dev server.",
+          },
+          { status: 500 },
+        );
+      }
     } else if (message) {
       console.error("Waitlist signup failed:", message);
     }

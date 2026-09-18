@@ -76,6 +76,7 @@ export default function WaitlistForm({
         ok?: boolean;
         alreadyJoined?: boolean;
         error?: string;
+        message?: string;
       };
 
       if (!res.ok) {
@@ -84,7 +85,7 @@ export default function WaitlistForm({
             ? "That email doesn't look right."
             : data.error === "rate_limited"
               ? "Too many tries. Wait a moment and try again."
-              : "Something went wrong. Try again in a moment.";
+              : data.message || "Something went wrong. Try again in a moment.";
         flashError(message, "error");
         return;
       }

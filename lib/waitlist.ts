@@ -14,6 +14,17 @@ export type WaitlistSignup = {
   referrer?: string;
 };
 
+type ResendIssue = {
+  message: string;
+  statusCode?: number | null;
+  name?: string;
+} | null;
+
+function logResend(label: string, error: ResendIssue) {
+  if (!error) return;
+  console.error(label, error.name ?? "", error.statusCode ?? "", error.message);
+}
+
 function contactProperties(input: WaitlistSignup) {
   const properties: Record<string, string> = {
     source: "waitlist",
@@ -26,77 +37,101 @@ function contactProperties(input: WaitlistSignup) {
   return properties;
 }
 
-function isMissingContact(error: { statusCode?: number | null; name?: string } | null) {
-  if (!error) return false;
-  return error.statusCode === 404 || error.name === "not_found";
-}
-
-export async function findWaitlistContact(email: string) {
-  const resend = getResend();
-  const { data, error } = await resend.contacts.get({ email });
-  if (data) return data;
-  if (isMissingContact(error)) return null;
-  if (error) {
-    throw new Error(error.message);
-  }
-  return null;
-}
-
 export async function saveWaitlistSignup(input: WaitlistSignup) {
-  const resend = getResend();
-  const existing = await findWaitlistContact(input.email);
+  const stored = await storeWaitlistContact(input);
+  const emailed =
+    stored.alreadyJoined ? true : await sendWaitlistConfirmation(input.email);
 
-  if (existing) {
-    if (input.role || input.utmSource || input.utmMedium || input.utmCampaign || input.referrer) {
-      const { error } = await resend.contacts.update({
+  if (!stored.saved && !emailed) {
+    throw new Error("waitlist_persist_failed");
+  }
+
+  return { alreadyJoined: stored.alreadyJoined };
+}
+
+async function storeWaitlistContact(input: WaitlistSignup) {
+  try {
+    const resend = getResend();
+    const { data: existing, error: getError } = await resend.contacts.get({
+      email: input.email,
+    });
+
+    if (existing) {
+      const { error: updateError } = await resend.contacts.update({
         email: input.email,
         properties: contactProperties(input),
       });
-      if (error) {
-        console.error("Resend contact update failed:", error.message);
-      }
+      logResend("Resend contact update failed:", updateError);
+      return { saved: true, alreadyJoined: true };
     }
-    return { alreadyJoined: true as const };
+
+    if (getError && getError.statusCode !== 404 && getError.name !== "not_found") {
+      logResend("Resend contact lookup failed:", getError);
+    }
+
+    const segmentId = getWaitlistSegmentId();
+    const created = await createContact(input, segmentId);
+    if (created) return { saved: true, alreadyJoined: false };
+
+    return { saved: false, alreadyJoined: false };
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "unknown_contact_error";
+    console.error("Resend contacts unavailable:", message);
+    return { saved: false, alreadyJoined: false };
   }
+}
 
-  const segmentId = getWaitlistSegmentId();
-  const { error: createError } = await resend.contacts.create({
-    email: input.email,
-    unsubscribed: false,
-    properties: contactProperties(input),
-    ...(segmentId ? { segments: [{ id: segmentId }] } : {}),
-  });
+async function createContact(input: WaitlistSignup, segmentId?: string) {
+  const resend = getResend();
+  const attempts = [
+    {
+      email: input.email,
+      unsubscribed: false,
+      properties: contactProperties(input),
+      ...(segmentId ? { segments: [{ id: segmentId }] } : {}),
+    },
+    {
+      email: input.email,
+      unsubscribed: false,
+    },
+  ];
 
-  if (createError) {
+  for (const payload of attempts) {
+    const { error } = await resend.contacts.create(payload);
+    if (!error) return true;
+
     const already =
-      createError.statusCode === 409 ||
-      /already exists|already been taken/i.test(createError.message);
-    if (already) {
-      return { alreadyJoined: true as const };
-    }
-    throw new Error(createError.message);
+      error.statusCode === 409 || /already exists|already been taken/i.test(error.message);
+    if (already) return true;
+
+    logResend("Resend contact create failed:", error);
   }
 
-  await sendWaitlistConfirmation(input.email);
-  return { alreadyJoined: false as const };
+  return false;
 }
 
 async function sendWaitlistConfirmation(email: string) {
-  const resend = getResend();
-  const { error } = await resend.emails.send(
-    {
-      from: getResendFrom(),
-      to: [email],
-      subject: waitlistConfirmationSubject(),
-      text: waitlistConfirmationText(),
-      html: waitlistConfirmationHtml(),
-    },
-    { idempotencyKey: `waitlist-welcome/${email}` },
+  const fromAddresses = [getResendFrom(), "AppFox <onboarding@resend.dev>"].filter(
+    (value, index, all) => all.indexOf(value) === index,
   );
 
-  if (error) {
-    // Contact is already stored; don't fail the signup if mail delivery is blocked
-    // (unverified domain, sandbox from-address, etc.).
-    console.error("Resend waitlist email failed:", error.message);
+  const resend = getResend();
+
+  for (const from of fromAddresses) {
+    const { error } = await resend.emails.send(
+      {
+        from,
+        to: [email],
+        subject: waitlistConfirmationSubject(),
+        text: waitlistConfirmationText(),
+        html: waitlistConfirmationHtml(),
+      },
+      { idempotencyKey: `waitlist-welcome/${email}/${from}` },
+    );
+
+    if (!error) return true;
+    logResend(`Resend waitlist email failed (${from}):`, error);
   }
+
+  return false;
 }
