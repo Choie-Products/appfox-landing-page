@@ -1,37 +1,52 @@
 import type { Metadata } from "next";
 import Script from "next/script";
+import { Inter } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import { AgentationWrapper } from "@/components/agentation-wrapper";
 
-const GA_ID = "G-5H68LE3WEB";
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+  axes: ["opsz"],
+});
 
+const sentient = localFont({
+  src: "./fonts/Sentient-Variable.woff2",
+  display: "swap",
+  variable: "--font-sentient",
+  weight: "200 700",
+});
+
+const GA_ID = "G-5H68LE3WEB";
 const SITE_URL = "https://appfox.app";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Appfox - Find the Best Mobile App Deals & Lifetime Offers",
-    template: "%s | Appfox",
+    default: "AppFox - Know What Your App Needs Next",
+    template: "%s | AppFox",
   },
   description:
-    "Appfox is a mobile-first platform that curates discounted apps, lifetime deals, and limited-time offers across iOS and Android. Browse 500+ active deals with discounts of 50-90% off.",
+    "AppFox watches your app, customers, competitors, and market, then turns meaningful changes into evidence-backed actions. Join the waitlist.",
   alternates: {
     canonical: SITE_URL,
   },
   openGraph: {
-    title: "Appfox - Find the Best Mobile App Deals & Lifetime Offers",
+    title: "AppFox - Intelligence for Mobile Apps",
     description:
-      "Discover curated mobile app deals with 50-90% discounts. Lifetime access, real-time alerts, and smart filters across 15+ categories on iOS and Android.",
+      "Your app, customers, competitors, and market, continuously researched and turned into actionable priorities.",
     url: SITE_URL,
-    siteName: "Appfox",
+    siteName: "AppFox",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Appfox - Find the Best Mobile App Deals & Lifetime Offers",
+    title: "AppFox - Intelligence for Mobile Apps",
     description:
-      "Discover curated mobile app deals with 50-90% discounts. Lifetime access, real-time alerts, and smart filters.",
+      "AppFox watches your app, customers, and market, then tells you what deserves attention next.",
   },
   robots: {
     index: true,
@@ -49,49 +64,40 @@ export const metadata: Metadata = {
   },
 };
 
-// Structured data is a static constant derived from hardcoded values only — safe to inline.
 const jsonLdString = JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: "Appfox",
+      name: "AppFox",
       url: SITE_URL,
       logo: `${SITE_URL}/logo.svg`,
       description:
-        "Appfox is a mobile-first platform that curates the best discounted apps, lifetime deals, and limited-time offers across iOS and Android app stores.",
+        "AppFox is an intelligence system for mobile apps. It watches an app, its customers, and its market, then turns meaningful changes into evidence-backed actions.",
     },
     {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "Appfox",
+      name: "AppFox",
       publisher: { "@id": `${SITE_URL}/#organization` },
       description:
-        "Find the best mobile app deals, lifetime offers, and deep discounts on premium iOS and Android apps.",
+        "Join the AppFox waitlist. Intelligence for mobile apps that tells you what deserves attention next.",
     },
     {
       "@type": "SoftwareApplication",
-      name: "Appfox",
-      operatingSystem: "iOS, Android",
-      applicationCategory: "ShoppingApplication",
+      name: "AppFox",
+      applicationCategory: "BusinessApplication",
+      operatingSystem: "Web",
       description:
-        "A mobile app that aggregates and curates discounted mobile apps, lifetime deals, and limited-time offers with real-time alerts, smart filters, and push notifications.",
+        "An intelligence layer for mobile apps that connects market, customer, business, and product signals, then recommends what to do next.",
       offers: {
         "@type": "Offer",
         price: "0",
         priceCurrency: "USD",
         availability: "https://schema.org/PreOrder",
       },
-      featureList: [
-        "Time-sensitive deal tracking with expiration countdowns",
-        "Lifetime access deals and one-time purchases",
-        "Push notifications for new deals and price drops",
-        "Smart filters by discount, rating, category, and expiration",
-        "Wishlist and favorites with price drop alerts",
-        "Native iOS and Android performance",
-      ],
     },
   ],
 });
@@ -102,16 +108,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className={`${inter.variable} ${sentient.variable}`}>
       <head>
-        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
-        <link
-          href="https://api.fontshare.com/v2/css?f[]=clash-display@200,300,400,500,600,700&display=swap"
-          rel="stylesheet"
-        />
         <script type="application/ld+json">{jsonLdString}</script>
       </head>
-      <body className="antialiased">
+      <body className={`${inter.className} antialiased`}>
         <Script
           src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
           strategy="afterInteractive"

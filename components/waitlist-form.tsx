@@ -1,72 +1,190 @@
-'use client';
+"use client";
 
-import { useState, FormEvent } from 'react';
+import { FormEvent, useEffect, useId, useState } from "react";
+import { AlertCircle } from "lucide-react";
+import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { track } from "@/lib/track";
+import { cn } from "@/lib/utils";
+import WaitlistSuccess from "@/components/waitlist-success";
 
-export default function WaitlistForm({ fullWidth = false }: { fullWidth?: boolean }) {
-  const [email, setEmail] = useState('');
-  const [state, setState] = useState<'idle' | 'loading' | 'success'>('idle');
-  const [message, setMessage] = useState('');
+type FormStatus =
+  | { type: "idle" }
+  | { type: "invalid"; message: string }
+  | { type: "loading" }
+  | { type: "success"; alreadyJoined: boolean }
+  | { type: "error"; message: string };
 
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    setState('loading');
+export default function WaitlistForm({
+  className,
+  onSuccess,
+}: {
+  className?: string;
+  onSuccess?: (result: { email: string; alreadyJoined: boolean }) => void;
+}) {
+  const inputId = useId();
+  const errorId = useId();
+  const [email, setEmail] = useState("");
+  const [honeypot, setHoneypot] = useState("");
+  const [status, setStatus] = useState<FormStatus>({ type: "idle" });
+  const [shake, setShake] = useState(false);
+
+  useEffect(() => {
+    track("landing_view");
+  }, []);
+
+  function flashError(message: string, type: "invalid" | "error" = "invalid") {
+    setStatus({ type, message });
+    setShake(true);
+    window.setTimeout(() => setShake(false), 420);
+  }
+
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const trimmed = email.trim();
+
+    if (!trimmed) {
+      flashError("Enter your work email.");
+      return;
+    }
+
+    if (!isValidEmail(normalizeEmail(trimmed))) {
+      flashError("That email doesn't look right.");
+      return;
+    }
+
+    setStatus({ type: "loading" });
+    track("waitlist_submit");
+    track("hero_waitlist_click");
+
+    const params = new URLSearchParams(window.location.search);
 
     try {
-      const res = await fetch('/api/waitlist', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email }),
+      const res = await fetch("/api/waitlist", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: trimmed,
+          website: honeypot,
+          utmSource: params.get("utm_source") ?? undefined,
+          utmMedium: params.get("utm_medium") ?? undefined,
+          utmCampaign: params.get("utm_campaign") ?? undefined,
+          referrer: document.referrer || undefined,
+        }),
       });
 
-      const data = await res.json();
+      const data = (await res.json().catch(() => ({}))) as {
+        ok?: boolean;
+        alreadyJoined?: boolean;
+        error?: string;
+      };
 
       if (!res.ok) {
-        setMessage(data.error);
-        setState('idle');
+        const message =
+          data.error === "invalid_email"
+            ? "That email doesn't look right."
+            : data.error === "rate_limited"
+              ? "Too many tries. Wait a moment and try again."
+              : "Something went wrong. Try again in a moment.";
+        flashError(message, "error");
         return;
       }
 
-      setMessage(data.message);
-      setState('success');
+      const alreadyJoined = Boolean(data.alreadyJoined);
+      setStatus({ type: "success", alreadyJoined });
+      track("waitlist_success", { already_joined: alreadyJoined });
+      onSuccess?.({ email: trimmed, alreadyJoined });
     } catch {
-      setMessage('Something went wrong. Please try again.');
-      setState('idle');
+      flashError("Couldn't reach AppFox. Try again.", "error");
     }
   }
 
-  if (state === 'success') {
+  const errorMessage =
+    status.type === "invalid" || status.type === "error" ? status.message : "";
+  const showError = Boolean(errorMessage) && status.type !== "loading";
+  const isBusy = status.type === "loading";
+
+  if (status.type === "success" && !onSuccess) {
     return (
-      <div className="flex items-center justify-center gap-2 text-gray-900">
-        <svg className="w-5 h-5 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-        </svg>
-        <span className="text-lg font-medium">{message}</span>
+      <div className={cn("w-full", className)}>
+        <WaitlistSuccess email={email} alreadyJoined={status.alreadyJoined} />
       </div>
     );
   }
 
+  if (status.type === "success" && onSuccess) {
+    return null;
+  }
+
   return (
-    <div>
-      <form onSubmit={handleSubmit} className={`flex flex-col sm:flex-row items-center gap-3${fullWidth ? '' : ' max-w-md mx-auto'}`}>
-        <input
-          type="email"
-          placeholder="Enter your email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-          className="w-full sm:flex-1 px-5 py-3 rounded-full border border-gray-200 text-gray-900 placeholder-gray-400 focus:outline-none focus:border-gray-400 transition"
-        />
-        <button
-          type="submit"
-          disabled={state === 'loading'}
-          className="w-full sm:w-auto px-7 py-3 bg-gray-900 text-white rounded-full font-medium hover:bg-gray-800 transition disabled:opacity-50 disabled:cursor-not-allowed"
+    <div className={cn("w-full", className)}>
+      <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-2">
+        <label htmlFor={inputId} className="text-sm text-foreground">
+          Work email
+        </label>
+
+        <div
+          className={cn(
+            "flex flex-col gap-3 sm:flex-row sm:items-center",
+            shake && "waitlist-shake",
+          )}
         >
-          {state === 'loading' ? 'Joining...' : 'Join Waitlist'}
-        </button>
+          <input
+            id={inputId}
+            name="email"
+            type="email"
+            autoComplete="email"
+            inputMode="email"
+            placeholder="you@company.com"
+            value={email}
+            disabled={isBusy}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              if (status.type === "invalid" || status.type === "error") {
+                setStatus({ type: "idle" });
+              }
+            }}
+            aria-invalid={showError}
+            aria-describedby={showError ? errorId : undefined}
+            className={cn(
+              "h-12 w-full rounded-full border bg-surface px-5 text-base text-foreground outline-none transition placeholder:text-foreground-muted/80 focus-visible:ring-2 focus-visible:ring-accent/40 sm:flex-1",
+              showError
+                ? "border-danger focus:border-danger"
+                : "border-border focus:border-accent",
+              isBusy && "opacity-70",
+            )}
+          />
+          <button
+            type="submit"
+            disabled={isBusy}
+            className="h-12 shrink-0 rounded-full bg-accent px-7 text-sm font-medium text-white transition-transform hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+          >
+            {isBusy ? "Joining" : "Join waitlist"}
+          </button>
+        </div>
+
+        <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
+          <label>
+            Website
+            <input
+              tabIndex={-1}
+              autoComplete="off"
+              value={honeypot}
+              onChange={(event) => setHoneypot(event.target.value)}
+            />
+          </label>
+        </div>
+
+        <div className="min-h-5" aria-live="polite">
+          {showError ? (
+            <p id={errorId} className="flex items-center gap-1.5 text-sm text-danger">
+              <AlertCircle className="size-4 shrink-0" strokeWidth={1.75} />
+              {errorMessage}
+            </p>
+          ) : (
+            <p className="text-sm text-foreground-muted">No spam. Just early access.</p>
+          )}
+        </div>
       </form>
-      {message && state === 'idle' && (
-        <p className="text-sm text-red-500 mt-3 text-center">{message}</p>
-      )}
     </div>
   );
 }

@@ -1,47 +1,53 @@
-import Link from 'next/link';
-import { notFound } from 'next/navigation';
-import WaitlistForm from '@/components/waitlist-form';
+import Link from "next/link";
+import { notFound } from "next/navigation";
+import SiteFooter from "@/components/site-footer";
+import SiteHeader from "@/components/site-header";
+import WaitlistForm from "@/components/waitlist-form";
 
 const pages: Record<string, { title: string; description: string }> = {
   pricing: {
-    title: 'Pricing',
-    description: "We're finalizing our pricing plans. Join the waitlist and we'll let you know as soon as they're ready.",
+    title: "Pricing",
+    description:
+      "Pricing will stay simple and built for indie teams. Join the waitlist and we will share details as we get closer.",
   },
   download: {
-    title: 'Download',
-    description: "The app isn't available just yet. Join the waitlist to be the first to download when we launch.",
+    title: "Download",
+    description:
+      "AppFox starts on the web. Join the waitlist and we will tell you when there is something to open.",
   },
-  'partner-portal': {
-    title: 'Partner Portal',
-    description: "The partner portal is coming soon. Sign up and we'll notify you when it's open for developers.",
+  "partner-portal": {
+    title: "Partner Portal",
+    description: "A partner surface is not available yet. Join the waitlist for product updates.",
   },
-  'submit-app': {
-    title: 'Submit Your App',
-    description: "App submissions will open soon. Join the waitlist and we'll reach out when you can submit.",
+  "submit-app": {
+    title: "Add your app",
+    description:
+      "You'll add an App Store or Google Play app after early access opens. Join the waitlist to be first in line.",
   },
-  'api-docs': {
-    title: 'API Documentation',
-    description: "Our API documentation is being prepared. Join the waitlist to get early access.",
+  "api-docs": {
+    title: "API",
+    description: "Public API docs are not ready yet. Join the waitlist for product updates.",
   },
   guidelines: {
-    title: 'Guidelines',
-    description: "Our developer and submission guidelines are on the way. Join the waitlist to stay updated.",
+    title: "Guidelines",
+    description: "Product guidelines will land with early access. Join the waitlist to stay close.",
   },
   about: {
-    title: 'About',
-    description: "We're a small team building the best way to discover app deals. More details coming soon.",
+    title: "About",
+    description:
+      "AppFox is an intelligence layer for mobile apps. It watches your product, customers, and market, then tells you what deserves attention.",
   },
   blog: {
-    title: 'Blog',
-    description: "Our blog is launching soon with tips, app reviews, and deal roundups. Stay tuned.",
+    title: "Blog",
+    description: "Writing will come later. Join the waitlist and we will keep the product updates here.",
   },
   careers: {
-    title: 'Careers',
-    description: "We're not hiring just yet, but that could change soon. Join the waitlist to hear about openings.",
+    title: "Careers",
+    description: "We are not hiring yet. Join the waitlist if you want to hear when that changes.",
   },
   contact: {
-    title: 'Contact',
-    description: "A dedicated contact page is on the way. For now, join the waitlist and we'll be in touch.",
+    title: "Contact",
+    description: "The fastest way to reach us right now is to join the waitlist.",
   },
 };
 
@@ -50,11 +56,10 @@ export function generateStaticParams() {
 }
 
 export function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
-  // Need to handle async params for Next.js 15
   return params.then(({ slug }) => {
     const page = pages[slug];
     if (!page) return {};
-    return { title: `${page.title} - Appfox` };
+    return { title: `${page.title} - AppFox` };
   });
 }
 
@@ -65,34 +70,27 @@ export default async function ComingSoonPage({ params }: { params: Promise<{ slu
   if (!page) notFound();
 
   return (
-    <div className="min-h-screen bg-white">
-      <nav className="fixed top-0 w-full bg-white/90 backdrop-blur-sm z-50">
-        <div className="max-w-6xl mx-auto px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <Link href="/" className="flex items-center">
-              <img src="/logo.svg" alt="Appfox" className="h-7" />
-            </Link>
-          </div>
-        </div>
-      </nav>
-
-      <section className="pt-36 pb-24 px-6 lg:px-8">
-        <div className="max-w-xl mx-auto text-center">
-          <p className="text-sm font-medium text-orange-600 mb-3">Coming soon</p>
-          <h1 className="text-4xl md:text-5xl font-normal text-gray-900 tracking-tight leading-[1.1] mb-6">
+    <div className="flex min-h-[100dvh] flex-col bg-background">
+      <SiteHeader />
+      <section className="flex flex-1 items-center px-5 py-16 sm:px-8 lg:px-12">
+        <div className="mx-auto w-full max-w-xl">
+          <h1 className="font-heading text-4xl font-normal tracking-tight text-foreground sm:text-5xl">
             {page.title}
           </h1>
-          <p className="text-lg text-gray-500 mb-12 leading-relaxed">
+          <p className="mt-4 max-w-[46ch] text-base leading-relaxed text-foreground-muted sm:text-lg">
             {page.description}
           </p>
-          <WaitlistForm />
-          <div className="mt-12">
-            <Link href="/" className="text-sm text-gray-400 hover:text-gray-600 transition">
-              &larr; Back to home
+          <div className="mt-10">
+            <WaitlistForm />
+          </div>
+          <div className="mt-10">
+            <Link href="/" className="text-sm text-foreground-muted transition-colors hover:text-foreground">
+              Back to home
             </Link>
           </div>
         </div>
       </section>
+      <SiteFooter />
     </div>
   );
 }

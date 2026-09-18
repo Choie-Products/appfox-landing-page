@@ -3,32 +3,55 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #0a0a0a;
-  --font-heading: 'Clash Display', -apple-system, BlinkMacSystemFont, sans-serif;
+  color-scheme: dark;
+  --background: #000000;
+  --surface: #141414;
+  --surface-muted: #1c1c1c;
+  --foreground: #f3f3f4;
+  --foreground-muted: #9a9a9e;
+  --border: #2c2c2c;
+  --accent: #fe5000;
+  --accent-foreground: #0a0a0a;
+  --success: #fe5000;
+  --warning: #fe5000;
+  --danger: #ff5a4a;
+  --info: #fe5000;
+  --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading: var(--font-sentient), "Sentient", "Iowan Old Style", Palatino, serif;
 }
 
 ::selection {
-  background-color: #ea580c;
-  color: #ffffff;
+  background-color: var(--accent);
+  color: var(--accent-foreground);
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  font-family: var(--font-sans);
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.font-heading {
   font-family: var(--font-heading);
 }
 
-@keyframes hero-fade-in {
+@keyframes waitlist-rise {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(18px);
   }
   to {
     opacity: 1;
@@ -36,21 +59,56 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-.hero-animate > * {
-  opacity: 0;
-  animation: hero-fade-in 0.7s ease forwards;
+@keyframes waitlist-shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
 }
 
-.hero-animate > *:nth-child(1) { animation-delay: 0.1s; }
-.hero-animate > *:nth-child(2) { animation-delay: 0.25s; }
-.hero-animate > *:nth-child(3) { animation-delay: 0.4s; }
-.hero-animate > *:nth-child(4) { animation-delay: 0.5s; }
+.waitlist-enter {
+  opacity: 1;
+}
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
+.waitlist-shake {
+  animation: waitlist-shake 0.4s ease;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .waitlist-enter {
+    animation: waitlist-rise 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
-  .font-heading {
-    font-family: var(--font-heading);
+
+  .waitlist-enter-delay-1 {
+    animation-delay: 0.08s;
+  }
+
+  .waitlist-enter-delay-2 {
+    animation-delay: 0.16s;
+  }
+
+  .waitlist-enter-delay-3 {
+    animation-delay: 0.28s;
+  }
+
+  .waitlist-enter-delay-4 {
+    animation-delay: 0.36s;
+  }
+
+  .waitlist-enter-delay-5 {
+    animation-delay: 0.44s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waitlist-enter,
+  .waitlist-shake {
+    animation: none;
   }
 }
