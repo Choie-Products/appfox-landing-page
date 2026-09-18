@@ -1,22 +1,10 @@
 import { NextResponse } from "next/server";
-import { readFile, writeFile } from "fs/promises";
-import path from "path";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
+import { saveWaitlistSignup } from "@/lib/waitlist";
 
 export const dynamic = "force-dynamic";
 
-const WAITLIST_PATH = path.join(process.cwd(), "waitlist.json");
 const ALLOWED_ROLES = new Set(["indie", "founder", "product", "studio", "exploring"]);
-
-type Signup = {
-  email: string;
-  role?: string;
-  createdAt: string;
-  utmSource?: string;
-  utmMedium?: string;
-  utmCampaign?: string;
-  referrer?: string;
-};
 
 type WaitlistBody = {
   email?: unknown;
@@ -49,35 +37,6 @@ function isRateLimited(ip: string) {
 
 function asOptionalString(value: unknown) {
   return typeof value === "string" && value.trim() ? value.trim().slice(0, 200) : undefined;
-}
-
-function normalizeSignups(data: unknown): Signup[] {
-  if (!Array.isArray(data)) return [];
-  return data
-    .map((item) => {
-      if (typeof item === "string") {
-        return { email: normalizeEmail(item), createdAt: new Date().toISOString() };
-      }
-      if (item && typeof item === "object" && "email" in item && typeof item.email === "string") {
-        const row = item as Signup;
-        return { ...row, email: normalizeEmail(row.email) };
-      }
-      return null;
-    })
-    .filter((item): item is Signup => Boolean(item));
-}
-
-async function readSignups(): Promise<Signup[]> {
-  try {
-    const data = await readFile(WAITLIST_PATH, "utf-8");
-    return normalizeSignups(JSON.parse(data));
-  } catch {
-    return [];
-  }
-}
-
-async function writeSignups(signups: Signup[]) {
-  await writeFile(WAITLIST_PATH, JSON.stringify(signups, null, 2));
 }
 
 export async function POST(request: Request) {
@@ -118,28 +77,23 @@ export async function POST(request: Request) {
       );
     }
 
-    const signups = await readSignups();
-    const existing = signups.find((signup) => signup.email === email);
-
-    if (existing) {
-      if (role) existing.role = role;
-      await writeSignups(signups);
-      return NextResponse.json({ ok: true, alreadyJoined: true });
-    }
-
-    signups.push({
+    const result = await saveWaitlistSignup({
       email,
       role,
-      createdAt: new Date().toISOString(),
       utmSource: asOptionalString(body.utmSource),
       utmMedium: asOptionalString(body.utmMedium),
       utmCampaign: asOptionalString(body.utmCampaign),
       referrer: asOptionalString(body.referrer),
     });
-    await writeSignups(signups);
 
-    return NextResponse.json({ ok: true, alreadyJoined: false });
-  } catch {
+    return NextResponse.json({ ok: true, alreadyJoined: result.alreadyJoined });
+  } catch (error) {
+    const message = error instanceof Error ? error.message : "";
+    if (message === "missing_resend_key") {
+      console.error("RESEND_API_KEY is not set");
+    } else if (message) {
+      console.error("Waitlist signup failed:", message);
+    }
     return NextResponse.json(
       { error: "server_error", message: "Something went wrong" },
       { status: 500 },
