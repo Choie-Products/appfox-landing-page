@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Info } from "lucide-react";
 import Container from "@/components/ui/container";
@@ -230,6 +230,9 @@ export default function PricingTable() {
 }
 
 /** The plan comparison table with the raised Indie column. Shared by the homepage and the pricing page. */
+/** Where the plan row sticks: just under the floating header (which ends at 60px), with a little air. */
+const STICKY_TOP = 72;
+
 export function PricingGrid({
   className = "pt-[68px] lg:pt-[92px]",
   collapsible = false,
@@ -244,12 +247,47 @@ export function PricingGrid({
   const [expanded, setExpanded] = useState(!collapsible);
   const visible = expanded ? rows : rows.filter((r) => r.key);
   const hidden = rows.length - rows.filter((r) => r.key).length;
+
+  /*
+   * On large screens the plan row sticks under the floating header while the rows scroll. Once it is stuck
+   * it gets the page background (with a band reaching up behind the header) and a soft edge below.
+   */
+  const sentinel = useRef<HTMLDivElement>(null);
+  const [stuck, setStuck] = useState(false);
+  useEffect(() => {
+    const el = sentinel.current;
+    if (!el) return;
+    let frame = 0;
+    const check = () => {
+      frame = 0;
+      setStuck(el.getBoundingClientRect().top < STICKY_TOP);
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(check);
+    };
+    check();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+  const headCell = (indie: boolean) =>
+    `lg:sticky lg:top-[72px] lg:z-20 ${
+      stuck
+        ? `${indie ? "lg:bg-[#fbfbfa]" : "lg:bg-paper"} lg:shadow-[inset_0_-1px_0_var(--line),0_14px_18px_-14px_rgba(17,17,17,0.14)] lg:before:absolute lg:before:inset-x-0 lg:before:bottom-full lg:before:h-[72px] lg:before:bg-paper lg:before:content-['']`
+        : ""
+    }`;
+
   return (
     <>
       <div
         className={`-mx-5 overflow-x-auto px-5 pb-10 sm:-mx-8 sm:px-8 lg:mx-0 lg:overflow-visible lg:px-0 lg:pb-0 ${className}`}
       >
         <div className="relative min-w-[920px]">
+          <div ref={sentinel} aria-hidden="true" className="absolute inset-x-0 top-0 h-px" />
           {/* Raised soft gray panel behind the Indie column (second plan column), drawn under the table */}
           <div
             aria-hidden="true"
@@ -265,14 +303,14 @@ export function PricingGrid({
             </colgroup>
             <thead>
               <tr className="border-b border-line align-bottom">
-                <th scope="col" className="label-mono pb-[18px] font-normal">
+                <th scope="col" className={`label-mono pb-[18px] pt-4 font-normal ${headCell(false)}`}>
                   Plan
                 </th>
                 {plans.map((plan) => (
                   <th
                     key={plan.name}
                     scope="col"
-                    className="px-6 pb-[18px] font-normal align-bottom"
+                    className={`px-6 pb-[18px] pt-4 font-normal align-bottom ${headCell(plan.name === "Indie")}`}
                   >
                     <span className="flex items-center gap-2 text-[16px] font-semibold leading-5 text-ink">
                       {plan.name}
