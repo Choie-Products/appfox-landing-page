@@ -80,12 +80,12 @@ function Soon() {
   );
 }
 
-/** The outlined card that holds the active scene on small screens, scaled to fit its width. */
+/** The soft card that holds the active scene on small screens, scaled to fit its width. */
 function Stage({ index, className = "" }: { index: number; className?: string }) {
   const { Art } = JOURNEYS[index];
   return (
     <div
-      className={`items-center justify-center border-[1.5px] border-ink bg-white bg-[radial-gradient(rgba(17,17,17,0.07)_1px,transparent_1px)] [background-size:16px_16px] ${className}`}
+      className={`deck-front items-center justify-center ${className}`}
     >
       <div className="w-full max-w-[400px]">
         <ScaleToFit width={ART_WIDTH} height={ART_HEIGHT}>
@@ -135,7 +135,7 @@ function DeckButton({ label, onClick, children }: { label: string; onClick: () =
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="flex size-10 items-center justify-center rounded-full border-[1.5px] border-ink text-ink transition-colors hover:bg-ink hover:text-white"
+      className="soft-key flex size-10 items-center justify-center rounded-full text-ink"
     >
       {children}
     </button>
@@ -177,7 +177,7 @@ function Deck({
         </div>
       </div>
 
-      <div className="relative ml-auto mt-8 aspect-[23/20] w-[calc(100%-60px)] max-w-[460px]">
+      <div className="relative isolate mb-[72px] ml-auto mt-8 aspect-[23/20] w-[calc(100%-60px)] max-w-[460px]">
         {JOURNEYS.map((journey, i) => {
           const pos = (i - active + count) % count;
           const pose = POSES[pos] ?? HIDDEN_POSE;
@@ -232,12 +232,12 @@ export default function Journeys() {
   }
 
   return (
-    <Container as="section" className="py-16 lg:py-24">
+    <Container as="section" className="py-24 lg:py-40">
       <h2 className="text-display-md text-ink">What that lets you do.</h2>
       <p className="pt-2 text-[16px] leading-[26px] text-muted">
         Two journeys, one workspace, one evidence ledger. Start wherever you are.
       </p>
-      <div className="mt-7 grid gap-8 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-12">
+      <div className="mt-10 grid gap-8 lg:mt-16 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-12">
         <div className="flex flex-col self-start">
           {JOURNEYS.map((journey, i) => {
             const isActive = i === active;

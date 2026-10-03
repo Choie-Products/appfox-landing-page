@@ -32,7 +32,7 @@ export const homeFaq: FaqItem[] = [
 export default function FaqSection() {
   return (
     <section id="faq" className="scroll-mt-20">
-      <Container className="grid gap-10 py-16 lg:grid-cols-[400px_1fr] lg:gap-16 lg:py-24">
+      <Container className="grid gap-10 py-24 lg:grid-cols-[400px_1fr] lg:gap-16 lg:py-40">
         <div>
           <h2 className="text-display-md text-ink">Questions, answered.</h2>
           <p className="pt-3 text-[16px] leading-[26px] text-muted">

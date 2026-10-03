@@ -8,14 +8,17 @@ export default function CtaBand({
   title = "Stop being the integration layer.",
   lead = "Start free with both journeys and the full evidence ledger. Upgrade when you outgrow the limits.",
   secondary = { label: "See pricing", href: "/pricing" },
+  spacing = "py-16 lg:py-24",
 }: {
   title?: string;
   lead?: string;
   secondary?: { label: string; href: string };
+  /** Vertical padding around the card; the homepage uses a roomier rhythm. */
+  spacing?: string;
 }) {
   return (
     <section id="get-started" className="scroll-mt-20">
-      <Container className="py-16 lg:py-24">
+      <Container className={spacing}>
         <div className="relative overflow-hidden rounded-[32px] bg-ink px-8 py-12 sm:px-12 lg:px-16 lg:py-16">
           <FoxMark className="pointer-events-none absolute -right-8 -top-16 h-[300px] w-[285px] text-white opacity-[0.05]" />
           <div className="relative grid items-end gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-16">

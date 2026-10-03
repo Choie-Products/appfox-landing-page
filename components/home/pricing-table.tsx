@@ -132,7 +132,7 @@ function CellText({ cell, bold }: { cell: Cell; bold?: boolean }) {
 export default function PricingTable() {
   return (
     <section id="pricing" className="scroll-mt-20">
-      <Container className="py-16 lg:py-24">
+      <Container className="py-24 lg:py-40">
         <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
           <div className="max-w-[520px]">
             <h2 className="text-display-md text-ink">
@@ -157,7 +157,7 @@ export default function PricingTable() {
 
 /** The plan comparison table with the raised Indie column. Shared by the homepage and the pricing page. */
 export function PricingGrid({
-  className = "pt-[148px]",
+  className = "pt-[68px] lg:pt-[92px]",
   collapsible = false,
   fits,
 }: {
@@ -173,7 +173,7 @@ export function PricingGrid({
   return (
     <>
       <div
-        className={`-mx-5 overflow-x-auto px-5 pb-10 sm:-mx-8 sm:px-8 lg:mx-0 lg:px-0 ${className}`}
+        className={`-mx-5 overflow-x-auto px-5 pb-10 sm:-mx-8 sm:px-8 lg:mx-0 lg:overflow-visible lg:px-0 lg:pb-0 ${className}`}
       >
         <div className="relative min-w-[920px]">
           {/* Raised white panel behind the Indie column (second plan column), drawn under the table */}

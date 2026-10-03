@@ -27,7 +27,7 @@ import FoxMark from "@/components/fox-mark";
 export const ART_WIDTH = 400;
 export const ART_HEIGHT = 330;
 
-const CARD = "rounded-[16px] border border-ink bg-white text-ink";
+const CARD = "soft-panel rounded-[16px] text-ink";
 const DARK = "rounded-[14px] bg-[#111] text-white";
 
 function Scene({ children }: { children: ReactNode }) {

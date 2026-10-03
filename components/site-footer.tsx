@@ -42,7 +42,7 @@ export default function SiteFooter() {
       </Container>
       {/* The same slow halftone fox wave as the hero, as a band along the bottom edge */}
       <div className="relative mt-12 h-[220px] overflow-hidden lg:h-[280px]" aria-hidden="true">
-        <HalftoneSvg className="absolute inset-0 h-full w-full opacity-[0.04]" />
+        <HalftoneSvg className="absolute inset-0 h-full w-full opacity-[0.08]" />
       </div>
       <p className="sr-only">
         Copyright {new Date().getFullYear()} Appfox. Independent of Apple, Google, and RevenueCat.
