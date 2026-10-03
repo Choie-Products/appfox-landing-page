@@ -1,10 +1,12 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import LegalShell from "@/components/legal-shell";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
+  path: "/privacy",
   title: "Privacy Policy",
-};
+  description: "How Appfox collects, uses, and protects the information you share on appfox.app, including waitlist emails and analytics.",
+});
 
 export default function PrivacyPage() {
   return (

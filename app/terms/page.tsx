@@ -1,10 +1,12 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import LegalShell from "@/components/legal-shell";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
+  path: "/terms",
   title: "Terms of Service",
-};
+  description: "The terms that govern your use of the Appfox website and services.",
+});
 
 export default function TermsPage() {
   return (

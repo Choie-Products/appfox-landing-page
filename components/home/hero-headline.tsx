@@ -7,9 +7,10 @@
  */
 
 const TEXT = "Your app, Explained.";
-const WIDTH = 1060;
-const HEIGHT = 134;
-const BASELINE = 100;
+const TEXT_ID = "hero-headline-text";
+const WIDTH = 1000;
+const HEIGHT = 144;
+const BASELINE = 120;
 
 /** A wide shape with a gently waving top edge, used as a rising liquid clip. */
 function wavePath() {
@@ -41,23 +42,15 @@ function RisingClip({ id, begin, height }: { id: string; begin: string; height: 
 }
 
 export default function HeroHeadline() {
-  const Text = ({ fill, className }: { fill?: string; className?: string }) => (
-    <text
-      x={WIDTH / 2}
-      y={BASELINE}
-      textAnchor="middle"
-      fontSize={120}
-      letterSpacing={-6}
-      fill={fill}
-      className={className}
-    >
-      {TEXT}
-    </text>
+  // The headline text exists once, in <defs>; every layer draws it with <use>, so the
+  // heading's text content is not repeated for crawlers and assistive technology.
+  const Layer = ({ fill, className }: { fill?: string; className?: string }) => (
+    <use href={`#${TEXT_ID}`} fill={fill} className={className} />
   );
 
   return (
-    <h1 className="font-display text-[34px] font-bold text-black sm:text-[48px]">
-      <span className="sr-only">Your app, explained.</span>
+    <h1 className="font-display text-[44px] font-normal text-black sm:text-[64px]">
+      <span className="sr-only">{TEXT}</span>
       <svg
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
         className="hero-title block w-auto max-w-full overflow-visible"
@@ -65,6 +58,11 @@ export default function HeroHeadline() {
         aria-hidden="true"
         focusable="false"
       >
+        <defs>
+          <text id={TEXT_ID} x={WIDTH / 2} y={BASELINE} textAnchor="middle" fontSize={120} letterSpacing={0}>
+            {TEXT}
+          </text>
+        </defs>
         <g className="hl-anim">
           <defs>
             <RisingClip id="hero-ink-orange" begin="1.55s" height={HEIGHT} />
@@ -72,22 +70,22 @@ export default function HeroHeadline() {
             {/* Hides every stroke inside the letters, so only the outer outline shows on any background */}
             <mask id="hero-outline-mask" maskUnits="userSpaceOnUse" x={-40} y={-40} width={WIDTH + 80} height={HEIGHT + 80}>
               <rect x={-40} y={-40} width={WIDTH + 80} height={HEIGHT + 80} fill="white" />
-              <Text fill="black" />
+              <Layer fill="black" />
             </mask>
           </defs>
           <g mask="url(#hero-outline-mask)">
-            <Text className="hl-outline hl-outline-base" />
-            <Text className="hl-outline hl-outline-draw" />
+            <Layer className="hl-outline hl-outline-base" />
+            <Layer className="hl-outline hl-outline-draw" />
           </g>
           <g clipPath="url(#hero-ink-orange)">
-            <Text fill="#fe5000" />
+            <Layer fill="#fe5000" />
           </g>
           <g clipPath="url(#hero-ink-black)">
-            <Text fill="currentColor" />
+            <Layer fill="currentColor" />
           </g>
         </g>
         <g className="hl-static">
-          <Text fill="currentColor" />
+          <Layer fill="currentColor" />
         </g>
       </svg>
     </h1>

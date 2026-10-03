@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { FOX_PATH } from "@/components/fox-mark";
 import Container from "@/components/ui/container";
+import Reveal from "@/components/reveal";
 
 /** Real App Store icons in /public/icons. */
 const APPS = [
@@ -148,17 +149,20 @@ export default function MarketField() {
   return (
     <section className="overflow-hidden py-24 lg:py-40">
       <Container className="flex flex-col items-center text-center">
-        <p className="label-mono text-ink">Your market</p>
-        <h2 className="max-w-[640px] text-balance pt-4 text-display-md text-ink">
-          <span className="block">Every app you compete with,</span>
-          <span className="block text-quiet">watched while you build.</span>
-        </h2>
-        <p className="max-w-[640px] text-balance pt-4 text-[16px] leading-[26px] text-muted">
-          Confirm your competitors once. Appfox keeps reading their listings, reviews, rankings, and releases, and
-          tells you when something changes.
-        </p>
+        <Reveal className="flex flex-col items-center">
+          <p className="label-mono text-ink">Your market</p>
+          <h2 className="max-w-[640px] text-balance pt-4 text-display-md text-ink">
+            <span className="block">Every app you compete with,</span>
+            <span className="block text-quiet">watched while you build.</span>
+          </h2>
+          <p className="max-w-[640px] text-balance pt-4 text-[16px] leading-[26px] text-muted">
+            Confirm your competitors once. Appfox keeps reading their listings, reviews, rankings, and releases, and
+            tells you when something changes.
+          </p>
+        </Reveal>
       </Container>
 
+      <Reveal variant="fade" delay={120}>
       <div
         className="relative mt-12 h-[360px] sm:h-[460px] lg:mt-20 lg:h-[580px]"
         style={{
@@ -189,6 +193,7 @@ export default function MarketField() {
           <FloatingTile />
         </div>
       </div>
+      </Reveal>
     </section>
   );
 }

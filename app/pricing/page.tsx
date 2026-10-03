@@ -1,18 +1,24 @@
-import type { Metadata } from "next";
 import { Check } from "lucide-react";
 import CtaBand from "@/components/cta-band";
 import Faq from "@/components/faq";
+import { PageJsonLd } from "@/components/json-ld";
 import { PricingGrid } from "@/components/home/pricing-table";
 import { Section } from "@/components/ui/blocks";
 import { ButtonLink } from "@/components/ui/button";
-import Container from "@/components/ui/container";
+import PageIntro from "@/components/ui/page-intro";
+import SectionHeading from "@/components/ui/section-heading";
 import { APP_URL, CTA_HREF } from "@/lib/site";
+import { faqJsonLd, pageMetadata } from "@/lib/seo";
+import Reveal from "@/components/reveal";
 
-export const metadata: Metadata = {
-  title: "Pricing",
+const PAGE = {
+  path: "/pricing",
+  title: "Pricing: Free, Indie $29, Studio $99, Scale $299",
   description:
-    "Appfox plans: Free, Indie at $29 a month, Studio at $99, and Scale at $299. Every plan has the same evidence ledger and the same read-only boundary.",
+    "Appfox app tracker pricing. Start free with both journeys and the full evidence ledger, then upgrade to Indie at $29, Studio at $99, or Scale at $299 a month. Every plan is read-only and metered in the open.",
 };
+
+export const metadata = pageMetadata(PAGE);
 
 /** One-line fit for each plan, shown under the plan name in the table. */
 const FITS: Record<string, string> = {
@@ -81,60 +87,47 @@ const faq = [
   },
 ];
 
-function Eyebrow({ children }: { children: React.ReactNode }) {
-  return <p className="text-[14px] font-medium leading-5 text-accent-ink">{children}</p>;
-}
-
 export default function PricingPage() {
   return (
     <>
-      {/* Hero */}
-      <section className="-mt-[72px] bg-[linear-gradient(to_bottom,var(--hero-bg-top),var(--paper))] lg:-mt-[88px]">
-        <Container className="pb-12 pt-[128px] lg:pb-16 lg:pt-[176px]">
-          <div className="max-w-[760px]">
-            <Eyebrow>Pricing</Eyebrow>
-            <h1 className="pt-5 text-[40px] font-medium leading-[1.05] tracking-[-0.03em] text-ink sm:text-[52px] lg:text-[60px]">
-              Priced in the open. Start free, pay when you outgrow it.
-            </h1>
-            <p className="max-w-[620px] pt-6 text-[18px] leading-[28px] text-muted">
-              Every plan has the same evidence ledger and the same read-only boundary. The tiers change how much you can
-              watch, how far back you can look, and how many people can look with you.
-            </p>
-            <div className="flex flex-wrap items-center gap-3 pt-8">
-              <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="lg">
-                Start for free
-              </ButtonLink>
-              <ButtonLink href="#plans" variant="secondary" size="lg">
-                See plans
-              </ButtonLink>
-            </div>
-          </div>
-        </Container>
-      </section>
+      <PageJsonLd path={PAGE.path} name={PAGE.title} description={PAGE.description} extra={[faqJsonLd(faq)]} />
+      <PageIntro
+        kicker="Pricing"
+        title="Priced in the open. Start free, pay when you outgrow it."
+        lead="Every plan has the same evidence ledger and the same read-only boundary. The tiers change how much you can watch, how far back you can look, and how many people can look with you."
+      >
+        <div className="flex flex-wrap justify-center gap-4">
+          <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
+            Start for free
+          </ButtonLink>
+          <ButtonLink href="#plans" variant="secondary" size="hero">
+            See plans
+          </ButtonLink>
+        </div>
+      </PageIntro>
 
       {/* Plans and comparison, in one table */}
-      <Container as="section" id="plans" className="scroll-mt-24 pb-16 lg:pb-24">
-        <PricingGrid className="pt-12" collapsible fits={FITS} />
+      <Section id="plans" className="scroll-mt-24 pt-4 lg:pt-8">
+        <Reveal variant="scale">
+          <PricingGrid className="pt-12" collapsible fits={FITS} />
+        </Reveal>
         <p className="pt-6 text-center text-[13px] leading-5 text-quiet">
           Proposed plans. Prices are per month, with the annual rate where it applies.
         </p>
-      </Container>
+      </Section>
 
       {/* Included in every plan */}
       <Section>
-        <div className="max-w-[640px]">
-          <Eyebrow>Included in every plan</Eyebrow>
-          <h2 className="pt-3 text-display-md text-ink">The same evidence ledger on every plan.</h2>
-        </div>
-        <div className="mt-10 grid gap-x-10 sm:grid-cols-2 lg:grid-cols-3">
-          {EVERY_PLAN.map((item) => (
-            <div key={item.t} className="border-t border-line py-5">
-              <p className="flex items-center gap-2.5 text-[16px] font-semibold leading-6 text-ink">
+        <SectionHeading title="Included in every plan:" sub="the same evidence ledger." className="max-w-[640px]" />
+        <div className="mt-10 grid gap-x-10 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
+          {EVERY_PLAN.map((item, i) => (
+            <Reveal key={item.t} delay={(i % 3) * 80} className="border-t border-line py-5">
+              <p className="flex items-center gap-2.5 font-mono text-[14px] font-medium uppercase leading-6 text-ink">
                 <Check className="size-4 shrink-0 text-accent" strokeWidth={2.2} aria-hidden="true" />
                 {item.t}
               </p>
               <p className="pt-1.5 text-[16px] leading-[26px] text-muted">{item.b}</p>
-            </div>
+            </Reveal>
           ))}
         </div>
       </Section>
@@ -142,36 +135,35 @@ export default function PricingPage() {
       {/* How usage is metered */}
       <Section>
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
-          <div>
-            <Eyebrow>How usage works</Eyebrow>
-            <h2 className="pt-3 text-display-md text-ink">Metered, so the free plan can stay free.</h2>
-            <p className="pt-3 text-[16px] leading-[26px] text-muted">
-              Paid provider jobs and AI runs count against your plan. The accounting is the same on every tier, and you
-              can always see it.
-            </p>
-          </div>
+          <SectionHeading
+            title="Metered,"
+            sub="so the free plan can stay free."
+            lead="Paid provider jobs and AI runs count against your plan. The accounting is the same on every tier, and you can always see it."
+          />
+          <Reveal delay={100}>
           <dl className="grid gap-x-10 sm:grid-cols-2">
             {METERING.map((m) => (
               <div key={m.t} className="border-t border-line py-5">
-                <dt className="text-[16px] font-semibold leading-6 text-ink">{m.t}</dt>
+                <dt className="font-mono text-[14px] font-medium uppercase leading-6 text-ink">{m.t}</dt>
                 <dd className="pt-1.5 text-[16px] leading-[26px] text-muted">{m.b}</dd>
               </div>
             ))}
           </dl>
+          </Reveal>
         </div>
       </Section>
 
       {/* FAQ */}
       <Section>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
-          <div>
-            <Eyebrow>Questions</Eyebrow>
-            <h2 className="pt-3 text-display-md text-ink">Pricing questions</h2>
-            <p className="pt-3 text-[16px] leading-[26px] text-muted">
-              Something else? Email us from the contact page and a person will answer.
-            </p>
-          </div>
-          <Faq items={faq} />
+          <SectionHeading
+            title="Pricing questions,"
+            sub="answered."
+            lead="Something else? Email us from the contact page and a person will answer."
+          />
+          <Reveal delay={100}>
+            <Faq items={faq} />
+          </Reveal>
         </div>
       </Section>
 

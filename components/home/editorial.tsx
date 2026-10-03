@@ -1,5 +1,6 @@
-import { ChangedArt, DecisionArt } from "@/components/home/surface-art";
+import { ChangedArt, DecisionArt } from "@/components/illustrations/iso-art";
 import Container from "@/components/ui/container";
+import Reveal from "@/components/reveal";
 
 /** Two editorial rows: copy on the left, an illustration on the right. */
 function Row({
@@ -15,14 +16,16 @@ function Row({
 }) {
   return (
     <div className="grid gap-10 lg:grid-cols-[minmax(0,560px)_1fr] lg:items-center lg:gap-16">
-      <div>
+      <Reveal>
         <h2 className="text-display-md text-ink">
           <span className="block">{lead}</span>
           <span className="block text-quiet">{title}</span>
         </h2>
         <div className="pt-5 text-[16px] leading-[26px] text-ink-soft">{children}</div>
-      </div>
-      <div className="flex w-full max-w-[520px] items-center lg:justify-self-end">{illustration}</div>
+      </Reveal>
+      <Reveal variant="scale" delay={120} className="flex w-full max-w-[520px] items-center lg:justify-self-end">
+        {illustration}
+      </Reveal>
     </div>
   );
 }

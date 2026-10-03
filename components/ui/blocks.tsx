@@ -1,16 +1,17 @@
 import Link from "next/link";
 import { ArrowRight, Check, X } from "lucide-react";
+import Reveal from "@/components/reveal";
 import Container from "@/components/ui/container";
 import { cn } from "@/lib/utils";
 
 /**
- * Building blocks for inner pages, matching the homepage: 96px section spacing, outlined white cards
- * with a faint dot grid, ruled lists with gray dividers, mono uppercase labels, and orange mono links.
+ * Building blocks for inner pages, matching the homepage: roomy section spacing, soft gray cards with a
+ * solid lower edge, ruled lists with gray dividers, mono uppercase labels, and orange mono links.
  */
 
 export function Section({ children, className, id }: { children: React.ReactNode; className?: string; id?: string }) {
   return (
-    <Container as="section" id={id} className={cn("py-16 lg:py-24", className)}>
+    <Container as="section" id={id} className={cn("py-24 lg:py-40", className)}>
       {children}
     </Container>
   );
@@ -25,25 +26,35 @@ export function MonoLabel({ children, className }: { children: React.ReactNode; 
   );
 }
 
-/** Outlined white card with a faint dot grid, as used on the homepage. */
-export function OutlineCard({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <div className={cn("outline-card rounded-[28px] p-6 sm:p-8", className)}>{children}</div>;
+/** A soft gray card with a solid lower edge, like the cards on the homepage. It reveals on scroll; `delay` staggers siblings. */
+export function SoftCard({ children, className, delay }: { children: React.ReactNode; className?: string; delay?: number }) {
+  return (
+    <Reveal delay={delay} className={cn("soft-surface rounded-[28px] p-6 sm:p-8", className)}>
+      {children}
+    </Reveal>
+  );
 }
 
-/** Frames a product mock the way the homepage frames its scenes: an outlined card around a bordered tile. */
+/** Frames a product mock the way the homepage frames its scenes: a soft card around the mock. */
 export function Showcase({ children, className }: { children: React.ReactNode; className?: string }) {
-  return <div className={cn("outline-card rounded-[32px] p-4 sm:p-6", className)}>{children}</div>;
+  return (
+    <Reveal variant="scale" className={cn("soft-surface rounded-[32px] p-4 sm:p-6", className)}>
+      {children}
+    </Reveal>
+  );
 }
 
-/** Text on one side, a visual on the other. */
+/** Text on one side, a visual on the other. `sub` adds a gray second line to the title, like the homepage. */
 export function Split({
   title,
+  sub,
   children,
   visual,
   reverse = false,
   className,
 }: {
   title: React.ReactNode;
+  sub?: React.ReactNode;
   children?: React.ReactNode;
   visual: React.ReactNode;
   reverse?: boolean;
@@ -57,25 +68,36 @@ export function Split({
         className,
       )}
     >
-      <div>
-        <h2 className="text-display-md text-ink">{title}</h2>
-        {children ? <div className="space-y-4 pt-4 text-[16px] leading-[26px] text-muted">{children}</div> : null}
-      </div>
-      <div className="min-w-0">{visual}</div>
+      <Reveal>
+        <h2 className="text-display-md text-ink">
+          {sub ? (
+            <>
+              <span className="block">{title}</span>
+              <span className="block text-quiet">{sub}</span>
+            </>
+          ) : (
+            title
+          )}
+        </h2>
+        {children ? <div className="space-y-4 pt-5 text-[16px] leading-[26px] text-muted">{children}</div> : null}
+      </Reveal>
+      <Reveal variant="scale" delay={120} className="min-w-0">
+        {visual}
+      </Reveal>
     </div>
   );
 }
 
-/** Numbered steps as a grid of outlined cards. */
+/** Numbered steps as a grid of soft cards. */
 export function StepCards({ steps, className }: { steps: { t: string; b: string }[]; className?: string }) {
   return (
     <ol className={cn("grid gap-5 md:grid-cols-2 lg:grid-cols-3", className)}>
       {steps.map((s, i) => (
-        <li key={s.t} className="outline-card flex flex-col rounded-[24px] p-6">
+        <Reveal as="li" key={s.t} delay={(i % 3) * 90} className="soft-surface flex flex-col rounded-[24px] p-6">
           <span className="font-mono text-[14px] leading-5 text-accent-ink">{String(i + 1).padStart(2, "0")}</span>
           <MonoLabel className="pt-6">{s.t}</MonoLabel>
           <p className="pt-2 text-[16px] leading-[26px] text-muted">{s.b}</p>
-        </li>
+        </Reveal>
       ))}
     </ol>
   );
@@ -91,9 +113,10 @@ export function RuledList({
 }) {
   return (
     <div className={className}>
-      {items.map((item) => (
-        <div
+      {items.map((item, i) => (
+        <Reveal
           key={item.title}
+          delay={i * 60}
           className="grid gap-2 border-b border-line py-6 md:grid-cols-[minmax(0,18rem)_minmax(0,1fr)] md:gap-10"
         >
           <div>
@@ -104,7 +127,7 @@ export function RuledList({
             <div className="text-[16px] leading-[26px] text-muted">{item.body}</div>
             {item.note ? <p className="pt-2 text-[14px] leading-5 text-quiet">{item.note}</p> : null}
           </div>
-        </div>
+        </Reveal>
       ))}
     </div>
   );
@@ -164,15 +187,25 @@ export function MonoLink({ href, children, className }: { href: string; children
   );
 }
 
-/** Homepage-style card: a light panel with a small visual on top, and a black panel with the text below. */
-export function PanelCard({ visual, title, body }: { visual: React.ReactNode; title: string; body: React.ReactNode }) {
+/** Homepage-style card: a small visual on top, then a mono title and the text, on a soft gray card. */
+export function PanelCard({
+  visual,
+  title,
+  body,
+  delay,
+}: {
+  visual: React.ReactNode;
+  title: string;
+  body: React.ReactNode;
+  delay?: number;
+}) {
   return (
-    <div className="flex flex-col overflow-hidden rounded-[24px] border-2 border-ink bg-ink text-center">
-      <div className="flex aspect-[4/3] items-center justify-center rounded-b-[24px] bg-[#f6f6f6] px-6">{visual}</div>
-      <div className="flex-1 px-5 pb-6 pt-5">
-        <h3 className="font-mono text-[12px] font-medium uppercase leading-4 tracking-normal text-white">{title}</h3>
-        <p className="pt-2 text-[15px] leading-[24px] text-[#b8b8b4]">{body}</p>
+    <Reveal delay={delay} className="soft-surface flex flex-col rounded-[24px] text-center">
+      <div className="flex aspect-[4/3] items-center justify-center px-6">{visual}</div>
+      <div className="flex-1 px-5 pb-7">
+        <h3 className="font-mono text-[12px] font-medium uppercase leading-4 tracking-normal text-ink">{title}</h3>
+        <p className="pt-2 text-[15px] leading-[24px] text-muted">{body}</p>
       </div>
-    </div>
+    </Reveal>
   );
 }

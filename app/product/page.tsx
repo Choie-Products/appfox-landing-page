@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import CtaBand from "@/components/cta-band";
+import { PageJsonLd } from "@/components/json-ld";
 import {
   CompetitorsArt,
   MyAppArt,
@@ -8,51 +8,61 @@ import {
   RevenueArt,
   ThemesArt,
 } from "@/components/home/journey-art";
-import { MonoLabel, OutlineCard, PanelCard, Section, Split } from "@/components/ui/blocks";
+import { MonoLabel, SoftCard, PanelCard, Section, Split } from "@/components/ui/blocks";
 import { ButtonLink } from "@/components/ui/button";
 import PageIntro from "@/components/ui/page-intro";
 import SceneFrame from "@/components/ui/scene-frame";
 import { APP_URL, CTA_HREF } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 import SectionHeading from "@/components/ui/section-heading";
 
-export const metadata: Metadata = {
-  title: "Product",
+const PAGE = {
+  path: "/product",
+  title: "Product: One App Tracker, Six Surfaces",
   description:
-    "The surfaces inside Appfox: Today, Market, My App, Customers, Actions, and Integrations. Organized by what needs attention, not by dataset.",
+    "See how Appfox tracks a mobile app: Today ranks what changed, Market watches competitors, Customers groups reviews into themes, My App joins sources, Actions records outcomes, and Integrations stay read-only.",
 };
+
+export const metadata = pageMetadata(PAGE);
 
 const surfaces = [
   {
+    id: "today",
     name: "Today",
     question: "What needs my attention?",
     body: "A ranked list of significant findings with evidence, freshness, coverage, and a next action. Sections for critical, important, opportunities, recent changes, and resolved outcomes. Zero findings is a valid state, and it is distinguished from not enough data and from a failed sync.",
     mock: <OperateArt />,
   },
   {
+    id: "market",
     name: "Market",
     question: "Who is out there, and what is changing?",
     body: "An editable market scope with confirmed direct and adjacent competitors, a saved research brief, metadata and pricing comparisons, rating and review movement, tracked search queries, and newly discovered apps. History is append-only, so you can see change over time rather than a snapshot.",
     mock: <CompetitorsArt />,
   },
   {
+    id: "customers",
     name: "Customers",
     question: "What are people telling us?",
     body: "A review browser and a theme view. Themes carry total mentions, share of reviews, trend against the previous period, rating distribution, and affected versions. Every count links back to the original review text, and the collection window, locale, and cap are always shown.",
     mock: <ThemesArt />,
   },
   {
+    id: "my-app",
     name: "My App",
     question: "How is my app doing, across sources?",
     body: "Your owned app in one place: public store identity and listing history, customer evidence, store and manual release context, and supported RevenueCat metrics with exact project or app scope. The overview merges sources rather than mirroring each provider dashboard.",
     mock: <MyAppArt />,
   },
   {
+    id: "actions",
     name: "Actions",
     question: "What did we decide, and did it help?",
     body: "A deliberately small task list. Accept, edit, dismiss, complete, and record an assessment. Each task keeps its rationale and evidence. Completed tasks get a matched-window comparison and your own verdict, because an observed change is not a proven cause.",
     mock: <OutcomeArt />,
   },
   {
+    id: "integrations",
     name: "Integrations",
     question: "What does Appfox read, and can it write?",
     body: "Every connection card shows the data read, permissions requested, last sync, sync status, usage against provider limits, and a disconnect control. All launch integrations are read-only. Credentials are stored server-side in a vault.",
@@ -73,7 +83,7 @@ const levels = [
 /** A four-step meter showing how far a level reaches, from quiet to urgent. */
 function LevelTile({ index, where }: { index: number; where: string }) {
   return (
-    <div className="w-full rounded-[14px] border border-ink bg-white p-3.5 text-left">
+    <div className="soft-panel w-full rounded-[14px] p-3.5 text-left">
       <p className="text-[10px] leading-3 text-quiet">Where it goes</p>
       <p className="pt-1 text-[13px] font-semibold leading-4 text-ink">{where}</p>
       <div className="flex gap-1 pt-3" aria-hidden="true">
@@ -88,49 +98,53 @@ function LevelTile({ index, where }: { index: number; where: string }) {
 export default function ProductPage() {
   return (
     <>
+      <PageJsonLd path={PAGE.path} name={PAGE.title} description={PAGE.description} />
       <PageIntro
         kicker="Product"
         title="Six surfaces. One question each."
-        lead="Appfox avoids navigation built on raw datasets. There is no keywords tab, reviews tab, or revenue tab at the top level. Each surface answers something you actually ask about your app."
+        lead="Appfox is an app tracker organized around attention, not datasets. There is no keywords tab, reviews tab, or revenue tab at the top level. Each surface answers something you actually ask about your app, and AI explains every finding with its evidence attached."
       >
-        <div className="flex flex-wrap gap-4">
-          <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="lg">
+        <div className="flex flex-wrap justify-center gap-4">
+          <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
             Start for free
           </ButtonLink>
-          <ButtonLink href="#surfaces" variant="secondary" size="lg">
+          <ButtonLink href="#surfaces" variant="secondary" size="hero">
             See the surfaces
           </ButtonLink>
         </div>
       </PageIntro>
 
-      <Section id="surfaces" className="scroll-mt-24 space-y-16 pt-4 lg:space-y-24 lg:pt-8">
+      <Section id="surfaces" className="scroll-mt-24 space-y-24 pt-4 lg:space-y-40 lg:pt-8">
         {surfaces.map((s, i) => (
+          <div key={s.name} id={s.id} className="scroll-mt-28">
           <Split
-            key={s.name}
             reverse={i % 2 === 1}
             title={
               <>
-                <span className="block font-mono text-[14px] font-medium uppercase leading-5 tracking-normal text-ink">
+                <span className="label-mono block pb-4 text-ink">
                   {String(i + 1).padStart(2, "0")} · {s.name}
                 </span>
-                <span className="block pt-3">{s.question}</span>
+                {s.name}:
               </>
             }
+            sub={s.question}
             visual={<SceneFrame>{s.mock}</SceneFrame>}
           >
             <p>{s.body}</p>
           </Split>
+          </div>
         ))}
       </Section>
 
       <Section>
         <SectionHeading
-          title="Not every change deserves a notification."
+          title="Not every change"
+          sub="deserves a notification."
           lead="Each signal has a detection threshold, a minimum sample size, a cooldown, and a separate notification threshold. Alerts are driven by significance, not by events."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {levels.map((l, i) => (
-            <PanelCard key={l.level} visual={<LevelTile index={i} where={l.where} />} title={l.level} body={l.when} />
+            <PanelCard key={l.level} delay={i * 90} visual={<LevelTile index={i} where={l.where} />} title={l.level} body={l.when} />
           ))}
         </div>
       </Section>
@@ -138,10 +152,11 @@ export default function ProductPage() {
       <Section>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-16">
           <SectionHeading
-            title="Concise by default. Deep when you ask."
+            title="Concise by default."
+            sub="Deep when you ask."
             lead="Every finding opens the same way. You read the action first and drill into the evidence only as far as you need."
           />
-          <OutlineCard className="p-0 sm:p-0">
+          <SoftCard className="p-0 sm:p-0">
             <ol>
               {[
                 ["Recommendation", "One sentence you could act on today."],
@@ -159,7 +174,7 @@ export default function ProductPage() {
                 </li>
               ))}
             </ol>
-          </OutlineCard>
+          </SoftCard>
         </div>
       </Section>
 

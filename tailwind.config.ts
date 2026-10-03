@@ -7,7 +7,7 @@ export default {
       fontFamily: {
         sans: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
         heading: ["var(--font-inter)", "Inter", "system-ui", "sans-serif"],
-        display: ["var(--font-jost)", "Jost", "Futura", "sans-serif"],
+        display: ["var(--font-anton)", "Anton", "Impact", "sans-serif"],
         mono: ["var(--font-plex-mono)", "IBM Plex Mono", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
       },
       colors: {

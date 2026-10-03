@@ -15,6 +15,8 @@ import {
 import FoxMark, { FOX_PATH } from "@/components/fox-mark";
 import ScaleToFit from "@/components/mock/scale-to-fit";
 import Container from "@/components/ui/container";
+import Reveal from "@/components/reveal";
+import { Groove, Packet } from "@/components/illustrations/iso-art";
 
 type Layer = { name: string; body: string; icon: LucideIcon | null; side: "left" | "right" };
 
@@ -85,10 +87,15 @@ const CHIPS = [
   { x: CX + 200, y: 52 },
   { x: CX + 380, y: 104 },
 ];
-const CHIP_H = 36;
+const CHIP_H = 42;
 const DISC = { rx: 44, ry: 44 * K };
 const LANDING_ANGLES = [200, 235, 270, 305, 340];
-const FLOW_DURATIONS = ["1.2s", "0.9s", "1.1s", "1s", "1.3s"];
+/** Streaks of light run down the source pipes slowly, one source at a time, about once a second. */
+const STREAK_DUR = 4.8;
+const STREAK_TRAVEL = 0.5;
+const STREAK_BEGINS = [0, 1.9, 0.95, 2.85, 3.8];
+/** The pipes stretch with the top plate when it lifts, in step with its own transition. */
+const LIFT_EASE = "transform 700ms cubic-bezier(0.2, 0.7, 0.2, 1)";
 
 const CYCLE_MS = 2800;
 
@@ -133,7 +140,18 @@ function Walls({ top, bottom, half, r, fill }: { top: number; bottom: number; ha
   );
 }
 
-function Plate({ index, lifted, uid }: { index: number; lifted: boolean; uid: string }) {
+function Plate({
+  index,
+  lifted,
+  uid,
+  children,
+}: {
+  index: number;
+  lifted: boolean;
+  uid: string;
+  /** Drawn on the plate's face, so it rises with the plate. */
+  children?: React.ReactNode;
+}) {
   const cy = PLATE_Y[index];
   const brand = index === BRAND;
   const tone = brand ? "brand" : "gray";
@@ -168,6 +186,7 @@ function Plate({ index, lifted, uid }: { index: number; lifted: boolean; uid: st
           <path d={FOX_PATH} fill="#ffffff" transform="translate(-16 -16.8) scale(0.239)" />
         )}
       </g>
+      {children}
     </g>
   );
 }
@@ -177,6 +196,26 @@ function StackArt({ active, full }: { active: number; full: boolean }) {
   const uid = useId().replace(/:/g, "");
   const cupTop = PLATE_Y[BRAND] - 20;
   const cupBottom = PLATE_Y[PLATE_Y.length - 1] + 46;
+  /*
+   * Each source pipe is one smooth curve from its chip down into a port on the rim of the top disc. When the
+   * top plate lifts, each pipe is squeezed vertically from its chip end by exactly the lift, so its tip
+   * stays in the port without a joint.
+   */
+  const topLifted = active === 0;
+  const pipes = CHIPS.map((chip, i) => {
+    const angle = (LANDING_ANGLES[i] * Math.PI) / 180;
+    const tx = CX + DISC.rx * Math.cos(angle);
+    const ty = PLATE_Y[0] + DISC.ry * Math.sin(angle);
+    const sy = chip.y + CHIP_H + 4;
+    return {
+      key: chip.x,
+      tx,
+      ty,
+      sy,
+      squeeze: (ty + LIFT - sy) / (ty - sy),
+      d: `M${chip.x} ${sy} C ${chip.x} ${sy + 80}, ${tx} ${ty - 110}, ${tx} ${ty}`,
+    };
+  });
   return (
     <>
       <defs>
@@ -239,29 +278,42 @@ function StackArt({ active, full }: { active: number; full: boolean }) {
 
       {/* Drawn bottom up, so each plate sits over the one beneath it */}
       {PLATE_Y.map((_, i) => PLATE_Y.length - 1 - i).map((i) => (
-        <Plate key={i} index={i} lifted={i === active} uid={uid} />
+        <Plate key={i} index={i} lifted={i === active} uid={uid}>
+          {full && i === 0
+            ? pipes.map((pipe, k) => (
+                <g key={pipe.key}>
+                  <ellipse cx={pipe.tx} cy={pipe.ty} rx={5.5} ry={5.5 * K} fill="#cfcfcc" />
+                  <ellipse className="iso-packet" cx={pipe.tx} cy={pipe.ty} rx={7} ry={7 * K} fill="#fe5000" opacity={0}>
+                    <animate
+                      attributeName="opacity"
+                      values="0;0;1;0;0"
+                      keyTimes={`0;${STREAK_TRAVEL - 0.02};${STREAK_TRAVEL + 0.03};${STREAK_TRAVEL + 0.2};1`}
+                      dur={`${STREAK_DUR}s`}
+                      begin={`${STREAK_BEGINS[k]}s`}
+                      repeatCount="indefinite"
+                    />
+                  </ellipse>
+                </g>
+              ))
+            : null}
+        </Plate>
       ))}
 
       {full ? (
         <>
-          {CHIPS.map((chip, i) => {
-            const angle = (LANDING_ANGLES[i] * Math.PI) / 180;
-            const tx = CX + DISC.rx * Math.cos(angle);
-            const ty = PLATE_Y[0] + DISC.ry * Math.sin(angle);
-            const sy = chip.y + CHIP_H + 4;
-            return (
-              <path
-                key={chip.x}
-                d={`M${chip.x} ${sy} C ${chip.x} ${sy + 80}, ${tx} ${ty - 100}, ${tx} ${ty}`}
-                fill="none"
-                stroke="#fe5000"
-                strokeWidth={2}
-                strokeLinecap="round"
-                className="ledger-flow"
-                style={{ animationDuration: FLOW_DURATIONS[i] }}
-              />
-            );
-          })}
+          {pipes.map((pipe, i) => (
+            <g
+              key={pipe.key}
+              style={{
+                transform: topLifted ? `scaleY(${pipe.squeeze.toFixed(4)})` : "none",
+                transformOrigin: `0px ${pipe.sy}px`,
+                transition: LIFT_EASE,
+              }}
+            >
+              <Groove d={pipe.d} width={4} highlight={false} />
+              <Packet d={pipe.d} begin={STREAK_BEGINS[i]} dur={STREAK_DUR} travel={STREAK_TRAVEL} width={3.5} />
+            </g>
+          ))}
           {LAYERS.map((layer, i) => {
             const y = PLATE_Y[i] + 2;
             const [from, to] =
@@ -293,10 +345,10 @@ function SourceChip({ source, className = "", style }: { source: (typeof SOURCES
   return (
     <span
       style={style}
-      className={`inline-flex h-9 items-center gap-2 whitespace-nowrap rounded-full border border-line bg-white py-1.5 pl-1.5 pr-3.5 text-[14px] font-medium leading-5 text-ink ${className}`}
+      className={`soft-chip inline-flex h-10 items-center gap-2 whitespace-nowrap rounded-full py-1.5 pl-1.5 pr-4 text-[14px] font-medium leading-5 text-ink ${className}`}
     >
-      <span className="flex size-6 items-center justify-center rounded-full bg-ink">
-        <Icon className="size-3 text-white" strokeWidth={2} aria-hidden="true" />
+      <span className="flex size-7 items-center justify-center rounded-full bg-[#e9e9e7] text-[#8a8a87] shadow-[inset_0_2px_3px_rgba(17,17,17,0.08),0_1px_0_#ffffff]">
+        <Icon className="size-3.5" strokeWidth={1.9} aria-hidden="true" />
       </span>
       {source.label}
     </span>
@@ -368,12 +420,15 @@ export default function LayerStack() {
 
   return (
     <section ref={ref} className="mx-auto w-full max-w-site px-5 py-24 sm:px-8 lg:px-10 lg:py-40">
-      <h2 className="mx-auto max-w-[640px] text-balance text-center text-display-md text-ink">
-        <span className="block">So we built it in four layers.</span>
-        <span className="block text-quiet">Every answer traces back to its source.</span>
-      </h2>
+      <Reveal>
+        <h2 className="mx-auto max-w-[640px] text-balance text-center text-display-md text-ink">
+          <span className="block">So we built it in four layers.</span>
+          <span className="block text-quiet">Every answer traces back to its source.</span>
+        </h2>
+      </Reveal>
 
       {/* Desktop: one composition, scaled to fit */}
+      <Reveal variant="scale" delay={100}>
       <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
         <ScaleToFit
           width={CANVAS_W}
@@ -411,9 +466,10 @@ export default function LayerStack() {
           </div>
         </ScaleToFit>
       </div>
+      </Reveal>
 
       {/* Mobile and tablet: sources, the stack, then the four layers */}
-      <div className="mt-10 lg:hidden">
+      <Reveal className="mt-10 lg:hidden">
         <div className="flex flex-wrap justify-center gap-2">
           {SOURCES.map((source) => (
             <SourceChip key={source.label} source={source} />
@@ -431,7 +487,7 @@ export default function LayerStack() {
             <LayerItem key={layer.name} layer={layer} on={i === active} onSelect={() => setActive(i)} />
           ))}
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }

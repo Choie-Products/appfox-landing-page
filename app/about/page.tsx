@@ -1,19 +1,24 @@
-import type { Metadata } from "next";
 import CtaBand from "@/components/cta-band";
-import FoxMark from "@/components/fox-mark";
+import { PageJsonLd } from "@/components/json-ld";
 import { MorningArt } from "@/components/home/journey-art";
+import { LedgerPlateArt } from "@/components/home/ledger";
 import { PanelCard, Section, Split } from "@/components/ui/blocks";
 import { ButtonLink } from "@/components/ui/button";
 import PageIntro from "@/components/ui/page-intro";
 import SceneFrame from "@/components/ui/scene-frame";
 import { APP_URL, CTA_HREF } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 import SectionHeading from "@/components/ui/section-heading";
+import Reveal from "@/components/reveal";
 
-export const metadata: Metadata = {
-  title: "About",
+const PAGE = {
+  path: "/about",
+  title: "About: Mobile App Intelligence for Founders",
   description:
-    "Appfox is an intelligence layer for mobile apps, built for indie founders and small studios who are tired of being the integration layer between their tools.",
+    "Why Appfox exists: indie founders and small studios should not be the integration layer between their tools. An AI app tracker built on four rules: evidence before advice, facts first, honest coverage, human approval.",
 };
+
+export const metadata = pageMetadata(PAGE);
 
 const levels = [
   ["Research", "Understand a market and an app opportunity."],
@@ -25,15 +30,14 @@ const levels = [
 const OUTSIDE_IN = ["Competitors", "Rankings", "Reviews", "Pricing", "New entrants"];
 const INSIDE_OUT = ["Revenue", "Conversion", "Releases", "Customer feedback"];
 
-/** Outside-in and inside-out data meeting in one place, drawn like the homepage hub. */
+/** Outside-in and inside-out data meeting in one place, drawn like the homepage ledger hub. */
 function SourcesMap() {
   const column = (title: string, items: string[]) => (
-    <div className="outline-card relative z-10 rounded-[24px] p-5">
+    <div className="soft-surface relative z-10 rounded-[24px] p-5">
       <p className="font-mono text-[13px] font-medium uppercase leading-5 text-ink">{title}</p>
       <ul className="pt-2">
         {items.map((item) => (
-          <li key={item} className="flex items-center gap-2.5 border-b border-line py-2.5 text-[15px] leading-5 text-ink-soft last:border-b-0">
-            <span className="size-1.5 rounded-full bg-accent" aria-hidden="true" />
+          <li key={item} className="border-b border-line py-2.5 text-[15px] leading-5 text-ink-soft last:border-b-0">
             {item}
           </li>
         ))}
@@ -41,7 +45,7 @@ function SourcesMap() {
     </div>
   );
   return (
-    <div className="relative mt-12 grid items-center gap-5 lg:grid-cols-[minmax(0,1fr)_300px_minmax(0,1fr)] lg:gap-16">
+    <div className="relative mt-10 grid items-center gap-5 lg:mt-16 lg:grid-cols-[minmax(0,1fr)_300px_minmax(0,1fr)] lg:gap-16">
       <svg
         viewBox="0 0 1000 100"
         preserveAspectRatio="none"
@@ -52,22 +56,24 @@ function SourcesMap() {
         <path d="M750 50 H 500" fill="none" stroke="#fe5000" strokeWidth="2.5" strokeLinecap="round" className="ledger-flow" style={{ animationDuration: "1.2s" }} vectorEffect="non-scaling-stroke" />
       </svg>
       {column("Outside-in", OUTSIDE_IN)}
-      <div className="outline-card relative z-10 order-first flex flex-col items-center rounded-[32px] p-6 text-center lg:order-none">
-        <FoxMark className="h-[50px] w-12 text-accent" />
-        <p className="pt-4 font-mono text-[14px] font-medium uppercase leading-5 text-ink">Appfox</p>
-        <p className="pt-2 text-[15px] leading-[22px] text-muted">
-          Says what a generic market tool cannot, with the evidence attached.
-        </p>
+      <div className="relative z-10 order-first flex flex-col items-center text-center lg:order-none">
+        <LedgerPlateArt uid="about-hub" className="h-auto w-full max-w-[300px]" />
+        <div className="lg:absolute lg:inset-x-0 lg:top-full">
+          <p className="pt-2 font-mono text-[14px] font-medium uppercase leading-5 text-ink">Appfox</p>
+          <p className="pt-2 text-[15px] leading-[22px] text-muted">
+            Says what a generic market tool cannot, with the evidence attached.
+          </p>
+        </div>
       </div>
       {column("Inside-out", INSIDE_OUT)}
     </div>
   );
 }
 
-/** Small coded tiles for the four rules, drawn like the homepage scenes. */
+/** Small coded tiles for the four rules, drawn as soft panels like the homepage scenes. */
 function EvidenceTile() {
   return (
-    <div className="w-full rounded-[14px] border border-ink bg-white p-3.5 text-left">
+    <div className="w-full soft-panel rounded-[14px] p-3.5 text-left">
       <p className="text-[12px] font-semibold leading-4 text-ink">Pricing complaints rose after v2.8</p>
       <div className="flex flex-wrap gap-1 pt-2.5">
         {["47 reviews", "v2.8", "RevenueCat"].map((c) => (
@@ -83,7 +89,7 @@ function EvidenceTile() {
 
 function FactsTile() {
   return (
-    <div className="w-full rounded-[14px] border border-ink bg-white p-3.5 text-left">
+    <div className="w-full soft-panel rounded-[14px] p-3.5 text-left">
       <div className="flex items-end gap-3">
         {[
           { label: "Baseline", h: 26, c: "bg-[#c8c8c4]" },
@@ -105,7 +111,7 @@ function FactsTile() {
 
 function CoverageTile() {
   return (
-    <div className="w-full rounded-[14px] border border-ink bg-white p-3.5 text-left">
+    <div className="w-full soft-panel rounded-[14px] p-3.5 text-left">
       <div className="flex items-center justify-between text-[11px] leading-4">
         <span className="font-semibold text-ink">Coverage</span>
         <span className="text-quiet">US, English</span>
@@ -120,7 +126,7 @@ function CoverageTile() {
 
 function ApprovalTile() {
   return (
-    <div className="w-full rounded-[14px] border border-ink bg-white p-3.5 text-left">
+    <div className="w-full soft-panel rounded-[14px] p-3.5 text-left">
       <div className="flex items-center justify-between">
         <span className="text-[12px] font-semibold leading-4 text-ink">Draft reply</span>
         <span className="rounded-full bg-accent-soft px-2 py-0.5 text-[10px] font-semibold leading-3 text-accent-ink">
@@ -163,16 +169,17 @@ const RULES = [
 export default function AboutPage() {
   return (
     <>
+      <PageJsonLd path={PAGE.path} name={PAGE.title} description={PAGE.description} />
       <PageIntro
         kicker="About"
         title="Built for the person who runs the whole app."
         lead="Indie founders and small studios ship fast and own everything: product, growth, store presence, pricing, support. Appfox exists so that one person can operate an app with the awareness of a team."
       >
-        <div className="flex flex-wrap gap-4">
-          <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="lg">
+        <div className="flex flex-wrap justify-center gap-4">
+          <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
             Start for free
           </ButtonLink>
-          <ButtonLink href="/product" variant="secondary" size="lg">
+          <ButtonLink href="/product" variant="secondary" size="hero">
             See the product
           </ButtonLink>
         </div>
@@ -180,7 +187,8 @@ export default function AboutPage() {
 
       <Section className="pt-4 lg:pt-8">
         <Split
-          title="Every app founder we talk to describes the same morning."
+          title="Every founder we talk to"
+          sub="describes the same morning."
           visual={
             <SceneFrame>
               <MorningArt />
@@ -201,26 +209,32 @@ export default function AboutPage() {
       <Section>
         <SectionHeading
           align="center"
-          title="Outside-in and inside-out, in one place."
+          title="Outside-in and inside-out,"
+          sub="in one place."
           lead="We think of the category as mobile app intelligence and operations. ASO is one workflow inside it. Dashboards are not the product. Attention is."
         />
-        <SourcesMap />
+        <Reveal variant="scale" delay={100}>
+          <SourcesMap />
+        </Reveal>
       </Section>
 
       <Section>
         <SectionHeading
-          title="Where this goes"
+          title="Where this goes,"
+          sub="one level at a time."
           lead="The launch covers the first three. Autonomous execution is explicitly not a goal of the first version."
         />
         <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {levels.map(([t, b], i) => {
             const later = i === levels.length - 1;
             return (
-              <li
+              <Reveal
+                as="li"
                 key={t}
-                className={`outline-card relative flex flex-col rounded-[24px] p-6 lg:after:absolute lg:after:-right-[34px] lg:after:top-1/2 lg:after:w-[34px] lg:after:border-t-[2.5px] lg:after:border-dotted lg:after:content-[''] lg:last:after:hidden ${
+                delay={i * 90}
+                className={`relative flex flex-col rounded-[24px] p-6 lg:after:absolute lg:after:-right-[34px] lg:after:top-1/2 lg:after:w-[34px] lg:after:border-t-[2.5px] lg:after:border-dotted lg:after:content-[''] lg:last:after:hidden ${
                   i === levels.length - 2 ? "lg:after:border-[#c8c8c4]" : "lg:after:border-accent"
-                } ${later ? "border-dashed" : ""}`}
+                } ${later ? "border-2 border-dashed border-[#d6d6d3]" : "soft-surface"}`}
               >
                 <span className="flex items-center justify-between">
                   <span className="font-mono text-[14px] leading-5 text-accent-ink">{String(i + 1).padStart(2, "0")}</span>
@@ -234,7 +248,7 @@ export default function AboutPage() {
                 </span>
                 <p className="pt-6 font-mono text-[14px] font-medium uppercase leading-5 tracking-normal text-ink">{t}</p>
                 <p className="pt-2 text-[16px] leading-[26px] text-muted">{b}</p>
-              </li>
+              </Reveal>
             );
           })}
         </ol>
@@ -243,19 +257,20 @@ export default function AboutPage() {
       <Section>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-16">
           <SectionHeading
-            title="The honest version of the pitch."
+            title="The honest version"
+            sub="of the pitch."
             lead="Aggregating reviews, rankings, and revenue, or adding AI summaries on top, is not differentiation. Plenty of products already do parts of that well."
           />
-          <p className="text-[16px] leading-[26px] text-muted lg:pt-2">
+          <Reveal delay={100} className="text-[16px] leading-[26px] text-muted lg:pt-2">
             Our hypothesis is decision usefulness: that Appfox leads to better decisions with less work, both before you
             build and after you launch. We are testing that with researchers and live-app operators, including
             low-volume apps and people who will not connect private data. If the evidence says we are wrong, the product
             changes. Everything we ship follows four rules.
-          </p>
+          </Reveal>
         </div>
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {RULES.map(({ title, body, Visual }) => (
-            <PanelCard key={title} visual={<Visual />} title={title} body={body} />
+          {RULES.map(({ title, body, Visual }, i) => (
+            <PanelCard key={title} delay={i * 90} visual={<Visual />} title={title} body={body} />
           ))}
         </div>
       </Section>

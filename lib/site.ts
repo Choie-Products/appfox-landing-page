@@ -3,6 +3,9 @@ export const SITE_NAME = "Appfox";
 export const CONTACT_EMAIL = "hello@appfox.app";
 export const GA_ID = "G-5H68LE3WEB";
 
+/** Public profiles, used as schema.org sameAs links. Add them as they go live, e.g. an X or LinkedIn URL. */
+export const SOCIAL_LINKS: string[] = [];
+
 /** Set NEXT_PUBLIC_APP_URL once the product is reachable; "Start for free" then points at the app. */
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL?.trim() || null;
 
@@ -25,37 +28,46 @@ export const primaryNav: NavLink[] = [
   { label: "FAQs", href: "/#faq" },
 ];
 
+export const solutionLinks: NavLink[] = [
+  { label: "App review monitoring", href: "/solutions/app-review-monitoring" },
+  { label: "Competitor tracking", href: "/solutions/app-store-competitor-tracking" },
+  { label: "App idea validation", href: "/solutions/app-idea-validation" },
+  { label: "RevenueCat analytics", href: "/solutions/revenuecat-analytics" },
+  { label: "Rank tracking", href: "/solutions/app-store-rank-tracking" },
+];
+
+export const compareLinks: NavLink[] = [
+  { label: "Appfox vs Appfigures", href: "/compare/appfigures" },
+  { label: "Appfox vs AppFollow", href: "/compare/appfollow" },
+  { label: "Appfox vs Appbot", href: "/compare/appbot" },
+  { label: "Appfox vs AppTweak", href: "/compare/apptweak" },
+  { label: "All comparisons", href: "/compare" },
+  { label: "Glossary", href: "/glossary" },
+];
+
 export const footerColumns: { heading: string; links: NavLink[] }[] = [
   {
     heading: "Product",
     links: [
-      { label: "Today", href: "/product" },
-      { label: "Market", href: "/product" },
-      { label: "Customers", href: "/product" },
-      { label: "Actions", href: "/product" },
-      { label: "Integrations", href: "/integrations" },
-    ],
-  },
-  {
-    heading: "Journeys",
-    links: [
+      { label: "Overview", href: "/product" },
+      { label: "Today", href: "/product#today" },
+      { label: "Market", href: "/product#market" },
+      { label: "Customers", href: "/product#customers" },
       { label: "Research an idea", href: "/research" },
       { label: "Operate a live app", href: "/live-app" },
       { label: "Session replay", href: "/replay" },
+      { label: "Integrations", href: "/integrations" },
       { label: "Pricing", href: "/pricing" },
     ],
   },
+  { heading: "Solutions", links: solutionLinks },
+  { heading: "Compare", links: compareLinks },
   {
     heading: "Company",
     links: [
       { label: "About", href: "/about" },
       { label: "Security", href: "/security" },
       { label: "Contact", href: "/contact" },
-    ],
-  },
-  {
-    heading: "Legal",
-    links: [
       { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
       { label: "Cookies", href: "/cookies" },

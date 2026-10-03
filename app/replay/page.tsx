@@ -1,15 +1,19 @@
-import type { Metadata } from "next";
 import CtaBand from "@/components/cta-band";
+import { PageJsonLd } from "@/components/json-ld";
 import Replay from "@/components/mock/replay";
-import { MonoLabel, OutlineCard, Section, Showcase, StepCards } from "@/components/ui/blocks";
+import { MonoLabel, SoftCard, Section, Showcase, StepCards } from "@/components/ui/blocks";
 import PageIntro from "@/components/ui/page-intro";
 import SectionHeading from "@/components/ui/section-heading";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Mobile session replay",
+const PAGE = {
+  path: "/replay",
+  title: "Mobile Session Replay for React Native & Expo",
   description:
-    "A first-party SDK for React Native and Expo on iOS and Android that records privacy-masked screens and permitted interactions, then replays completed sessions inside Appfox.",
+    "Privacy-first mobile session replay for iOS and Android. A small React Native and Expo SDK records masked snapshots and events, never keyboard values, and replays completed sessions inside Appfox. On every plan.",
 };
+
+export const metadata = pageMetadata(PAGE);
 
 const controls = [
   { t: "Consent and a visible indicator", b: "Recording starts only after explicit consent, and the device shows that a session is being recorded." },
@@ -38,10 +42,11 @@ const excluded = [
 export default function ReplayPage() {
   return (
     <>
+      <PageJsonLd path={PAGE.path} name={PAGE.title} description={PAGE.description} />
       <PageIntro
         kicker="Mobile session replay"
         title="See what customers actually did, without seeing what they typed."
-        lead="A small SDK you embed in your own app. It captures masked native snapshots and a short event timeline, uploads completed sessions, and plays them back in Appfox."
+        lead="A small session replay SDK for React Native and Expo apps on iOS and Android. It captures masked native snapshots and a short event timeline, uploads completed sessions, and plays them back in Appfox."
       />
 
       <Section className="pt-4 lg:pt-8">
@@ -52,7 +57,8 @@ export default function ReplayPage() {
 
       <Section>
         <SectionHeading
-          title="Snapshots and events, not video."
+          title="Snapshots and events,"
+          sub="not video."
           lead="Replay uses masked native snapshots plus a small event timeline, reconstructed by the Appfox browser player. There is no continuous screen video and no server-side transcoding, which keeps payloads small and masking verifiable."
         />
         <StepCards steps={controls} className="mt-10" />
@@ -60,7 +66,7 @@ export default function ReplayPage() {
 
       <Section>
         <div className="grid gap-5 lg:grid-cols-2">
-          <OutlineCard>
+          <SoftCard>
             <MonoLabel>Platforms</MonoLabel>
             <ol className="pt-3">
               {[
@@ -83,14 +89,14 @@ export default function ReplayPage() {
                 </li>
               ))}
             </ol>
-          </OutlineCard>
-          <OutlineCard>
+          </SoftCard>
+          <SoftCard delay={100}>
             <MonoLabel>Deliberately not included</MonoLabel>
             <ul className="flex flex-wrap gap-2 pt-5">
               {excluded.map((e) => (
                 <li
                   key={e}
-                  className="rounded-full border border-[#e6e6e4] bg-white px-3.5 py-1.5 text-[14px] leading-5 text-quiet line-through decoration-[#c8c8c4]"
+                  className="soft-panel rounded-full px-3.5 py-1.5 text-[14px] leading-5 text-quiet line-through decoration-[#c8c8c4]"
                 >
                   {e}
                 </li>
@@ -100,7 +106,7 @@ export default function ReplayPage() {
               Replay exists to show you a completed session from your own app. Anything that would turn it into
               surveillance stays out.
             </p>
-          </OutlineCard>
+          </SoftCard>
         </div>
       </Section>
 

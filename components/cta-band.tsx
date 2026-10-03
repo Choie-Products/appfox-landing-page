@@ -2,6 +2,7 @@ import FoxMark from "@/components/fox-mark";
 import { ButtonLink } from "@/components/ui/button";
 import Container from "@/components/ui/container";
 import { APP_URL, CTA_HREF } from "@/lib/site";
+import Reveal from "@/components/reveal";
 
 /** Closing call to action for inner pages: a black card that sends people to sign up or to pricing. */
 export default function CtaBand({
@@ -19,14 +20,14 @@ export default function CtaBand({
   return (
     <section id="get-started" className="scroll-mt-20">
       <Container className={spacing}>
-        <div className="relative overflow-hidden rounded-[32px] bg-ink px-8 py-12 sm:px-12 lg:px-16 lg:py-16">
+        <Reveal variant="scale" className="relative overflow-hidden rounded-[32px] bg-ink px-8 py-12 sm:px-12 lg:px-16 lg:py-16">
           <FoxMark className="pointer-events-none absolute -right-8 -top-16 h-[300px] w-[285px] text-white opacity-[0.05]" />
           <div className="relative grid items-end gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-16">
             <div>
               <p className="font-mono text-[14px] font-medium uppercase leading-5 tracking-normal text-[#ff8a4c]">
                 Get started
               </p>
-              <h2 className="max-w-[640px] pt-4 font-display text-[34px] font-bold leading-[1.04] text-white sm:text-[48px]">
+              <h2 className="max-w-[640px] pt-4 font-display text-[38px] font-normal leading-[1.08] text-white sm:text-[56px]">
                 {title}
               </h2>
               <p className="max-w-[32rem] pt-4 text-[16px] leading-[26px] text-[#b8b8b4]">{lead}</p>
@@ -50,7 +51,7 @@ export default function CtaBand({
               </p>
             </div>
           </div>
-        </div>
+        </Reveal>
       </Container>
     </section>
   );

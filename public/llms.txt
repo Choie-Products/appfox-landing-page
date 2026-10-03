@@ -1,0 +1,51 @@
+# Appfox
+
+> Appfox is the AI app tracker for indie founders and mobile studios. It reads your App Store and Google Play reviews, rankings, releases, revenue, and competitors every day, then tells you what needs attention and why, with the evidence attached. Tagline: "Your app, explained."
+
+Appfox is an intelligence layer and operations partner for mobile apps (iOS and Android). It is built for the person who runs the whole app: product, growth, store presence, pricing, and support. Signals are detected deterministically from stored facts; AI then explains them in plain language and cites the reviews, listings, and metrics it used. Every integration is read-only. Appfox drafts review replies, store copy, tasks, and experiment plans, but never publishes, sends, or changes anything outside your workspace. A quiet day is reported as a quiet day.
+
+Website: https://appfox.app. Contact: hello@appfox.app. Pricing starts free; paid plans are Indie ($29/month), Studio ($99/month), and Scale ($299/month).
+
+## Product
+
+- [Product overview](https://appfox.app/product): Six surfaces, one question each. Today (what needs attention), Market (competitors and what is changing), Customers (reviews grouped into themes with exact counts), My App (one app across sources), Actions (decisions and whether they helped), Integrations (what Appfox reads, read-only).
+- [Research an idea](https://appfox.app/research): Describe an app idea, confirm a competitor set, and get an AI research brief written from real listings and reviews, including the evidence against the idea and what reviews cannot establish.
+- [Operate a live app](https://appfox.app/live-app): Add an app by store URL and get a daily ranked feed of customer, competitor, release, and monetization changes with evidence and a suggested action. Four kinds of empty are kept apart: quiet, not enough data, sync failed, collecting.
+- [Mobile session replay](https://appfox.app/replay): A first-party SDK for React Native and Expo on iOS and Android that records privacy-masked snapshots and events, never keyboard values, and replays completed sessions inside Appfox.
+- [Integrations](https://appfox.app/integrations): App Store and Google Play public data and RevenueCat at launch, all read-only. App Store Connect, Google Play Console, GitHub, product analytics, Linear, and Notion are planned.
+- [Pricing](https://appfox.app/pricing): Free, Indie $29/month ($24 annual), Studio $99/month ($79 annual), Scale $299/month ($249 annual). Every plan has the same evidence ledger and read-only boundary.
+
+## Solutions
+
+- [App review monitoring](https://appfox.app/solutions/app-review-monitoring): Reviews grouped into themes with exact counts, denominators, trend, and affected versions; every count links to the original review; spikes ranked on Today next to the release they followed.
+- [App Store competitor tracking](https://appfox.app/solutions/app-store-competitor-tracking): Confirm competitors once; listing, price, rating, and release changes kept as append-only history; new entrants discovered and scored.
+- [App idea validation](https://appfox.app/solutions/app-idea-validation): An AI research brief from real listings and reviews, with the evidence against the idea and what reviews cannot establish.
+- [RevenueCat analytics](https://appfox.app/solutions/revenuecat-analytics): Read-only revenue, subscriptions, trials, and paid conversions with exact scope, shown next to the release or review theme that explains a change.
+- [App Store rank tracking](https://appfox.app/solutions/app-store-rank-tracking): Tracked search queries with current and previous rank, movements explained against listing changes and competitors. No volume estimates.
+
+## Compare
+
+- [All comparisons](https://appfox.app/compare): Honest side-by-side pages written from each vendor's own website, checked October 2026.
+- [Appfox vs Appfigures](https://appfox.app/compare/appfigures): Appfigures is app analytics organized by dataset with ad-network revenue and keyword tools from $9.99 a month; Appfox is a ranked daily reading with evidence.
+- [Appfox vs AppFollow](https://appfox.app/compare/appfollow): AppFollow is review management with automated replies and helpdesk integrations from $179 a month; Appfox drafts replies and never posts.
+- [Appfox vs Appbot](https://appfox.app/compare/appbot): Appbot is review sentiment analytics from about $49 a month; Appfox reads reviews together with releases, rankings, competitors, and revenue, with exact counts.
+- [Appfox vs AppTweak](https://appfox.app/compare/apptweak): AppTweak is keyword-first ASO with volume estimates from $79 a month; Appfox treats ASO as one workflow and reports observed facts only.
+- Alternatives pages: [Appfigures](https://appfox.app/alternatives/appfigures), [AppFollow](https://appfox.app/alternatives/appfollow), [Appbot](https://appfox.app/alternatives/appbot), [AppTweak](https://appfox.app/alternatives/apptweak).
+
+## Glossary
+
+- [Glossary](https://appfox.app/glossary): Definitions of app tracker, mobile app intelligence, App Store Optimization, app review monitoring, competitor tracking, and mobile session replay.
+
+## Company
+
+- [About](https://appfox.app/about): The thesis (the founder should not be the integration layer between their tools), the category (mobile app intelligence and operations; ASO is one workflow inside it), and the four rules: evidence before advice, facts first explained by AI, honest coverage, human approval.
+- [Security](https://appfox.app/security): Workspace isolation with Postgres row-level security, credentials in a server-side vault, read-only integrations, fail-closed reads, observability without payloads, explicit retention and deletion.
+- [Contact](https://appfox.app/contact): Email hello@appfox.app. Replies come from the people building the product.
+- [Start for free](https://appfox.app/waitlist): Request a workspace on the Free plan.
+
+## Optional
+
+- [Full text for LLMs](https://appfox.app/llms-full.txt): Every page's substance in one Markdown file.
+- [Privacy policy](https://appfox.app/privacy)
+- [Terms of service](https://appfox.app/terms)
+- [Cookie policy](https://appfox.app/cookies)

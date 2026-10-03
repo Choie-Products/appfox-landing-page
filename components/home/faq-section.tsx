@@ -1,15 +1,33 @@
-import Faq, { type FaqItem } from "@/components/faq";
+import Faq from "@/components/faq";
 import Container from "@/components/ui/container";
 import { CONTACT_EMAIL } from "@/lib/site";
+import Reveal from "@/components/reveal";
 
-export const homeFaq: FaqItem[] = [
+/** Answers are plain strings so the same list feeds the FAQPage structured data. */
+export const homeFaq: { q: string; a: string }[] = [
   {
-    q: "Who built Appfox?",
-    a: "A small team building for indie founders and mobile studios. The product is specified before it is built, including the claims it refuses to make.",
+    q: "What is Appfox?",
+    a: "Appfox is an AI app tracker and intelligence layer for mobile apps. It reads your App Store and Google Play reviews, rankings, releases, revenue, and the competitors you confirm every day, then ranks what changed with the evidence attached. It is built for indie founders and small mobile studios.",
   },
   {
     q: "What exactly does Appfox do?",
-    a: "It reads your reviews, rankings, releases, and revenue, plus the competitors you confirm, and turns what changed into a ranked list of findings with the evidence attached. It drafts replies, store copy, tasks, and experiment plans. You decide what ships.",
+    a: "It turns what changed across reviews, rankings, releases, revenue, and competitors into a ranked list of findings, each with the reviews, listings, and metrics behind it. It drafts replies, store copy, tasks, and experiment plans. You decide what ships.",
+  },
+  {
+    q: "Does Appfox use AI?",
+    a: "Yes. Signals are detected deterministically from stored facts, then AI joins independent sources into one plain-language explanation that cites the evidence it used. AI also writes research briefs for new ideas, groups reviews into themes with exact counts, and drafts review replies and store copy. Ask Fox, a question-and-answer layer over your own evidence, is coming soon.",
+  },
+  {
+    q: "Which stores and platforms does Appfox support?",
+    a: "The Apple App Store and Google Play, one country and language per market. Mobile session replay supports React Native and Expo apps on iOS and Android first, with native UIKit, SwiftUI, Views, and Compose to follow.",
+  },
+  {
+    q: "Is Appfox an ASO tool or an app analytics dashboard?",
+    a: "Neither on its own. App Store Optimization is one workflow inside Appfox: tracked search queries, listing history, and competitor metadata comparisons are all there. But Appfox is organized around what needs your attention across customers, competitors, releases, and revenue, and it reads the data for you instead of leaving you a dashboard. A quiet day is reported as a quiet day.",
+  },
+  {
+    q: "Who built Appfox?",
+    a: "A small team building for indie founders and mobile studios. The product is specified before it is built, including the claims it refuses to make.",
   },
   {
     q: "Do I need to connect private data?",
@@ -33,7 +51,7 @@ export default function FaqSection() {
   return (
     <section id="faq" className="scroll-mt-20">
       <Container className="grid gap-10 py-24 lg:grid-cols-[400px_1fr] lg:gap-16 lg:py-40">
-        <div>
+        <Reveal>
           <h2 className="text-display-md text-ink">Questions, answered.</h2>
           <p className="pt-3 text-[16px] leading-[26px] text-muted">
             Still stuck?{" "}
@@ -42,8 +60,10 @@ export default function FaqSection() {
             </a>{" "}
             and a person will reply.
           </p>
-        </div>
-        <Faq items={homeFaq} />
+        </Reveal>
+        <Reveal delay={100}>
+          <Faq items={homeFaq} />
+        </Reveal>
       </Container>
     </section>
   );

@@ -1,12 +1,14 @@
+import Reveal from "@/components/reveal";
 import { cn } from "@/lib/utils";
 
 /**
- * A heading block for a page section, in the homepage style: optional mono label, 30px regular title,
- * and a short 16px lead.
+ * A heading block for a page section, in the homepage style: optional mono label, a 30px title with an
+ * optional gray second line, and a short 16px lead.
  */
 export default function SectionHeading({
   kicker,
   title,
+  sub,
   lead,
   align = "left",
   size = "lg",
@@ -15,6 +17,8 @@ export default function SectionHeading({
 }: {
   kicker?: string;
   title: React.ReactNode;
+  /** A second line in gray, like the homepage headings. */
+  sub?: React.ReactNode;
   lead?: React.ReactNode;
   align?: "left" | "center";
   size?: "lg" | "md";
@@ -28,12 +32,19 @@ export default function SectionHeading({
   const leadColor = tone === "dark" ? "text-dark-muted" : "text-muted";
 
   return (
-    <div className={cn("max-w-[560px]", align === "center" && "mx-auto text-center", className)}>
-      {kicker ? (
-        <p className="mb-3 font-mono text-[14px] font-medium uppercase leading-5 tracking-normal text-ink">{kicker}</p>
-      ) : null}
-      <h2 className={`${sizeClass} ${titleColor}`}>{title}</h2>
-      {lead ? <p className={`mt-2 text-[16px] leading-[26px] ${leadColor}`}>{lead}</p> : null}
-    </div>
+    <Reveal className={cn("max-w-[560px]", align === "center" && "mx-auto text-center", className)}>
+      {kicker ? <p className="label-mono mb-4 text-ink">{kicker}</p> : null}
+      <h2 className={`${sizeClass} ${titleColor}`}>
+        {sub ? (
+          <>
+            <span className="block">{title}</span>
+            <span className="block text-quiet">{sub}</span>
+          </>
+        ) : (
+          title
+        )}
+      </h2>
+      {lead ? <p className={`${sub ? "mt-4" : "mt-2"} text-[16px] leading-[26px] ${leadColor}`}>{lead}</p> : null}
+    </Reveal>
   );
 }

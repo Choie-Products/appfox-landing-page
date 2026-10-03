@@ -1,10 +1,12 @@
 import Link from "next/link";
-import type { Metadata } from "next";
 import LegalShell from "@/components/legal-shell";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata = pageMetadata({
+  path: "/cookies",
   title: "Cookie Policy",
-};
+  description: "Which cookies appfox.app sets, what they are for, and how to control them.",
+});
 
 export default function CookiesPage() {
   return (

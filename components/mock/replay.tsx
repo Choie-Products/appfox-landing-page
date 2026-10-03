@@ -13,10 +13,11 @@ export default function Replay({ className }: { className?: string }) {
   return (
     <Window title="Replays" meta="Owner and admin only" className={className}>
       <div className="grid gap-4 sm:grid-cols-[11rem_1fr]">
-        <div className="mx-auto w-[11rem] rounded-[1.6rem] border-[5px] border-ink bg-paper p-2.5 shadow-[inset_0_0_0_1px_rgba(0,0,0,0.3)]">
-          <div className="mx-auto mb-2 h-1 w-10 rounded-full bg-ink/30" />
+        <div className="soft-surface mx-auto w-[11rem] rounded-[1.8rem] p-2">
+          <div className="soft-panel rounded-[1.4rem] p-2.5">
+          <div className="mx-auto mb-2 h-1 w-10 rounded-full bg-[#dcdcd9]" />
           <div className="space-y-2">
-            <div className="h-3 w-20 rounded bg-ink/70" />
+            <div className="h-3 w-20 rounded bg-[#cfcfcc]" />
             <div className="h-24 rounded-lg bg-line" />
             <div className="h-2.5 w-full rounded bg-line-strong" />
             <div className="h-2.5 w-3/4 rounded bg-line-strong" />
@@ -31,6 +32,7 @@ export default function Replay({ className }: { className?: string }) {
           <div className="mt-3 flex items-center gap-1.5">
             <span className="size-2 rounded-full bg-accent" />
             <span className="text-[9px] text-muted">Recording</span>
+          </div>
           </div>
         </div>
         <div>

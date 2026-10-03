@@ -1,0 +1,87 @@
+# Appfox: the complete reference for language models
+
+> Appfox is the AI app tracker for indie founders and mobile studios. It reads your App Store and Google Play reviews, rankings, releases, revenue, and competitors every day, then tells you what needs attention and why, with the evidence attached. Tagline: "Your app, explained." Website: https://appfox.app. Contact: hello@appfox.app.
+
+## What Appfox is
+
+Appfox is an intelligence layer and operations partner for mobile apps on iOS and Android. It is a web application. The category is mobile app intelligence and operations; App Store Optimization (ASO) is one workflow inside it, not the whole product. Dashboards are not the product. Attention is.
+
+It is built for indie founders and small studios: people who ship fast and own everything (product, growth, store presence, pricing, support), and who currently act as the integration layer between App Store Connect, RevenueCat, review feeds, competitor listings, and crash dashboards.
+
+Appfox works with public store data alone. Connecting private data such as RevenueCat is optional, read-only, and shown with exactly what it reads.
+
+## How Appfox works: four layers
+
+1. Facts: listings, reviews, ranks, releases, and metrics, stored once and never backdated.
+2. Signals: deterministic detections with a threshold, a minimum sample size, and a cooldown. Examples: a negative review spike, a trial conversion drop, a rank acceleration, a new competitor, a price change, a post-release crash increase.
+3. Insights: AI joins independent sources into one plain-language explanation and cites the evidence IDs it used.
+4. Outcomes: you accept, dismiss, or snooze. Matched comparison windows then show whether the change helped. A decrease is reported as observed, not as caused.
+
+Each signal has a stable fingerprint, so an ongoing episode updates instead of re-alerting, and revised source data can retract a finding that no longer holds. Alert levels: Low (history only), Interesting (activity feed), Important (Today and digest), Critical (push or email candidate). Alerts are driven by significance, not by events.
+
+## The six surfaces (product overview, https://appfox.app/product)
+
+- Today: What needs my attention? A ranked list of significant findings with evidence, freshness, coverage, and a next action. Zero findings is a valid state, distinguished from not enough data and from a failed sync.
+- Market: Who is out there, and what is changing? Confirmed direct and adjacent competitors, a saved research brief, metadata and pricing comparisons, rating and review movement, tracked search queries, newly discovered apps. History is append-only.
+- Customers: What are people telling us? A review browser and a theme view. Themes carry total mentions, share of reviews, trend, rating distribution, and affected versions. Every count links back to the original review text.
+- My App: How is my app doing, across sources? Public store identity and listing history, customer evidence, release context, and supported RevenueCat metrics with exact scope.
+- Actions: What did we decide, and did it help? A small task list with rationale and evidence, matched-window comparisons, and your own verdict.
+- Integrations: What does Appfox read, and can it write? Every connection card shows the data read, permissions, last sync, status, usage against provider limits, and a disconnect control. All launch integrations are read-only.
+
+Every finding opens the same way: recommendation, why it matters, evidence summary, raw evidence, historical data.
+
+## Journey 1: Research an idea (https://appfox.app/research)
+
+Describe the idea (the job, who it is for, the store, the country, the language). Appfox discovers candidate competitors across store search, similar-app relationships, and overlapping review language; you confirm the set and label each direct or adjacent. The AI brief covers positioning, observable monetization, recurring complaints, existing strengths, potential gaps, and evidence against the idea. Each claim links to the listings and reviews behind it, with coverage shown. You record a decision: a hypothesis and next validation action, or a decision not to pursue. Monitoring keeps the market refreshing.
+
+A brief can tell you who exists in the market, how apps position themselves, what monetization is observable, what customers complain about repeatedly, what features are praised or requested, and where review activity is rising. It refuses to claim market size, willingness to pay, or business viability; that an unmentioned feature is missing; a trend before comparable snapshots exist; that update frequency equals revenue growth; that an in-app purchase indicator is a verified subscription; or that a periodic search is an exhaustive census. Stores: App Store and Google Play. Scope: one country and language per market.
+
+## Journey 2: Operate a live app (https://appfox.app/live-app)
+
+Add your app by App Store or Google Play URL. Public evidence (listing history, collected reviews, tracked search queries) starts immediately. Optionally connect RevenueCat; Appfox verifies the project and app binding, then reads revenue, active subscriptions, trials, and paid conversions. Nothing is written back. Today ranks meaningful customer, competitor, release, and monetization changes with evidence and a suggested action. You act and record; comparable windows show whether the change moved what you meant to move.
+
+Four kinds of empty are kept apart: nothing significant changed (a quiet day, with coverage shown); not enough data (individual evidence instead of percentage alarms); sync failed (never shown as zero or disconnected); collection in progress.
+
+## AI in Appfox
+
+- AI explanations: each finding is written by AI from deterministic signals and cites the evidence it used.
+- AI research briefs: written from real listings and reviews, with the evidence for and against an idea.
+- Review themes: AI groups reviews into themes with exact counts and denominators; the customer's own words stay one click away.
+- Drafts (coming soon): review replies and store copy drafted from evidence, for you to copy. Appfox never posts or submits anything.
+- Ask Fox (coming soon): ask a question in plain words and get an answer built from your own reviews, releases, and metrics, with sources linked.
+- AI runs are metered per plan: 20 per month on Free, 200 on Indie, 1,000 on Studio, 5,000 on Scale. Research briefs: 1, 5, unlimited, unlimited.
+
+## Mobile session replay (https://appfox.app/replay)
+
+A first-party SDK for React Native and Expo on iOS and Android (native UIKit, SwiftUI, Views, and Compose through the same engines, validated separately). It records privacy-masked native snapshots and a short event timeline, not video; uploads completed sessions only; and plays them back in Appfox. Controls: explicit consent and a visible recording indicator, masking on the device before anything leaves it, bounded storage and uploads, remote sampling and a kill switch, retention windows with real deletion, owner and admin access only at first. Deliberately excluded: browser recording, system-wide capture, background capture, live streaming, remote control, audio, keyboard values, request and response bodies, automatic logs, heatmaps and funnels, AI interpretation of replays, crash-triggered prebuffering. Replay is on every plan, starting with 1,000 sessions and 7-day retention on Free.
+
+## Integrations (https://appfox.app/integrations)
+
+At launch: App Store and Google Play public listings, reviews, and ranks; RevenueCat (revenue, subscriptions, trials; Indie plan and above). Planned: App Store Connect, Google Play Console, GitHub, product analytics, Linear and Notion. Every connection is read-only. Adding a public store URL is a declaration, not proof of ownership; private resources bind only after server-side authorization.
+
+## Pricing (https://appfox.app/pricing)
+
+- Free: $0. Both journeys on one app and one market, 30 days of evidence history, 20 AI runs and 1 research brief a month, 1,000 replay sessions with 7-day retention.
+- Indie: $29 per month, or $24 per month billed annually. For a solo founder with a few apps. 12 months of evidence history, 200 AI runs and 5 briefs, RevenueCat and verified competitor revenue, 10,000 replay sessions with 14-day retention.
+- Studio: $99 per month, or $79 annually. For a small studio across several apps. Full history, 1,000 AI runs and unlimited briefs, 50,000 replay sessions with 30-day retention.
+- Scale: $299 per month, or $249 annually. For teams running many apps and markets. 5,000 AI runs, unlimited markets, 50 competitors per market, daily ads monitoring, 250,000 replay sessions with 90-day retention, SSO and API.
+
+Every plan includes both journeys, every surface, evidence on every finding, read-only integrations, workspace isolation with owner, admin, and viewer roles, and visible usage history. Limits are enforced on the server before any paid provider job starts; jobs reserve budget first and settle at actual cost; at a limit the control stops and says why, and nothing collected goes away. Prices are proposed plans and may change.
+
+## Security (https://appfox.app/security)
+
+Workspace isolation with Postgres row-level security and composite foreign keys; authentication by Clerk with Supabase as the database and enforcement layer. Integration credentials are stored in Supabase Vault, used server-side only, and never reach the browser. All launch integrations read; none write. Fail closed: an unavailable read is never shown as zero, empty, inactive, or disconnected. Observability records exclude identifiers, payloads, credentials, URLs, and raw error text. Explicit retention windows; owner deletion removes workspace data and is vault-aware; a backup and restore rehearsal runs in CI as a release gate. Security reports: hello@appfox.app with the subject line Security.
+
+## Company (https://appfox.app/about)
+
+Appfox is built by a small team for indie founders and mobile studios. Roadmap levels: Research (understand a market and an opportunity), Intelligence (continuously monitor the market and the owned app), Recommendation (turn evidence into prioritized actions), and later Operator (prepare and, with explicit approval, execute actions; not part of the launch). Four rules: evidence before advice; facts first, explained by AI; honest coverage; human approval. Appfox is independent of Apple, Google, and RevenueCat.
+
+## Frequently asked questions
+
+- What is Appfox? An AI app tracker and intelligence layer for mobile apps that reads reviews, rankings, releases, revenue, and competitors daily and ranks what changed, with evidence.
+- Does Appfox use AI? Yes. Signals are detected deterministically; AI explains them and cites its sources, writes research briefs, groups reviews into themes, and drafts replies and store copy.
+- Which stores and platforms? The App Store and Google Play, one country and language per market. Session replay supports React Native and Expo on iOS and Android first.
+- Is Appfox an ASO tool? ASO is one workflow inside it. Appfox is organized around what needs attention, not around keywords.
+- Do I need to connect private data? No. Public store data is enough to start. RevenueCat is optional and read-only.
+- Does Appfox write anything? No. It drafts; you decide what ships. Nothing is published, sent, or changed outside your workspace.
+- Can I start for free? Yes. The Free plan includes both journeys for one app and one market.

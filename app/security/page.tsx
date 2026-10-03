@@ -1,15 +1,20 @@
-import type { Metadata } from "next";
 import CtaBand from "@/components/cta-band";
-import { CheckList, MonoLabel, MonoLink, OutlineCard, Section } from "@/components/ui/blocks";
+import { PageJsonLd } from "@/components/json-ld";
+import { SecurityArt } from "@/components/illustrations/iso-art";
+import { CheckList, MonoLabel, MonoLink, SoftCard, Section, Split } from "@/components/ui/blocks";
 import PageIntro from "@/components/ui/page-intro";
 import SectionHeading from "@/components/ui/section-heading";
 import { CONTACT_EMAIL } from "@/lib/site";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Security",
+const PAGE = {
+  path: "/security",
+  title: "Security: Isolated Workspaces, Read-Only Access",
   description:
-    "How Appfox isolates workspaces, stores credentials, keeps integrations read-only, fails closed on unavailable data, and handles retention and deletion.",
+    "How Appfox protects your app data: workspace isolation with row-level security, credentials in a server-side vault, read-only integrations, fail-closed reads, and explicit retention and deletion.",
 };
+
+export const metadata = pageMetadata(PAGE);
 
 const sections = [
   {
@@ -65,6 +70,7 @@ const sections = [
 export default function SecurityPage() {
   return (
     <>
+      <PageJsonLd path={PAGE.path} name={PAGE.title} description={PAGE.description} />
       <PageIntro
         kicker="Security"
         title="Your evidence, your workspace, nobody else's."
@@ -72,13 +78,27 @@ export default function SecurityPage() {
       />
 
       <Section className="pt-4 lg:pt-8">
+        <Split
+          title="Isolated by default."
+          sub="Read-only by design."
+          visual={<SecurityArt className="mx-auto h-auto w-full max-w-[520px]" />}
+        >
+          <p>
+            Every workspace is walled off at the database, credentials never reach the browser, and every launch
+            integration only reads. When data is unavailable, Appfox says so instead of guessing.
+          </p>
+          <p>The six boundaries below are written the way they are enforced.</p>
+        </Split>
+      </Section>
+
+      <Section className="pt-0 lg:pt-0">
         <div className="grid gap-5 md:grid-cols-2">
           {sections.map((sec, i) => (
-            <OutlineCard key={sec.title}>
+            <SoftCard key={sec.title} delay={(i % 2) * 90}>
               <span className="font-mono text-[14px] leading-5 text-accent-ink">{String(i + 1).padStart(2, "0")}</span>
               <MonoLabel className="pt-4">{sec.title}</MonoLabel>
               <CheckList items={sec.items} className="pt-2" />
-            </OutlineCard>
+            </SoftCard>
           ))}
         </div>
       </Section>
@@ -86,10 +106,11 @@ export default function SecurityPage() {
       <Section>
         <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:gap-16">
           <SectionHeading
-            title="What we do not claim yet."
+            title="What we do not"
+            sub="claim yet."
             lead="Real pilot outcomes, authenticated end-to-end tests against production, and authorized live-provider checks are release evidence, not marketing claims. We publish them when they exist."
           />
-          <OutlineCard>
+          <SoftCard delay={100}>
             <MonoLabel>Report a security issue</MonoLabel>
             <p className="pt-2 text-[16px] leading-[26px] text-muted">
               Email us with the subject line Security. We respond to every report.
@@ -97,7 +118,7 @@ export default function SecurityPage() {
             <MonoLink href={`mailto:${CONTACT_EMAIL}?subject=Security`} className="mt-5 normal-case">
               {CONTACT_EMAIL}
             </MonoLink>
-          </OutlineCard>
+          </SoftCard>
         </div>
       </Section>
 

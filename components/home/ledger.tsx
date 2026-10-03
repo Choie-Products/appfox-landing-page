@@ -3,6 +3,7 @@ import { ArrowRight, ListOrdered, Plug, Smartphone, Star, Store, Target, type Lu
 import { FOX_PATH } from "@/components/fox-mark";
 import ScaleToFit from "@/components/mock/scale-to-fit";
 import Container from "@/components/ui/container";
+import Reveal from "@/components/reveal";
 
 /** The six surfaces, each with the question it answers (wording from the product page). */
 const SURFACES: { name: string; question: string; icon: LucideIcon }[] = [
@@ -88,6 +89,15 @@ function LedgerPlate({ cx, cy, uid }: { cx: number; cy: number; uid: string }) {
   );
 }
 
+/** The orange ledger plate on its own, for hub layouts on other pages. */
+export function LedgerPlateArt({ uid, className }: { uid: string; className?: string }) {
+  return (
+    <svg viewBox={`${CX - 200} ${PLATE_CY - 110} 400 230`} className={className} aria-hidden="true">
+      <LedgerPlate cx={CX} cy={PLATE_CY} uid={uid} />
+    </svg>
+  );
+}
+
 function SurfaceCard({
   surface,
   className = "",
@@ -129,7 +139,7 @@ export default function Ledger() {
   const lineY = PLATE_CY + T / 2;
   return (
     <Container as="section" className="py-24 lg:py-40">
-      <div className="mx-auto max-w-[560px] text-center">
+      <Reveal className="mx-auto max-w-[560px] text-center">
         <h2 className="text-display-md text-ink">
           <span className="block">Where it all lives:</span>
           <span className="block text-quiet">six surfaces, one ledger.</span>
@@ -138,9 +148,10 @@ export default function Ledger() {
           Today, Market, My App, Customers, Actions, and Integrations. No keyword silo, no review silo, no revenue
           silo. Each surface answers a question you actually ask.
         </p>
-      </div>
+      </Reveal>
 
       {/* Desktop: one composition, scaled to fit */}
+      <Reveal variant="scale" delay={100}>
       <ScaleToFit width={CANVAS_W} height={CANVAS_H} className="mx-auto mt-10 hidden max-w-[1200px] lg:mt-16 lg:block">
         <div className="relative" style={{ width: CANVAS_W, height: CANVAS_H }}>
           <svg
@@ -190,12 +201,11 @@ export default function Ledger() {
           </div>
         </div>
       </ScaleToFit>
+      </Reveal>
 
       {/* Mobile and tablet: the plate, then the surfaces */}
-      <div className="mt-10 lg:hidden">
-        <svg viewBox={`${CX - 200} ${PLATE_CY - 110} 400 230`} className="mx-auto h-auto w-full max-w-[320px]" aria-hidden="true">
-          <LedgerPlate cx={CX} cy={PLATE_CY} uid="ledger-mobile" />
-        </svg>
+      <Reveal className="mt-10 lg:hidden">
+        <LedgerPlateArt uid="ledger-mobile" className="mx-auto h-auto w-full max-w-[320px]" />
         <div className="mx-auto max-w-[320px] pt-2">
           <LedgerCaption />
         </div>
@@ -204,9 +214,9 @@ export default function Ledger() {
             <SurfaceCard key={s.name} surface={s} />
           ))}
         </div>
-      </div>
+      </Reveal>
 
-      <div className="grid gap-3 pt-10 sm:grid-cols-3 lg:grid-cols-[minmax(0,1fr)_320px_minmax(0,1fr)] lg:gap-16 lg:pt-16">
+      <Reveal delay={80} className="grid gap-3 pt-10 sm:grid-cols-3 lg:grid-cols-[minmax(0,1fr)_320px_minmax(0,1fr)] lg:gap-16 lg:pt-16">
         {JOURNEY_LINKS.map((item, i) => (
           <Link
             key={item.href}
@@ -219,7 +229,7 @@ export default function Ledger() {
             <ArrowRight className="size-4 shrink-0" strokeWidth={2} aria-hidden="true" />
           </Link>
         ))}
-      </div>
+      </Reveal>
     </Container>
   );
 }

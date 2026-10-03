@@ -1,10 +1,22 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { IBM_Plex_Mono, Inter, Jost } from "next/font/google";
+import { Anton, IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
+import { JsonLd } from "@/components/json-ld";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
-import { GA_ID, SITE_URL } from "@/lib/site";
+import {
+  OG_IMAGE,
+  SITE_DESCRIPTION,
+  SITE_KEYWORDS,
+  SITE_TAGLINE,
+  SITE_TITLE,
+  graph,
+  organizationJsonLd,
+  softwareApplicationJsonLd,
+  websiteJsonLd,
+} from "@/lib/seo";
+import { GA_ID, SITE_NAME, SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -13,10 +25,11 @@ const inter = Inter({
   axes: ["opsz"],
 });
 
-const jost = Jost({
+const anton = Anton({
   subsets: ["latin"],
+  weight: "400",
   display: "swap",
-  variable: "--font-jost",
+  variable: "--font-anton",
 });
 
 const plexMono = IBM_Plex_Mono({
@@ -26,29 +39,38 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
 });
 
+const verification: NonNullable<Metadata["verification"]> = {};
+if (process.env.GOOGLE_SITE_VERIFICATION) verification.google = process.env.GOOGLE_SITE_VERIFICATION;
+if (process.env.BING_SITE_VERIFICATION) verification.other = { "msvalidate.01": process.env.BING_SITE_VERIFICATION };
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Appfox - Your app explained",
-    template: "%s | Appfox",
+    default: SITE_TITLE,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "Appfox reads your reviews, rankings, releases, and revenue, then tells you what deserves attention and why. Evidence on every finding. Built for indie founders and small mobile studios.",
+  description: SITE_DESCRIPTION,
+  keywords: SITE_KEYWORDS,
+  applicationName: SITE_NAME,
+  category: "technology",
+  creator: SITE_NAME,
+  publisher: SITE_NAME,
+  authors: [{ name: SITE_NAME, url: SITE_URL }],
   alternates: { canonical: SITE_URL },
   openGraph: {
-    title: "Appfox - Your app explained",
-    description:
-      "An intelligence layer and operations partner for mobile apps. Reviews, rankings, releases, and revenue, read for you, with the evidence attached.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
     url: SITE_URL,
-    siteName: "Appfox",
+    siteName: SITE_NAME,
     type: "website",
     locale: "en_US",
+    images: [{ url: OG_IMAGE, width: 1200, height: 630, alt: `${SITE_NAME}: ${SITE_TAGLINE}` }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Appfox - Your app explained",
-    description:
-      "Appfox reads your reviews, rankings, releases, and revenue, then tells you what deserves attention and why.",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: [OG_IMAGE],
   },
   robots: {
     index: true,
@@ -61,50 +83,35 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: { icon: "/favicon.svg" },
+  // Listed explicitly: when `icons` is configured, Next does not add the file-based routes on its own.
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/icon", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon", sizes: "180x180", type: "image/png" }],
+  },
+  verification,
+  other: {
+    "llms-txt": `${SITE_URL}/llms.txt`,
+  },
 };
 
-const jsonLd = JSON.stringify({
-  "@context": "https://schema.org",
-  "@graph": [
-    {
-      "@type": "Organization",
-      "@id": `${SITE_URL}/#organization`,
-      name: "Appfox",
-      url: SITE_URL,
-      logo: `${SITE_URL}/logo.svg`,
-      description:
-        "Appfox is an intelligence layer and operations partner for mobile apps. It reads reviews, rankings, releases, and revenue, then turns meaningful changes into evidence-backed actions.",
-    },
-    {
-      "@type": "WebSite",
-      "@id": `${SITE_URL}/#website`,
-      url: SITE_URL,
-      name: "Appfox",
-      publisher: { "@id": `${SITE_URL}/#organization` },
-    },
-    {
-      "@type": "SoftwareApplication",
-      name: "Appfox",
-      applicationCategory: "BusinessApplication",
-      operatingSystem: "Web",
-      description:
-        "An intelligence layer for mobile apps that connects market, customer, business, and product signals, then recommends what to do next.",
-      offers: {
-        "@type": "Offer",
-        price: "0",
-        priceCurrency: "USD",
-        availability: "https://schema.org/PreOrder",
-      },
-    },
-  ],
-});
+export const viewport: Viewport = {
+  themeColor: "#fbfbfb",
+  width: "device-width",
+  initialScale: 1,
+};
+
+/** Organization, WebSite, and SoftwareApplication, shared by every page. */
+const siteGraph = graph(organizationJsonLd(), websiteJsonLd(), softwareApplicationJsonLd());
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${jost.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${anton.variable} ${plexMono.variable}`}>
       <head>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
+        <link rel="alternate" type="text/markdown" href="/llms.txt" title="Appfox for LLMs" />
+        <JsonLd data={siteGraph} />
       </head>
       <body className={`${inter.className} antialiased`}>
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />

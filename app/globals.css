@@ -24,7 +24,7 @@
   --hero-bg: #fbfbfb;
   --hero-bg-top: #fbfbfb;
   --font-sans: var(--font-inter), "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: var(--font-jost), "Jost", "Futura", sans-serif;
+  --font-display: var(--font-anton), "Anton", Impact, sans-serif;
   --font-mono: var(--font-plex-mono), "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -118,7 +118,7 @@ p {
 }
 
 /* Hero headline "ink rise" (see components/home/hero-headline.tsx).
-   Jost is a variable font whose letters are built from overlapping shapes, so the outlines are
+   The display font's letters can be built from overlapping shapes, so the outlines are
    masked by the letter shapes themselves: every stroke inside a letter is cut away and only the
    outer border (half the stroke width) shows, on any background. */
 .hero-title {
@@ -399,24 +399,6 @@ details[open] .faq-icon {
   text-underline-offset: 3px;
 }
 
-/* Hero underline: a hand-drawn orange stroke that draws in after the headline ink has risen. */
-.hl-underline {
-  stroke-dasharray: 1 2;
-  stroke-dashoffset: 0;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .hl-underline {
-    animation: hl-underline-draw 0.6s cubic-bezier(0.6, 0, 0.3, 1) both;
-  }
-}
-
-@keyframes hl-underline-draw {
-  from {
-    stroke-dashoffset: 1.02;
-  }
-}
-
 /* Extra illustration motion: line draw-in (needs pathLength="1"), caret blink, flowing dashes, gentle float. */
 .illo-draw {
   stroke-dasharray: 1;
@@ -529,12 +511,6 @@ details[open] .faq-icon {
   }
 }
 
-/* Outlined card on the page background (no fill, dots, or shadow), used across the homepage and inner pages. */
-.outline-card {
-  background-color: var(--paper);
-  border: 2px solid var(--ink);
-}
-
 /* Ledger hub (components/home/ledger.tsx): dotted orange connectors flow into the center. */
 .ledger-flow {
   stroke-dasharray: 2 9;
@@ -627,7 +603,9 @@ details[open] .faq-icon {
   }
 }
 
-/* Soft card: a light gray key with a solid lower edge, in the style of the layer stack plates */
+/* Soft card: a light gray key with a solid lower edge, in the style of the layer stack plates.
+   .soft-surface is the same look for larger, static containers (no hover lift). */
+.soft-surface,
 .soft-card {
   background: linear-gradient(180deg, #fefefd 0%, #efefed 100%);
   box-shadow:
@@ -640,6 +618,9 @@ details[open] .faq-icon {
     0 6px 0 #d4d4d1,
     0 7px 0 #d0d0cd,
     0 24px 32px -18px rgba(17, 17, 17, 0.2);
+}
+
+.soft-card {
   transition: transform 0.35s cubic-bezier(0.2, 0.7, 0.2, 1);
 }
 
@@ -658,7 +639,9 @@ details[open] .faq-icon {
 }
 
 /* Soft key: a small round or pill control that presses down */
-.soft-key {
+/* .soft-chip is the same small key look for static labels (no hover or press). */
+.soft-key,
+.soft-chip {
   background: linear-gradient(180deg, #fefefd 0%, #ececea 100%);
   box-shadow:
     inset 0 1px 0 #ffffff,
@@ -666,6 +649,9 @@ details[open] .faq-icon {
     0 2px 0 #d9d9d6,
     0 3px 0 #d3d3d0,
     0 10px 16px -10px rgba(17, 17, 17, 0.3);
+}
+
+.soft-key {
   transition:
     transform 0.15s ease,
     box-shadow 0.15s ease;
@@ -680,4 +666,131 @@ details[open] .faq-icon {
   box-shadow:
     inset 0 1px 0 #ffffff,
     0 1px 0 #d3d3d0;
+}
+
+/* Scroll reveal (components/reveal.tsx): content fades and lifts into place once, with a quick
+   expo-out ease. Hidden only when scripts run and motion is allowed, so nothing is ever stuck invisible. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal] {
+    transition:
+      opacity 0.55s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+
+  [data-reveal]:not([data-shown]) {
+    opacity: 0;
+    transform: translate3d(0, 22px, 0);
+  }
+
+  [data-reveal="scale"]:not([data-shown]) {
+    transform: translate3d(0, 36px, 0) scale(0.97);
+  }
+
+  [data-reveal="fade"]:not([data-shown]) {
+    transform: none;
+  }
+}
+
+/* Isometric illustration loops (components/illustrations/iso-art.tsx): floating pieces bob and their
+   shadows breathe in step, columns rise and settle, and the approve key presses now and then. */
+@media (prefers-reduced-motion: no-preference) {
+  .iso-bob {
+    animation: iso-bob 3.2s ease-in-out infinite alternate;
+  }
+
+  .iso-shade {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: iso-shade 3.2s ease-in-out infinite alternate;
+  }
+
+  .iso-bob.iso-slow,
+  .iso-shade.iso-slow {
+    animation-duration: 4.4s;
+  }
+
+  .iso-grow {
+    transform-box: fill-box;
+    transform-origin: 50% 100%;
+    animation: iso-grow 3s ease-in-out infinite alternate;
+  }
+
+  .iso-grow-soft {
+    animation-name: iso-grow-soft;
+  }
+
+}
+
+@keyframes iso-bob {
+  to {
+    transform: translateY(-6px);
+  }
+}
+
+@keyframes iso-shade {
+  to {
+    transform: scale(0.86);
+    opacity: 0.65;
+  }
+}
+
+@keyframes iso-grow {
+  from {
+    transform: scaleY(0.9);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes iso-grow-soft {
+  from {
+    transform: scaleY(0.96);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+
+/* The flagged card's badge pings as each packet arrives (packets cycle every 2.7s). */
+@media (prefers-reduced-motion: no-preference) {
+  .iso-ping {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: iso-ping 2.7s ease-out infinite;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iso-packet {
+    display: none;
+  }
+}
+
+@keyframes iso-ping {
+  0%,
+  80%,
+  100% {
+    transform: scale(1);
+  }
+  86% {
+    transform: scale(1.22);
+  }
+}
+
+/* Pieces animated with SVG timing (which ignores CSS) come in a moving and a still copy. */
+.iso-still {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iso-motion {
+    display: none;
+  }
+
+  .iso-still {
+    display: inline;
+  }
 }

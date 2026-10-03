@@ -1,5 +1,5 @@
-import type { Metadata } from "next";
 import CtaBand from "@/components/cta-band";
+import { PageJsonLd } from "@/components/json-ld";
 import Image from "next/image";
 import { Check } from "lucide-react";
 import { OperateArt, OutcomeArt, RevenueArt } from "@/components/home/journey-art";
@@ -8,13 +8,18 @@ import { ButtonLink } from "@/components/ui/button";
 import PageIntro from "@/components/ui/page-intro";
 import SceneFrame from "@/components/ui/scene-frame";
 import { APP_URL, CTA_HREF } from "@/lib/site";
+import { howToJsonLd, pageMetadata } from "@/lib/seo";
 import SectionHeading from "@/components/ui/section-heading";
+import Reveal from "@/components/reveal";
 
-export const metadata: Metadata = {
-  title: "Operate a live app",
+const PAGE = {
+  path: "/live-app",
+  title: "Operate a Live App: Daily App Monitoring",
   description:
-    "Add your app by store URL, confirm the market, optionally connect RevenueCat, and let Today surface the customer, competitor, release, and monetization changes that matter.",
+    "Track a live iOS or Android app from one ranked feed. Add it by store URL, optionally connect RevenueCat read-only, and let Today surface the review, competitor, release, and revenue changes that matter, with evidence.",
 };
+
+export const metadata = pageMetadata(PAGE);
 
 const steps = [
   { t: "Add your app", b: "Paste an App Store or Google Play URL. Appfox builds the initial market and suggests competitors for you to confirm." },
@@ -32,10 +37,10 @@ const states = [
   { s: "Collection in progress", b: "Reviews or listings are still arriving. Findings wait until the sample is usable." },
 ];
 
-/** Small coded tiles for the four kinds of empty, drawn like the homepage scenes. */
+/** Small coded tiles for the four kinds of empty, drawn as soft panels like the homepage scenes. */
 function QuietTile() {
   return (
-    <div className="w-full rounded-[14px] border border-ink bg-white p-3.5 text-left">
+    <div className="w-full soft-panel rounded-[14px] p-3.5 text-left">
       <div className="flex items-center justify-between text-[11px] leading-4">
         <span className="font-semibold text-ink">Today</span>
         <span className="text-quiet">Updated 8:02</span>
@@ -53,7 +58,7 @@ function QuietTile() {
 
 function SparseTile() {
   return (
-    <div className="w-full rounded-[14px] border border-ink bg-white p-3.5 text-left">
+    <div className="w-full soft-panel rounded-[14px] p-3.5 text-left">
       <div className="flex items-center justify-between text-[11px] leading-4">
         <span className="font-semibold text-ink">Customers</span>
         <span className="text-quiet">3 new reviews</span>
@@ -76,7 +81,7 @@ function SparseTile() {
 
 function FailedTile() {
   return (
-    <div className="w-full rounded-[14px] border border-ink bg-white p-3.5 text-left">
+    <div className="w-full soft-panel rounded-[14px] p-3.5 text-left">
       <div className="flex items-center gap-2">
         <Image src="/icons/revenuecat.jpg" alt="" width={24} height={24} className="size-6 rounded-[28%]" />
         <span className="flex-1 text-[12px] font-semibold leading-4 text-ink">RevenueCat</span>
@@ -92,7 +97,7 @@ function FailedTile() {
 
 function CollectingTile() {
   return (
-    <div className="w-full rounded-[14px] border border-ink bg-white p-3.5 text-left">
+    <div className="w-full soft-panel rounded-[14px] p-3.5 text-left">
       <div className="flex items-center justify-between text-[11px] leading-4">
         <span className="font-semibold text-ink">Collecting reviews</span>
         <span className="text-quiet">62%</span>
@@ -112,14 +117,16 @@ function ConnectedSteps({ items }: { items: { t: string; b: string }[] }) {
   return (
     <ol className="grid gap-5 md:grid-cols-2 lg:grid-cols-3 lg:gap-8">
       {items.map((step, i) => (
-        <li
+        <Reveal
+          as="li"
           key={step.t}
-          className="outline-card relative flex flex-col rounded-[24px] p-6 lg:after:absolute lg:after:-right-[34px] lg:after:top-1/2 lg:after:w-[34px] lg:after:border-t-[2.5px] lg:after:border-dotted lg:after:border-accent lg:after:content-[''] lg:[&:nth-child(3n)]:after:hidden"
+          delay={(i % 3) * 90}
+          className="soft-surface relative flex flex-col rounded-[24px] p-6 lg:after:absolute lg:after:-right-[34px] lg:after:top-1/2 lg:after:w-[34px] lg:after:border-t-[2.5px] lg:after:border-dotted lg:after:border-accent lg:after:content-[''] lg:[&:nth-child(3n)]:after:hidden"
         >
           <span className="font-mono text-[14px] leading-5 text-accent-ink">{String(i + 1).padStart(2, "0")}</span>
           <p className="pt-6 font-mono text-[14px] font-medium uppercase leading-5 tracking-normal text-ink">{step.t}</p>
           <p className="pt-2 text-[16px] leading-[26px] text-muted">{step.b}</p>
-        </li>
+        </Reveal>
       ))}
     </ol>
   );
@@ -128,16 +135,28 @@ function ConnectedSteps({ items }: { items: { t: string; b: string }[] }) {
 export default function LiveAppPage() {
   return (
     <>
+      <PageJsonLd
+        path={PAGE.path}
+        name={PAGE.title}
+        description={PAGE.description}
+        extra={[
+          howToJsonLd({
+            name: "How to monitor a live app with Appfox",
+            description: "From a store URL to a measured outcome.",
+            steps,
+          }),
+        ]}
+      />
       <PageIntro
         kicker="Operate a live app"
         title="Stop checking five tools every morning."
-        lead="Today tells you what changed across your customers, your competitors, your releases, and your monetization, why it may matter, and what to do next."
+        lead="Appfox tracks your app every day. Today tells you what changed across your customers, your competitors, your releases, and your monetization, why it may matter, and what to do next."
       >
-        <div className="flex flex-wrap gap-4">
-          <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="lg">
+        <div className="flex flex-wrap justify-center gap-4">
+          <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
             Start for free
           </ButtonLink>
-          <ButtonLink href="#how-it-works" variant="secondary" size="lg">
+          <ButtonLink href="#how-it-works" variant="secondary" size="hero">
             How it works
           </ButtonLink>
         </div>
@@ -145,7 +164,8 @@ export default function LiveAppPage() {
 
       <Section className="pt-4 lg:pt-8">
         <Split
-          title="The signal is deterministic. The explanation cites it."
+          title="The signal is deterministic."
+          sub="The explanation cites it."
           visual={
             <SceneFrame>
               <OperateArt />
@@ -166,7 +186,7 @@ export default function LiveAppPage() {
       </Section>
 
       <Section id="how-it-works" className="scroll-mt-24">
-        <SectionHeading title="From a store URL to a measured outcome." />
+        <SectionHeading title="From a store URL" sub="to a measured outcome." />
         <div className="mt-10">
           <ConnectedSteps items={steps} />
         </div>
@@ -175,7 +195,8 @@ export default function LiveAppPage() {
       <Section>
         <Split
           reverse
-          title="Real monetization context, with exact scope."
+          title="Real monetization context,"
+          sub="with exact scope."
           visual={
             <SceneFrame>
               <RevenueArt />
@@ -197,20 +218,22 @@ export default function LiveAppPage() {
 
       <Section>
         <SectionHeading
-          title="Quiet is a valid answer."
+          title="Quiet is"
+          sub="a valid answer."
           lead="Today has no minimum card count. Four different kinds of empty are kept apart so you never mistake an outage for calm."
         />
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {states.map((st, i) => {
             const Visual = STATE_TILES[i];
-            return <PanelCard key={st.s} visual={<Visual />} title={st.s} body={st.b} />;
+            return <PanelCard key={st.s} delay={i * 90} visual={<Visual />} title={st.s} body={st.b} />;
           })}
         </div>
       </Section>
 
       <Section>
         <Split
-          title="Close the loop."
+          title="Close the loop:"
+          sub="did the change help?"
           visual={
             <SceneFrame>
               <OutcomeArt />

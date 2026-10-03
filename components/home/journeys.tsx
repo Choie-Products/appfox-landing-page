@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, Plus } from "lucide-react";
 import Container from "@/components/ui/container";
 import ScaleToFit from "@/components/mock/scale-to-fit";
+import Reveal from "@/components/reveal";
 import {
   ART_HEIGHT,
   ART_WIDTH,
@@ -233,12 +234,14 @@ export default function Journeys() {
 
   return (
     <Container as="section" className="py-24 lg:py-40">
-      <h2 className="text-display-md text-ink">What that lets you do.</h2>
-      <p className="pt-2 text-[16px] leading-[26px] text-muted">
-        Two journeys, one workspace, one evidence ledger. Start wherever you are.
-      </p>
+      <Reveal>
+        <h2 className="text-display-md text-ink">What that lets you do.</h2>
+        <p className="pt-2 text-[16px] leading-[26px] text-muted">
+          Two journeys, one workspace, one evidence ledger. Research an idea or track a live app, and start wherever you are.
+        </p>
+      </Reveal>
       <div className="mt-10 grid gap-8 lg:mt-16 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-12">
-        <div className="flex flex-col self-start">
+        <Reveal delay={60} className="flex flex-col self-start">
           {JOURNEYS.map((journey, i) => {
             const isActive = i === active;
             return (
@@ -282,14 +285,16 @@ export default function Journeys() {
               </div>
             );
           })}
-        </div>
+        </Reveal>
 
-        <Deck
-          active={active}
-          leaving={leaving}
-          onPrev={() => go((active - 1 + JOURNEYS.length) % JOURNEYS.length)}
-          onNext={() => go((active + 1) % JOURNEYS.length)}
-        />
+        <Reveal variant="scale" delay={160}>
+          <Deck
+            active={active}
+            leaving={leaving}
+            onPrev={() => go((active - 1 + JOURNEYS.length) % JOURNEYS.length)}
+            onNext={() => go((active + 1) % JOURNEYS.length)}
+          />
+        </Reveal>
       </div>
     </Container>
   );
