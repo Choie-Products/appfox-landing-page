@@ -111,7 +111,7 @@ async function createContact(input: WaitlistSignup, segmentId?: string) {
 }
 
 async function sendWaitlistConfirmation(email: string) {
-  const fromAddresses = [getResendFrom(), "AppFox <onboarding@resend.dev>"].filter(
+  const fromAddresses = [getResendFrom(), "Appfox <onboarding@resend.dev>"].filter(
     (value, index, all) => all.indexOf(value) === index,
   );
 

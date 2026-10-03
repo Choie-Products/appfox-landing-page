@@ -21,7 +21,7 @@ export default function CookiesPage() {
 
       <section>
         <h2>2. How We Use Cookies</h2>
-        <p className="mb-3">AppFox uses cookies for the following purposes:</p>
+        <p className="mb-3">Appfox uses cookies for the following purposes:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>
             <strong>Essential cookies:</strong> required for the website to function properly.

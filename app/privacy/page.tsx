@@ -12,7 +12,7 @@ export default function PrivacyPage() {
       <section>
         <h2>1. Introduction</h2>
         <p>
-          AppFox (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy.
+          Appfox (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) is committed to protecting your privacy.
           This Privacy Policy explains how we collect, use, and safeguard your information when you
           visit our website at appfox.app.
         </p>
@@ -45,7 +45,7 @@ export default function PrivacyPage() {
         <p className="mb-3">We use the information we collect to:</p>
         <ul className="list-disc space-y-2 pl-5">
           <li>Operate the waitlist and send early-access invitations.</li>
-          <li>Send product updates related to AppFox.</li>
+          <li>Send product updates related to Appfox.</li>
           <li>Respond to your requests.</li>
           <li>Understand how the site is used so we can improve it.</li>
           <li>Comply with legal obligations.</li>

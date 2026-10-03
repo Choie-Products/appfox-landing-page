@@ -14,7 +14,7 @@ export function getResend() {
 }
 
 export function getResendFrom() {
-  return process.env.RESEND_FROM?.trim() || "AppFox <hello@appfox.app>";
+  return process.env.RESEND_FROM?.trim() || "Appfox <hello@appfox.app>";
 }
 
 export function getWaitlistSegmentId() {

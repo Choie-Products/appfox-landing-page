@@ -95,7 +95,7 @@ export async function POST(request: Request) {
         return NextResponse.json(
           {
             error: "server_error",
-            message: "Add RESEND_API_KEY to .env.local (AppFox Resend account) and restart the dev server.",
+            message: "Add RESEND_API_KEY to .env.local (Appfox Resend account) and restart the dev server.",
           },
           { status: 500 },
         );

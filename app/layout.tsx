@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import Script from "next/script";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
+import { IBM_Plex_Mono, Inter, Jost } from "next/font/google";
 import "./globals.css";
-import { AgentationWrapper } from "@/components/agentation-wrapper";
+import SiteHeader from "@/components/site-header";
+import SiteFooter from "@/components/site-footer";
+import { GA_ID, SITE_URL } from "@/lib/site";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -12,41 +13,42 @@ const inter = Inter({
   axes: ["opsz"],
 });
 
-const sentient = localFont({
-  src: "./fonts/Sentient-Variable.woff2",
+const jost = Jost({
+  subsets: ["latin"],
   display: "swap",
-  variable: "--font-sentient",
-  weight: "200 700",
+  variable: "--font-jost",
 });
 
-const GA_ID = "G-5H68LE3WEB";
-const SITE_URL = "https://appfox.app";
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
+  variable: "--font-plex-mono",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "AppFox - Know What Your App Needs Next",
-    template: "%s | AppFox",
+    default: "Appfox - Your app explained",
+    template: "%s | Appfox",
   },
   description:
-    "AppFox watches your app, customers, competitors, and market, then turns meaningful changes into evidence-backed actions. Join the waitlist.",
-  alternates: {
-    canonical: SITE_URL,
-  },
+    "Appfox reads your reviews, rankings, releases, and revenue, then tells you what deserves attention and why. Evidence on every finding. Built for indie founders and small mobile studios.",
+  alternates: { canonical: SITE_URL },
   openGraph: {
-    title: "AppFox - Intelligence for Mobile Apps",
+    title: "Appfox - Your app explained",
     description:
-      "Your app, customers, competitors, and market, continuously researched and turned into actionable priorities.",
+      "An intelligence layer and operations partner for mobile apps. Reviews, rankings, releases, and revenue, read for you, with the evidence attached.",
     url: SITE_URL,
-    siteName: "AppFox",
+    siteName: "Appfox",
     type: "website",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    title: "AppFox - Intelligence for Mobile Apps",
+    title: "Appfox - Your app explained",
     description:
-      "AppFox watches your app, customers, and market, then tells you what deserves attention next.",
+      "Appfox reads your reviews, rankings, releases, and revenue, then tells you what deserves attention and why.",
   },
   robots: {
     index: true,
@@ -59,35 +61,31 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: {
-    icon: "/favicon.svg",
-  },
+  icons: { icon: "/favicon.svg" },
 };
 
-const jsonLdString = JSON.stringify({
+const jsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@graph": [
     {
       "@type": "Organization",
       "@id": `${SITE_URL}/#organization`,
-      name: "AppFox",
+      name: "Appfox",
       url: SITE_URL,
       logo: `${SITE_URL}/logo.svg`,
       description:
-        "AppFox is an intelligence system for mobile apps. It watches an app, its customers, and its market, then turns meaningful changes into evidence-backed actions.",
+        "Appfox is an intelligence layer and operations partner for mobile apps. It reads reviews, rankings, releases, and revenue, then turns meaningful changes into evidence-backed actions.",
     },
     {
       "@type": "WebSite",
       "@id": `${SITE_URL}/#website`,
       url: SITE_URL,
-      name: "AppFox",
+      name: "Appfox",
       publisher: { "@id": `${SITE_URL}/#organization` },
-      description:
-        "Join the AppFox waitlist. Intelligence for mobile apps that tells you what deserves attention next.",
     },
     {
       "@type": "SoftwareApplication",
-      name: "AppFox",
+      name: "Appfox",
       applicationCategory: "BusinessApplication",
       operatingSystem: "Web",
       description:
@@ -102,26 +100,28 @@ const jsonLdString = JSON.stringify({
   ],
 });
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${sentient.variable}`}>
+    <html lang="en" className={`${inter.variable} ${jost.variable} ${plexMono.variable}`}>
       <head>
-        <script type="application/ld+json">{jsonLdString}</script>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: jsonLd }} />
       </head>
       <body className={`${inter.className} antialiased`}>
-        <Script
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-          strategy="afterInteractive"
-        />
+        <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
         </Script>
-        {children}
-        <AgentationWrapper />
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:bg-ink focus:px-4 focus:py-2 focus:text-sm focus:text-white"
+        >
+          Skip to content
+        </a>
+        <SiteHeader />
+        <main id="main" className="pt-[72px] lg:pt-[88px]">
+          {children}
+        </main>
+        <SiteFooter />
       </body>
     </html>
   );

@@ -6,25 +6,26 @@ import { track } from "@/lib/track";
 import { cn } from "@/lib/utils";
 
 const ROLES = [
-  { id: "indie", label: "Indie" },
+  { id: "indie", label: "Indie developer" },
   { id: "founder", label: "Founder" },
-  { id: "product", label: "Product" },
-  { id: "studio", label: "Studio" },
-  { id: "exploring", label: "Exploring" },
+  { id: "product", label: "Product or growth" },
+  { id: "studio", label: "Studio or agency" },
+  { id: "exploring", label: "Just exploring" },
 ] as const;
 
 export default function WaitlistSuccess({
   email,
   alreadyJoined,
-  layout = "card",
+  tone = "light",
 }: {
   email: string;
   alreadyJoined: boolean;
-  layout?: "card" | "page";
+  tone?: "light" | "dark";
 }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [role, setRole] = useState<string | null>(null);
   const [roleSaved, setRoleSaved] = useState(false);
+  const dark = tone === "dark";
 
   useEffect(() => {
     headingRef.current?.focus();
@@ -45,50 +46,33 @@ export default function WaitlistSuccess({
     }
   }
 
-  const isPage = layout === "page";
-
   return (
     <div
       className={cn(
-        "waitlist-enter",
-        isPage
-          ? "max-w-xl"
-          : "w-full rounded-[28px] border border-border bg-surface p-5 shadow-[0_12px_40px_rgba(23,23,23,0.05)] sm:p-6",
+        "rise w-full border p-5 sm:p-6",
+        dark ? "border-dark-line bg-dark-surface" : "border-line bg-surface",
       )}
     >
-      <div className={cn("flex", isPage ? "flex-col" : "items-start gap-4")}>
-        <span
-          className={cn(
-            "flex shrink-0 items-center justify-center rounded-2xl bg-accent text-accent-foreground",
-            isPage ? "mb-6 size-12" : "size-11",
-          )}
-        >
+      <div className="flex items-start gap-4">
+        <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent text-white">
           <Check className="size-5" strokeWidth={2.25} />
         </span>
         <div>
-          <h2
+          <h3
             ref={headingRef}
             tabIndex={-1}
-            className={cn(
-              "font-heading tracking-tight text-foreground outline-none",
-              isPage ? "text-4xl leading-[1.12] sm:text-5xl" : "text-xl sm:text-2xl",
-            )}
+            className={cn("text-xl font-medium tracking-[-0.015em] outline-none sm:text-2xl", dark ? "text-white" : "text-ink")}
           >
             {alreadyJoined ? "You're already on the list." : "You're on the list."}
-          </h2>
-          <p
-            className={cn(
-              "mt-2 max-w-[38ch] leading-relaxed text-foreground-muted",
-              isPage ? "text-base sm:text-lg" : "text-sm",
-            )}
-          >
-            We'll email you when AppFox is ready to watch your app.
+          </h3>
+          <p className={cn("mt-1.5 text-sm leading-relaxed", dark ? "text-dark-muted" : "text-muted")}>
+            We sent a note to {email}. We'll email you when your workspace is ready.
           </p>
         </div>
       </div>
 
-      <div className={cn(isPage ? "mt-8" : "mt-5 border-t border-border pt-5")}>
-        <p className="text-sm text-foreground">What best describes you?</p>
+      <div className={cn("mt-5 border-t pt-5", dark ? "border-dark-line" : "border-line")}>
+        <p className={cn("text-sm", dark ? "text-white" : "text-ink")}>What best describes you?</p>
         <div className="mt-3 flex flex-wrap gap-2" role="group" aria-label="Your role">
           {ROLES.map((item) => {
             const selected = role === item.id;
@@ -98,10 +82,12 @@ export default function WaitlistSuccess({
                 type="button"
                 onClick={() => saveRole(item.id)}
                 className={cn(
-                  "rounded-full px-3.5 py-2 text-sm transition-colors",
-                    selected
-                      ? "bg-accent text-accent-foreground"
-                      : "bg-surface-muted text-foreground hover:bg-border",
+                  "rounded-full border px-3.5 py-1.5 text-sm transition-colors",
+                  selected
+                    ? "border-accent bg-accent text-white"
+                    : dark
+                      ? "border-dark-line text-dark-muted hover:border-dark-muted hover:text-white"
+                      : "border-line-strong text-ink-soft hover:border-ink hover:text-ink",
                 )}
               >
                 {item.label}
@@ -110,7 +96,7 @@ export default function WaitlistSuccess({
           })}
         </div>
         {roleSaved ? (
-          <p className="mt-3 text-sm text-foreground-muted" aria-live="polite">
+          <p className={cn("mt-3 text-sm", dark ? "text-dark-muted" : "text-muted")} aria-live="polite">
             Got it. That helps us shape early access.
           </p>
         ) : null}

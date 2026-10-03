@@ -1,6 +1,6 @@
 "use client";
 
-import { FormEvent, useEffect, useId, useState } from "react";
+import { FormEvent, useId, useState } from "react";
 import { AlertCircle } from "lucide-react";
 import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { track } from "@/lib/track";
@@ -16,10 +16,14 @@ type FormStatus =
 
 export default function WaitlistForm({
   className,
-  onSuccess,
+  source = "page",
+  tone = "light",
+  compact = false,
 }: {
   className?: string;
-  onSuccess?: (result: { email: string; alreadyJoined: boolean }) => void;
+  source?: string;
+  tone?: "light" | "dark";
+  compact?: boolean;
 }) {
   const inputId = useId();
   const errorId = useId();
@@ -27,10 +31,6 @@ export default function WaitlistForm({
   const [honeypot, setHoneypot] = useState("");
   const [status, setStatus] = useState<FormStatus>({ type: "idle" });
   const [shake, setShake] = useState(false);
-
-  useEffect(() => {
-    track("landing_view");
-  }, []);
 
   function flashError(message: string, type: "invalid" | "error" = "invalid") {
     setStatus({ type, message });
@@ -42,19 +42,11 @@ export default function WaitlistForm({
     event.preventDefault();
     const trimmed = email.trim();
 
-    if (!trimmed) {
-      flashError("Enter your work email.");
-      return;
-    }
-
-    if (!isValidEmail(normalizeEmail(trimmed))) {
-      flashError("That email doesn't look right.");
-      return;
-    }
+    if (!trimmed) return flashError("Enter your work email.");
+    if (!isValidEmail(normalizeEmail(trimmed))) return flashError("That email doesn't look right.");
 
     setStatus({ type: "loading" });
-    track("waitlist_submit");
-    track("hero_waitlist_click");
+    track("waitlist_submit", { source });
 
     const params = new URLSearchParams(window.location.search);
 
@@ -92,43 +84,32 @@ export default function WaitlistForm({
 
       const alreadyJoined = Boolean(data.alreadyJoined);
       setStatus({ type: "success", alreadyJoined });
-      track("waitlist_success", { already_joined: alreadyJoined });
-      onSuccess?.({ email: trimmed, alreadyJoined });
+      track("waitlist_success", { already_joined: alreadyJoined, source });
     } catch {
-      flashError("Couldn't reach AppFox. Try again.", "error");
+      flashError("Couldn't reach Appfox. Try again.", "error");
     }
   }
 
-  const errorMessage =
-    status.type === "invalid" || status.type === "error" ? status.message : "";
-  const showError = Boolean(errorMessage) && status.type !== "loading";
-  const isBusy = status.type === "loading";
-
-  if (status.type === "success" && !onSuccess) {
+  if (status.type === "success") {
     return (
       <div className={cn("w-full", className)}>
-        <WaitlistSuccess email={email} alreadyJoined={status.alreadyJoined} />
+        <WaitlistSuccess email={email} alreadyJoined={status.alreadyJoined} tone={tone} />
       </div>
     );
   }
 
-  if (status.type === "success" && onSuccess) {
-    return null;
-  }
+  const errorMessage = status.type === "invalid" || status.type === "error" ? status.message : "";
+  const showError = Boolean(errorMessage);
+  const isBusy = status.type === "loading";
+  const dark = tone === "dark";
 
   return (
     <div className={cn("w-full", className)}>
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-2">
-        <label htmlFor={inputId} className="text-sm text-foreground">
+        <label htmlFor={inputId} className="sr-only">
           Work email
         </label>
-
-        <div
-          className={cn(
-            "flex flex-col gap-3 sm:flex-row sm:items-center",
-            shake && "waitlist-shake",
-          )}
-        >
+        <div className={cn("flex flex-col gap-2 sm:flex-row", shake && "shake")}>
           <input
             id={inputId}
             name="email"
@@ -140,49 +121,48 @@ export default function WaitlistForm({
             disabled={isBusy}
             onChange={(event) => {
               setEmail(event.target.value);
-              if (status.type === "invalid" || status.type === "error") {
-                setStatus({ type: "idle" });
-              }
+              if (status.type === "invalid" || status.type === "error") setStatus({ type: "idle" });
             }}
             aria-invalid={showError}
             aria-describedby={showError ? errorId : undefined}
             className={cn(
-              "h-12 w-full rounded-full border bg-surface px-5 text-base text-foreground outline-none transition placeholder:text-foreground-muted/80 focus-visible:ring-2 focus-visible:ring-accent/40 sm:flex-1",
-              showError
-                ? "border-danger focus:border-danger"
-                : "border-border focus:border-accent",
+              "h-10 w-full rounded-full border px-4 text-[16px] outline-none transition sm:flex-1",
+              dark
+                ? "border-dark-line bg-dark-surface text-white placeholder:text-dark-muted focus:border-white"
+                : "border-line-strong bg-white text-ink placeholder:text-quiet focus:border-ink",
+              showError && "border-danger focus:border-danger",
               isBusy && "opacity-70",
             )}
           />
           <button
             type="submit"
             disabled={isBusy}
-            className="h-12 shrink-0 rounded-full bg-accent px-7 text-sm font-medium text-white transition-transform hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/50 focus-visible:ring-offset-2 focus-visible:ring-offset-background active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+            className={cn(
+              "h-10 shrink-0 rounded-full px-[18px] text-[14px] font-bold transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60",
+              "bg-accent text-white hover:bg-[#e94800]",
+            )}
           >
-            {isBusy ? "Joining" : "Join waitlist"}
+            {isBusy ? "Joining" : compact ? "Join" : "Start for free"}
           </button>
         </div>
 
         <div className="absolute -left-[9999px] h-0 w-0 overflow-hidden" aria-hidden="true">
           <label>
             Website
-            <input
-              tabIndex={-1}
-              autoComplete="off"
-              value={honeypot}
-              onChange={(event) => setHoneypot(event.target.value)}
-            />
+            <input tabIndex={-1} autoComplete="off" value={honeypot} onChange={(e) => setHoneypot(e.target.value)} />
           </label>
         </div>
 
-        <div className="min-h-5" aria-live="polite">
+        <div className="min-h-5 px-1" aria-live="polite">
           {showError ? (
             <p id={errorId} className="flex items-center gap-1.5 text-sm text-danger">
               <AlertCircle className="size-4 shrink-0" strokeWidth={1.75} />
               {errorMessage}
             </p>
           ) : (
-            <p className="text-sm text-foreground-muted">No spam. Just early access.</p>
+            <p className={cn("text-[12px] leading-[18px]", dark ? "text-dark-muted" : "text-quiet")}>
+              Free to start. Both journeys, full evidence ledger, no time expiry.
+            </p>
           )}
         </div>
       </form>

@@ -1,82 +1,55 @@
-# Appfox Landing Page
+# Appfox website
 
-The official landing page for **Appfox** - a curated discovery platform for discounted mobile apps.
+Marketing site for **Appfox**, an intelligence layer for mobile apps. It watches an app, its customers, its competitors, and its market, then turns meaningful changes into evidence-backed actions.
 
-## 🦊 About Appfox
+Live at [appfox.app](https://appfox.app).
 
-Appfox is the clever fox that hunts down and snags the best mobile app deals for users. We provide an App Store-like experience optimized for deal hunting, featuring:
+## Pages
 
-- **Lifetime Premium Deals** - One-time purchases for lifetime access
-- **Deep Discounts** - 50-90% off on premium mobile apps
-- **Time-Sensitive Offers** - Limited-time deals with countdown timers
-- **Curated Selection** - Manually reviewed and approved apps
-- **Native Experience** - True iOS (Cupertino) and Android (Material Design) apps
+| Route | Purpose |
+|---|---|
+| `/` | Home: hero with the Today feed, the problem, before/after, the facts-to-outcomes chain, the two journeys, surfaces, principles, replay, FAQ |
+| `/product` | The six surfaces, alert levels, progressive disclosure |
+| `/research` | Research-an-idea journey and what a brief can and cannot claim |
+| `/live-app` | Operate-a-live-app journey, RevenueCat scope, empty states, closed loop |
+| `/replay` | Mobile session replay SDK, privacy controls, exclusions |
+| `/integrations` | Launch and planned integrations, connection-card contract |
+| `/pricing` | Open-beta plan and how metering works |
+| `/security` | Isolation, credentials, read-only, fail-closed, retention |
+| `/about` | Thesis, category, roadmap levels |
+| `/contact` | Email and waitlist |
+| `/privacy`, `/terms`, `/cookies` | Legal |
 
-## 🚀 Tech Stack
+Copy is sourced from the product specification in the `appfox` repository (`spec/docs`). Mockup data is illustrative and mirrors the spec's own examples; the site makes no customer, traffic, or revenue claims.
 
-- **Framework**: Next.js 15+ (App Router)
-- **Styling**: Tailwind CSS
-- **Language**: TypeScript
-- **Icons**: Lucide React
-- **Deployment**: Vercel
+## Stack
 
-## 📦 Getting Started
+- Next.js 15 (App Router), React 19, TypeScript
+- Tailwind CSS 3 with tokens in `app/globals.css`
+- Inter, Jost, and IBM Plex Mono (Google Fonts): body, display headlines, and mono labels
+- Resend for waitlist contacts and the confirmation email
+- Google Analytics via `gtag`
 
-### Prerequisites
-
-- Node.js 18+
-- npm or yarn
-
-### Installation
+## Develop
 
 ```bash
-# Install dependencies
 npm install
-
-# Run development server
 npm run dev
-
-# Build for production
-npm run build
-
-# Start production server
-npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view the landing page.
+Copy `.env.example` to `.env.local` and set `RESEND_API_KEY`. Set `NEXT_PUBLIC_APP_URL` to show a "Sign in" link in the header once the product is reachable.
 
-## 🎨 Features
+```bash
+npm run lint
+npm run build
+```
 
-### Landing Page Sections
+## Structure
 
-1. **Hero Section** - Eye-catching introduction with CTAs
-2. **Features** - Key benefits and capabilities
-3. **How It Works** - Simple 3-step process
-4. **Stats** - Platform metrics and achievements
-5. **Developers** - Call-to-action for app developers
-6. **Footer** - Links and company information
-
-### Design Highlights
-
-- Responsive design (mobile-first)
-- Dark mode support
-- Gradient animations
-- Smooth transitions and hover effects
-- Accessibility-focused
-- SEO optimized
-
-## 🔗 Related Projects
-
-- **Appfox Mobile**: React Native app (iOS & Android)
-- **Partner Portal**: Next.js app for developers at `partners.appfox.app`
-- **Admin Dashboard**: Next.js app for content management at `admin.appfox.app`
-
-## 📝 License
-
-Copyright © 2026 Appfox. All rights reserved.
-
-## 🌐 Links
-
-- **Website**: [appfox.app](https://appfox.app)
-- **Partner Portal**: [partners.appfox.app](https://partners.appfox.app)
-- **GitHub**: [github.com/Choie-Products/appfox-landing-page](https://github.com/Choie-Products/appfox-landing-page)
+```text
+app/                 routes, layout, metadata, sitemap, robots
+components/          header, footer, hero, CTA band, FAQ, waitlist form
+components/mock/     product UI mockups (Today feed, brief, competitors, themes, task, integration, replay)
+components/ui/       container, button, section heading, page intro
+lib/                 site constants, waitlist persistence, email helpers, analytics
+```

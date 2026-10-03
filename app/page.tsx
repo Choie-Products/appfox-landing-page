@@ -1,19 +1,27 @@
-import DashField from "@/components/dash-field";
-import SiteFooter from "@/components/site-footer";
-import SiteHeader from "@/components/site-header";
-import WaitlistView from "@/components/waitlist-view";
+import CtaBand from "@/components/cta-band";
+import Editorial from "@/components/home/editorial";
+import FaqSection from "@/components/home/faq-section";
+import HeroShowcase from "@/components/home/hero-showcase";
+import Journeys from "@/components/home/journeys";
+import Layers from "@/components/home/layers";
+import Ledger from "@/components/home/ledger";
+import Masthead from "@/components/home/masthead";
+import PricingTable from "@/components/home/pricing-table";
+import Surfaces from "@/components/home/surfaces";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <div className="relative isolate flex h-[100dvh] min-h-[100dvh] flex-col overflow-hidden overscroll-none bg-background">
-      <DashField />
-      <div className="relative z-10 flex min-h-0 flex-1 flex-col">
-        <SiteHeader />
-        <main className="mx-auto flex min-h-0 w-full max-w-[1200px] flex-1 flex-col px-5 sm:px-8 lg:px-12">
-          <WaitlistView />
-        </main>
-        <SiteFooter />
-      </div>
-    </div>
+    <>
+      <Masthead />
+      <HeroShowcase />
+      <Surfaces />
+      <Editorial />
+      <Layers />
+      <Journeys />
+      <Ledger />
+      <PricingTable />
+      <FaqSection />
+      <CtaBand />
+    </>
   );
 }

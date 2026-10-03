@@ -1,16 +1,16 @@
 export function waitlistConfirmationSubject() {
-  return "You're on the AppFox waitlist";
+  return "You're on the Appfox waitlist";
 }
 
 export function waitlistConfirmationText() {
   return [
-    "You're on the AppFox waitlist.",
+    "You're on the Appfox waitlist.",
     "",
-    "We'll email you when AppFox is ready to watch your app.",
+    "We'll email you when Appfox is ready to watch your app.",
     "",
     "No spam — just early access.",
     "",
-    "AppFox",
+    "Appfox",
     "https://appfox.app",
   ].join("\n");
 }
@@ -21,7 +21,7 @@ export function waitlistConfirmationHtml() {
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>You're on the AppFox waitlist</title>
+    <title>You're on the Appfox waitlist</title>
   </head>
   <body style="margin:0;padding:0;background:#000000;color:#f3f3f4;">
     <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#000000;">
@@ -35,7 +35,7 @@ export function waitlistConfirmationHtml() {
             </tr>
             <tr>
               <td style="padding-top:16px;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;font-size:16px;line-height:1.6;color:#9a9a9e;">
-                We'll email you when AppFox is ready to watch your app.
+                We'll email you when Appfox is ready to watch your app.
               </td>
             </tr>
             <tr>

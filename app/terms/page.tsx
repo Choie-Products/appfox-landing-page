@@ -12,7 +12,7 @@ export default function TermsPage() {
       <section>
         <h2>1. Acceptance of Terms</h2>
         <p>
-          By accessing or using the AppFox website (the &quot;Service&quot;), you agree to be bound
+          By accessing or using the Appfox website (the &quot;Service&quot;), you agree to be bound
           by these Terms of Service. If you do not agree to these terms, please do not use the Service.
         </p>
       </section>
@@ -20,8 +20,8 @@ export default function TermsPage() {
       <section>
         <h2>2. Description of Service</h2>
         <p>
-          AppFox is an intelligence product for mobile apps. The public website currently offers a
-          waitlist for early access. AppFox is intended to watch an app, its customers, and its
+          Appfox is an intelligence product for mobile apps. The public website currently offers a
+          waitlist for early access. Appfox is intended to watch an app, its customers, and its
           market, then surface what deserves attention and what to do next. Features, availability,
           and integrations may change as the product develops.
         </p>
@@ -52,7 +52,7 @@ export default function TermsPage() {
         <h2>5. Intellectual Property</h2>
         <p>
           All content on the Service, including text, graphics, logos, and software, is the
-          property of AppFox or its content suppliers and is protected by applicable intellectual
+          property of Appfox or its content suppliers and is protected by applicable intellectual
           property laws. You may not reproduce, distribute, or create derivative works from any
           content without our prior written permission.
         </p>
@@ -61,7 +61,7 @@ export default function TermsPage() {
       <section>
         <h2>6. Limitation of Liability</h2>
         <p>
-          AppFox is provided &quot;as is&quot; without warranties of any kind. To the fullest
+          Appfox is provided &quot;as is&quot; without warranties of any kind. To the fullest
           extent permitted by law, we shall not be liable for any indirect, incidental, special,
           or consequential damages arising from your use of the Service, including loss of data,
           revenue, or profits.
