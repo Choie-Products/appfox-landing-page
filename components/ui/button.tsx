@@ -1,18 +1,20 @@
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-type Variant = "primary" | "secondary" | "dark" | "ghost" | "inverse";
+type Variant = "primary" | "secondary" | "dark" | "ghost" | "inverse" | "flat";
 type Size = "sm" | "md" | "lg" | "hero";
 
 const base =
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-bold transition-[background-color,color,border-color,transform] duration-150 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-60";
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full font-bold disabled:pointer-events-none disabled:opacity-60";
 
+/** Filled buttons are 3D keys (see `.k3d` in globals.css): orange, light gray, or black. `flat` is the plain orange pill used in the header. */
 const variants: Record<Variant, string> = {
-  primary: "bg-accent text-white hover:bg-[#e94800]",
-  secondary: "bg-white text-ink hover:bg-[#f7f7f7]",
-  dark: "bg-[#121212] text-white hover:bg-black",
-  ghost: "text-ink hover:bg-ink/[0.05]",
-  inverse: "bg-white text-ink hover:bg-surface",
+  primary: "k3d k3d-accent text-white",
+  secondary: "k3d k3d-light text-ink",
+  dark: "k3d k3d-dark text-white",
+  ghost: "text-ink transition-colors hover:bg-ink/[0.05]",
+  inverse: "k3d k3d-light text-ink",
+  flat: "bg-accent text-white transition-colors hover:bg-[#e94800]",
 };
 
 const sizes: Record<Size, string> = {

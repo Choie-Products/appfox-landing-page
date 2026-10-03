@@ -20,12 +20,7 @@ export default function Masthead() {
           <p className="max-w-[640px] text-balance pt-6 text-[16px] leading-[26px] text-quiet">{DESCRIPTION}</p>
         </Reveal>
         <Reveal delay={240} className="flex flex-wrap justify-center gap-4 pt-8">
-          <ButtonLink
-            href={CTA_HREF}
-            external={Boolean(APP_URL)}
-            variant="dark"
-            size="hero"
-          >
+          <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
             Start for free
           </ButtonLink>
           <ButtonLink href="/pricing" variant="secondary" size="hero">

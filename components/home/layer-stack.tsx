@@ -129,15 +129,39 @@ function reach(half = S, r = R) {
   return (2 * half - 0.5 * r) / Math.SQRT2;
 }
 
-/** The walls of an extruded plate: its bottom face plus the band between the side extremes. */
+/**
+ * The walls of an extruded plate as one outline: straight down from the side extremes at `top`, then
+ * around the front of the bottom face at `bottom`. Drawn as a single shape so translucent fills (like the
+ * orange cup) stay one even shade instead of doubling up where pieces would overlap.
+ */
 function Walls({ top, bottom, half, r, fill }: { top: number; bottom: number; half: number; r: number; fill: string }) {
+  const a = half;
+  const b = half - r;
+  const pt = (u: number, v: number) => iso(u, v, bottom);
+  const mid = (p: [number, number], q: [number, number]): [number, number] => [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2];
+  const quarter = (p0: [number, number], p1: [number, number], p2: [number, number]): [number, number] => [
+    0.25 * p0[0] + 0.5 * p1[0] + 0.25 * p2[0],
+    0.25 * p0[1] + 0.5 * p1[1] + 0.25 * p2[1],
+  ];
+  // Right corner (u = a, v = -a): its outermost point is the curve's midpoint.
+  const rightMid = quarter([b, -a], [a, -a], [a, -b]);
+  const rightCtrl = mid([a, -a], [a, -b]);
+  // Left corner (u = -a, v = a).
+  const leftCtrl = mid([-b, a], [-a, a]);
+  const leftMid = quarter([-b, a], [-a, a], [-a, b]);
   const e = reach(half, r);
-  return (
-    <>
-      <path d={platePath(bottom, half, r)} fill={fill} />
-      <rect x={CX - e} y={top} width={e * 2} height={bottom - top} fill={fill} />
-    </>
-  );
+  const d = [
+    `M${(CX - e).toFixed(1)} ${top.toFixed(1)}`,
+    `L${(CX + e).toFixed(1)} ${top.toFixed(1)}`,
+    `L${pt(...rightMid)}`,
+    `Q${pt(...rightCtrl)} ${pt(a, -b)}`,
+    `L${pt(a, b)}`,
+    `Q${pt(a, a)} ${pt(b, a)}`,
+    `L${pt(-b, a)}`,
+    `Q${pt(...leftCtrl)} ${pt(...leftMid)}`,
+    "Z",
+  ].join(" ");
+  return <path d={d} fill={fill} />;
 }
 
 function Plate({
@@ -188,6 +212,67 @@ function Plate({
       </g>
       {children}
     </g>
+  );
+}
+
+/** Pseudo-random but stable numbers, so the embers sit in the same places on every render. Values drawn
+ * from it are rounded before use so the server and browser print identical attributes. */
+function seeded(n: number) {
+  const x = Math.sin(n * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+}
+
+/** The soft orange cup that holds the lower layers, with embers drifting up through it. */
+function StackGlow({ uid, cupTop, cupBottom }: { uid: string; cupTop: number; cupBottom: number }) {
+  const inner = { half: S * 1.18, r: R * 1.4 };
+  const innerReach = reach(inner.half, inner.r);
+  return (
+    <>
+      <g filter={`url(#${uid}-blur)`} opacity={0.6}>
+        <Walls top={cupTop - 30} bottom={cupBottom + 10} half={S * 1.34} r={R * 1.6} fill={`url(#${uid}-cup)`} />
+      </g>
+      <g opacity={0.75}>
+        <Walls top={cupTop} bottom={cupBottom} half={inner.half} r={inner.r} fill={`url(#${uid}-cup)`} />
+      </g>
+      <ellipse cx={CX} cy={PLATE_Y[BRAND] + 8} rx={270} ry={140} fill={`url(#${uid}-glow)`} />
+      <g className="iso-motion" filter={`url(#${uid}-soft)`}>
+        {Array.from({ length: 14 }, (_, i) => {
+          const x = CX + (seeded(i + 1) - 0.5) * innerReach * 1.7;
+          const start = cupBottom + 20 - seeded(i + 7) * 40;
+          const rise = 150 + seeded(i + 13) * 90;
+          const drift = (seeded(i + 21) - 0.5) * 30;
+          const dur = 4.5 + seeded(i + 29) * 3.5;
+          const begin = `${(-seeded(i + 43) * dur).toFixed(2)}s`;
+          return (
+            <circle
+              key={i}
+              cx={x.toFixed(1)}
+              cy={start.toFixed(1)}
+              r={(2.5 + seeded(i + 37) * 2.5).toFixed(1)}
+              fill="#ff7a3a"
+              opacity={0}
+            >
+              <animateTransform
+                attributeName="transform"
+                type="translate"
+                values={`0 0;${drift.toFixed(1)} ${(-rise).toFixed(1)}`}
+                dur={`${dur.toFixed(2)}s`}
+                begin={begin}
+                repeatCount="indefinite"
+              />
+              <animate
+                attributeName="opacity"
+                values="0;0.85;0.6;0"
+                keyTimes="0;0.2;0.7;1"
+                dur={`${dur.toFixed(2)}s`}
+                begin={begin}
+                repeatCount="indefinite"
+              />
+            </circle>
+          );
+        })}
+      </g>
+    </>
   );
 }
 
@@ -262,19 +347,16 @@ function StackArt({ active, full }: { active: number; full: boolean }) {
           <stop offset="0.45" stopColor="#ff9a66" stopOpacity="0.14" />
           <stop offset="1" stopColor="#ff9a66" stopOpacity="0.5" />
         </linearGradient>
+        <filter id={`${uid}-soft`} x="-50%" y="-50%" width="200%" height="200%">
+          <feGaussianBlur stdDeviation="1.4" />
+        </filter>
         <filter id={`${uid}-blur`} x="-30%" y="-30%" width="160%" height="160%">
           <feGaussianBlur stdDeviation="16" />
         </filter>
       </defs>
 
       {/* A soft orange cup holds the lower layers */}
-      <g filter={`url(#${uid}-blur)`} opacity={0.6}>
-        <Walls top={cupTop - 30} bottom={cupBottom + 10} half={S * 1.34} r={R * 1.6} fill={`url(#${uid}-cup)`} />
-      </g>
-      <g opacity={0.75}>
-        <Walls top={cupTop} bottom={cupBottom} half={S * 1.18} r={R * 1.4} fill={`url(#${uid}-cup)`} />
-      </g>
-      <ellipse cx={CX} cy={PLATE_Y[BRAND] + 8} rx={270} ry={140} fill={`url(#${uid}-glow)`} />
+      <StackGlow uid={uid} cupTop={cupTop} cupBottom={cupBottom} />
 
       {/* Drawn bottom up, so each plate sits over the one beneath it */}
       {PLATE_Y.map((_, i) => PLATE_Y.length - 1 - i).map((i) => (

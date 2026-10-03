@@ -121,7 +121,7 @@ function ConnectedSteps({ items }: { items: { t: string; b: string }[] }) {
           as="li"
           key={step.t}
           delay={(i % 3) * 90}
-          className="soft-surface relative flex flex-col rounded-[24px] p-6 lg:after:absolute lg:after:-right-[34px] lg:after:top-1/2 lg:after:w-[34px] lg:after:border-t-[2.5px] lg:after:border-dotted lg:after:border-accent lg:after:content-[''] lg:[&:nth-child(3n)]:after:hidden"
+          className="soft-surface relative flex flex-col rounded-[24px] p-6 lg:after:absolute lg:after:-right-[34px] lg:after:top-1/2 lg:after:w-[34px] lg:after:h-1 lg:after:-translate-y-1/2 lg:after:rounded-full lg:after:bg-[#d4d4d1] lg:after:content-[''] lg:[&:nth-child(3n)]:after:hidden"
         >
           <span className="font-mono text-[14px] leading-5 text-accent-ink">{String(i + 1).padStart(2, "0")}</span>
           <p className="pt-6 font-mono text-[14px] font-medium uppercase leading-5 tracking-normal text-ink">{step.t}</p>

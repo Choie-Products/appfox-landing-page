@@ -4,6 +4,7 @@ import { FOX_PATH } from "@/components/fox-mark";
 import ScaleToFit from "@/components/mock/scale-to-fit";
 import Container from "@/components/ui/container";
 import Reveal from "@/components/reveal";
+import { Groove, Packet } from "@/components/illustrations/iso-art";
 
 /** The six surfaces, each with the question it answers (wording from the product page). */
 const SURFACES: { name: string; question: string; icon: LucideIcon }[] = [
@@ -28,7 +29,9 @@ const CX = CANVAS_W / 2;
 const CARD_W = 360;
 const CARD_H = 96;
 const CARD_Y = [40, 196, 352];
-const FLOW_DURATIONS = ["1.1s", "0.9s", "1.3s"];
+/** Six pipes take turns, so a streak reaches the plate about every 0.6 seconds. */
+const STREAK_DUR = 3.6;
+const STREAK_BEGINS = [0, 1.8, 0.6, 2.4, 1.2, 3.0];
 
 /* The ledger plate: half side of its square, corner radius, isometric squash, thickness. */
 const PLATE_CY = 206;
@@ -161,29 +164,26 @@ export default function Ledger() {
             className="absolute inset-0 overflow-visible"
             aria-hidden="true"
           >
-            <LedgerPlate cx={CX} cy={PLATE_CY} uid="ledger-desktop" />
+            {/* Pipes run from under each card into the plate's side; streaks of light take turns flowing in. */}
             {CARD_Y.map((y, i) => {
               const cardMid = y + CARD_H / 2;
-              const fromL = CARD_W + 14;
-              const toL = CX - REACH - 10;
-              const fromR = CANVAS_W - CARD_W - 14;
-              const toR = CX + REACH + 10;
+              const fromL = CARD_W - 8;
+              const toL = CX - REACH + 18;
+              const fromR = CANVAS_W - CARD_W + 8;
+              const toR = CX + REACH - 18;
               const bend = (toL - fromL) / 2;
+              const left = `M${fromL} ${cardMid} C ${fromL + bend} ${cardMid}, ${toL - bend} ${lineY}, ${toL} ${lineY}`;
+              const right = `M${fromR} ${cardMid} C ${fromR - bend} ${cardMid}, ${toR + bend} ${lineY}, ${toR} ${lineY}`;
               return (
-                <g
-                  key={y}
-                  fill="none"
-                  stroke="#fe5000"
-                  strokeWidth={2.5}
-                  strokeLinecap="round"
-                  className="ledger-flow"
-                  style={{ animationDuration: FLOW_DURATIONS[i] }}
-                >
-                  <path d={`M${fromL} ${cardMid} C ${fromL + bend} ${cardMid}, ${toL - bend} ${lineY}, ${toL} ${lineY}`} />
-                  <path d={`M${fromR} ${cardMid} C ${fromR - bend} ${cardMid}, ${toR + bend} ${lineY}, ${toR} ${lineY}`} />
+                <g key={y}>
+                  <Groove d={left} width={4} highlight={false} />
+                  <Groove d={right} width={4} highlight={false} />
+                  <Packet d={left} begin={STREAK_BEGINS[i * 2]} dur={STREAK_DUR} travel={0.5} width={3.5} />
+                  <Packet d={right} begin={STREAK_BEGINS[i * 2 + 1]} dur={STREAK_DUR} travel={0.5} width={3.5} />
                 </g>
               );
             })}
+            <LedgerPlate cx={CX} cy={PLATE_CY} uid="ledger-desktop" />
           </svg>
           {left.map((s, i) => (
             <SurfaceCard key={s.name} surface={s} className="absolute" style={{ left: 0, top: CARD_Y[i], width: CARD_W, height: CARD_H }} />

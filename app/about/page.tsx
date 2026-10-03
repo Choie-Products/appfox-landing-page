@@ -10,6 +10,7 @@ import { APP_URL, CTA_HREF } from "@/lib/site";
 import { pageMetadata } from "@/lib/seo";
 import SectionHeading from "@/components/ui/section-heading";
 import Reveal from "@/components/reveal";
+import { Groove, Packet } from "@/components/illustrations/iso-art";
 
 const PAGE = {
   path: "/about",
@@ -52,8 +53,12 @@ function SourcesMap() {
         className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
         aria-hidden="true"
       >
-        <path d="M250 50 H 500" fill="none" stroke="#fe5000" strokeWidth="2.5" strokeLinecap="round" className="ledger-flow" vectorEffect="non-scaling-stroke" />
-        <path d="M750 50 H 500" fill="none" stroke="#fe5000" strokeWidth="2.5" strokeLinecap="round" className="ledger-flow" style={{ animationDuration: "1.2s" }} vectorEffect="non-scaling-stroke" />
+        {["M250 50 H 500", "M750 50 H 500"].map((d, i) => (
+          <g key={d}>
+            <Groove d={d} width={4} highlight={false} nonScaling />
+            <Packet d={d} begin={i * 1.8} dur={3.6} travel={0.5} width={3.5} nonScaling />
+          </g>
+        ))}
       </svg>
       {column("Outside-in", OUTSIDE_IN)}
       <div className="relative z-10 order-first flex flex-col items-center text-center lg:order-none">
@@ -232,8 +237,8 @@ export default function AboutPage() {
                 as="li"
                 key={t}
                 delay={i * 90}
-                className={`relative flex flex-col rounded-[24px] p-6 lg:after:absolute lg:after:-right-[34px] lg:after:top-1/2 lg:after:w-[34px] lg:after:border-t-[2.5px] lg:after:border-dotted lg:after:content-[''] lg:last:after:hidden ${
-                  i === levels.length - 2 ? "lg:after:border-[#c8c8c4]" : "lg:after:border-accent"
+                className={`relative flex flex-col rounded-[24px] p-6 lg:after:absolute lg:after:-right-[34px] lg:after:top-1/2 lg:after:w-[34px] lg:after:h-1 lg:after:-translate-y-1/2 lg:after:rounded-full lg:after:content-[''] lg:last:after:hidden ${
+                  i === levels.length - 2 ? "lg:after:bg-[#e2e2df]" : "lg:after:bg-[#d4d4d1]"
                 } ${later ? "border-2 border-dashed border-[#d6d6d3]" : "soft-surface"}`}
               >
                 <span className="flex items-center justify-between">

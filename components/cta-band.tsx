@@ -27,7 +27,7 @@ export default function CtaBand({
               <p className="font-mono text-[14px] font-medium uppercase leading-5 tracking-normal text-[#ff8a4c]">
                 Get started
               </p>
-              <h2 className="max-w-[640px] pt-4 font-display text-[38px] font-normal leading-[1.08] text-white sm:text-[56px]">
+              <h2 className="max-w-[640px] pt-4 font-display text-[34px] font-bold leading-[1.08] tracking-[-0.035em] text-white sm:text-[50px]">
                 {title}
               </h2>
               <p className="max-w-[32rem] pt-4 text-[16px] leading-[26px] text-[#b8b8b4]">{lead}</p>

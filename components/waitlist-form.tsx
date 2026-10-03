@@ -138,8 +138,8 @@ export default function WaitlistForm({
             type="submit"
             disabled={isBusy}
             className={cn(
-              "h-10 shrink-0 rounded-full px-[18px] text-[14px] font-bold transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60",
-              "bg-accent text-white hover:bg-[#e94800]",
+              "h-10 shrink-0 rounded-full px-[18px] text-[14px] font-bold disabled:cursor-not-allowed disabled:opacity-60",
+              "k3d k3d-accent text-white",
             )}
           >
             {isBusy ? "Joining" : compact ? "Join" : "Start for free"}

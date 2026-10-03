@@ -163,15 +163,15 @@ function InfoTip({ label, text }: { label: string; text: string }) {
 }
 
 const ctaStyles = {
-  outline: "bg-white text-ink hover:bg-ink hover:text-white",
-  accent: "bg-accent text-white hover:bg-[#e94800]",
-  dark: "bg-ink text-white hover:bg-black",
+  outline: "k3d k3d-light text-ink",
+  accent: "k3d k3d-accent text-white",
+  dark: "k3d k3d-dark text-white",
 } as const;
 
 export function PlanCta({ plan }: { plan: (typeof plans)[number] }) {
   const href = "href" in plan ? plan.href : CTA_HREF;
   const external = !("href" in plan) && Boolean(APP_URL);
-  const classes = `mt-3.5 inline-block rounded-full px-4 py-[9px] text-[13px] font-semibold leading-4 transition-colors ${ctaStyles[plan.style]}`;
+  const classes = `mt-3.5 inline-block rounded-full px-4 py-[9px] text-[13px] font-semibold leading-4 ${ctaStyles[plan.style]}`;
   if (external) {
     return (
       <a href={href} className={classes} target="_blank" rel="noreferrer">
@@ -370,7 +370,7 @@ export function PricingGrid({
             onClick={() => setExpanded((v) => !v)}
             aria-expanded={expanded}
             aria-controls="pricing-rows"
-            className="inline-flex h-11 items-center gap-2 rounded-full bg-white px-5 text-[14px] font-semibold text-ink transition-colors hover:bg-ink hover:text-white"
+            className="k3d k3d-light inline-flex h-11 items-center gap-2 rounded-full px-5 text-[14px] font-semibold text-ink"
           >
             {expanded
               ? "Show fewer comparisons"

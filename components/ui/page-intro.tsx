@@ -2,7 +2,7 @@ import Reveal from "@/components/reveal";
 import Container from "@/components/ui/container";
 
 /**
- * Inner-page hero, in the homepage style: centered, with a mono label, an Anton headline, a quiet
+ * Inner-page hero, in the homepage style: centered, with a mono label, a Poppins headline, a quiet
  * lead, and optional actions. It sits under the fixed header on the same soft background as the
  * homepage hero.
  */
@@ -26,7 +26,7 @@ export default function PageIntro({
           </Reveal>
         ) : null}
         <Reveal delay={90}>
-          <h1 className="max-w-[880px] text-balance pt-4 font-display text-[40px] font-normal leading-[1.08] text-black sm:text-[56px]">
+          <h1 className="max-w-[880px] text-balance pt-4 font-display text-[36px] font-bold leading-[1.1] tracking-[-0.035em] text-black sm:text-[54px]">
             {title}
           </h1>
         </Reveal>

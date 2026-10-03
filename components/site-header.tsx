@@ -82,7 +82,7 @@ export default function SiteHeader() {
           className={cn(
             "flex max-w-full items-center justify-between backdrop-blur-md transition-[width,height,padding,border-radius,background-color,box-shadow,border-color] duration-500 ease-[cubic-bezier(0.2,0.8,0.2,1)]",
             scrolled
-              ? "h-12 gap-5 rounded-[24px] border border-white/60 bg-white/90 pl-4 pr-1.5 shadow-[0_12px_40px_-16px_rgba(17,17,17,0.28)]"
+              ? "nav-3d h-12 gap-5 rounded-[24px] border border-transparent pl-4 pr-1.5"
               : "h-[72px] w-full max-w-site rounded-none border border-transparent bg-transparent px-5 sm:px-8 lg:h-[88px] lg:px-10",
           )}
         >
@@ -115,6 +115,7 @@ export default function SiteHeader() {
             <ButtonLink
               href={CTA_HREF}
               external={Boolean(APP_URL)}
+              variant="flat"
               size={scrolled ? "sm" : "md"}
             >
               Start for free

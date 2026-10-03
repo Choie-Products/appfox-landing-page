@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { Anton, IBM_Plex_Mono, Inter } from "next/font/google";
+import { IBM_Plex_Mono, Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { JsonLd } from "@/components/json-ld";
 import SiteHeader from "@/components/site-header";
@@ -25,11 +25,11 @@ const inter = Inter({
   axes: ["opsz"],
 });
 
-const anton = Anton({
+const poppins = Poppins({
   subsets: ["latin"],
-  weight: "400",
+  weight: ["600", "700"],
   display: "swap",
-  variable: "--font-anton",
+  variable: "--font-poppins",
 });
 
 const plexMono = IBM_Plex_Mono({
@@ -108,7 +108,7 @@ const siteGraph = graph(organizationJsonLd(), websiteJsonLd(), softwareApplicati
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${anton.variable} ${plexMono.variable}`}>
+    <html lang="en" className={`${inter.variable} ${poppins.variable} ${plexMono.variable}`}>
       <head>
         <link rel="alternate" type="text/markdown" href="/llms.txt" title="Appfox for LLMs" />
         <JsonLd data={siteGraph} />

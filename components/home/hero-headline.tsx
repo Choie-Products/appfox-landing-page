@@ -8,9 +8,9 @@
 
 const TEXT = "Your app, Explained.";
 const TEXT_ID = "hero-headline-text";
-const WIDTH = 1000;
+const WIDTH = 1220;
 const HEIGHT = 144;
-const BASELINE = 120;
+const BASELINE = 106;
 
 /** A wide shape with a gently waving top edge, used as a rising liquid clip. */
 function wavePath() {
@@ -49,7 +49,7 @@ export default function HeroHeadline() {
   );
 
   return (
-    <h1 className="font-display text-[44px] font-normal text-black sm:text-[64px]">
+    <h1 className="font-display text-[38px] font-bold text-black sm:text-[64px]">
       <span className="sr-only">{TEXT}</span>
       <svg
         viewBox={`0 0 ${WIDTH} ${HEIGHT}`}
@@ -59,7 +59,7 @@ export default function HeroHeadline() {
         focusable="false"
       >
         <defs>
-          <text id={TEXT_ID} x={WIDTH / 2} y={BASELINE} textAnchor="middle" fontSize={120} letterSpacing={0}>
+          <text id={TEXT_ID} x={WIDTH / 2} y={BASELINE} textAnchor="middle" fontSize={120} letterSpacing={-4.8}>
             {TEXT}
           </text>
         </defs>

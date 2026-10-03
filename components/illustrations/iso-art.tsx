@@ -332,13 +332,27 @@ function trackPath(cx: number, cy: number, [p0, p1, p2]: [number, number][]) {
  * A soft gray pipe along a path. On the floor it gets a fine white highlight underneath; pipes that are
  * drawn in pieces (like the layer stack's) skip it, so no highlight peeks out at the joins.
  */
-export function Groove({ d, width = 3, highlight = true }: { d: string; width?: number; highlight?: boolean }) {
+export function Groove({
+  d,
+  width = 3,
+  highlight = true,
+  nonScaling = false,
+  opacity,
+}: {
+  d: string;
+  width?: number;
+  highlight?: boolean;
+  /** Keep the stroke width fixed when the drawing is stretched (for SVGs with preserveAspectRatio="none"). */
+  nonScaling?: boolean;
+  opacity?: number;
+}) {
+  const ve = nonScaling ? "non-scaling-stroke" : undefined;
   return (
-    <g fill="none" strokeLinecap="round">
+    <g fill="none" strokeLinecap="round" opacity={opacity}>
       {highlight ? (
-        <path d={d} stroke="#ffffff" strokeWidth={width * 0.8} transform={`translate(0 ${width * 0.4})`} />
+        <path d={d} stroke="#ffffff" strokeWidth={width * 0.8} transform={`translate(0 ${width * 0.4})`} vectorEffect={ve} />
       ) : null}
-      <path d={d} stroke="#d4d4d1" strokeWidth={width} />
+      <path d={d} stroke="#d4d4d1" strokeWidth={width} vectorEffect={ve} />
     </g>
   );
 }
@@ -354,12 +368,14 @@ export function Packet({
   dur = 2.7,
   width = 3,
   travel = 0.45,
+  nonScaling = false,
 }: {
   d: string;
   begin: number;
   dur?: number;
   width?: number;
   travel?: number;
+  nonScaling?: boolean;
 }) {
   const layers = [
     { len: 0.34, w: width * 2.6, color: "#fe5000", op: 0.16 },
@@ -380,6 +396,7 @@ export function Packet({
           strokeWidth={l.w}
           strokeDasharray={`${l.len} 3`}
           strokeDashoffset={l.len}
+          vectorEffect={nonScaling ? "non-scaling-stroke" : undefined}
         >
           <animate
             attributeName="stroke-dashoffset"

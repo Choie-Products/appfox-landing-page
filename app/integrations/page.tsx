@@ -13,6 +13,7 @@ import { APP_URL, CTA_HREF } from "@/lib/site";
 import { pageMetadata } from "@/lib/seo";
 import SectionHeading from "@/components/ui/section-heading";
 import Reveal from "@/components/reveal";
+import { Groove, Packet } from "@/components/illustrations/iso-art";
 
 const PAGE = {
   path: "/integrations",
@@ -62,31 +63,19 @@ function ConnectionMap() {
         className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
         aria-hidden="true"
       >
-        {LAUNCH_Y.map((y, i) => (
-          <path
-            key={`l${y}`}
-            d={`M250 ${y} C 400 ${y}, 380 ${MID_Y}, 500 ${MID_Y}`}
-            fill="none"
-            stroke="#fe5000"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            className="ledger-flow"
-            style={{ animationDuration: i ? "1.2s" : "0.95s" }}
-            vectorEffect="non-scaling-stroke"
-          />
-        ))}
+        {/* Planned sources: quiet gray pipes. Launch sources: pipes with streaks of light flowing into the ledger. */}
         {LATER_Y.map((y) => (
-          <path
-            key={`r${y}`}
-            d={`M750 ${y} C 600 ${y}, 620 ${MID_Y}, 500 ${MID_Y}`}
-            fill="none"
-            stroke="#c8c8c4"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeDasharray="2 9"
-            vectorEffect="non-scaling-stroke"
-          />
+          <Groove key={`r${y}`} d={`M750 ${y} C 600 ${y}, 620 ${MID_Y}, 500 ${MID_Y}`} width={3.5} highlight={false} nonScaling opacity={0.55} />
         ))}
+        {LAUNCH_Y.map((y, i) => {
+          const d = `M250 ${y} C 400 ${y}, 380 ${MID_Y}, 500 ${MID_Y}`;
+          return (
+            <g key={`l${y}`}>
+              <Groove d={d} width={4} highlight={false} nonScaling />
+              <Packet d={d} begin={i * 1.8} dur={3.6} travel={0.5} width={3.5} nonScaling />
+            </g>
+          );
+        })}
       </svg>
 
       {/* At launch */}
