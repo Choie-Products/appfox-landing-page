@@ -20,14 +20,6 @@ const PAGE = {
 
 export const metadata = pageMetadata(PAGE);
 
-/** One-line fit for each plan, shown under the plan name in the table. */
-const FITS: Record<string, string> = {
-  Free: "Try both journeys on one app.",
-  Indie: "For a solo founder with a few apps.",
-  Studio: "For a small studio across several apps.",
-  Scale: "For teams running many apps and markets.",
-};
-
 const EVERY_PLAN = [
   { t: "Both journeys", b: "Research an idea and operate a live app in one workspace." },
   { t: "Every surface", b: "Today, Market, My App, Customers, Actions, and Integrations." },
@@ -105,7 +97,7 @@ export default function PricingPage() {
       {/* Plans and comparison, in one table */}
       <Section id="plans" className="scroll-mt-24 pt-4 lg:pt-8">
         <Reveal variant="scale">
-          <PricingGrid className="pt-12" collapsible fits={FITS} />
+          <PricingGrid className="pt-12" collapsible showFits />
         </Reveal>
         <p className="pt-6 text-center text-[13px] leading-5 text-quiet">
           Proposed plans. Prices are per month, with the annual rate where it applies.
