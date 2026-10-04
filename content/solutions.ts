@@ -216,7 +216,7 @@ export const solutions: Solution[] = [
     },
     faq: [
       { q: "How long does a research brief take?", a: "Discovery and collection run after you confirm the competitor set. The brief is written once the sample is usable, and the collection window is shown on it." },
-      { q: "Is a research brief on the free plan?", a: "Yes. The Free plan includes one research brief a month. Indie includes five; Studio and Scale are unlimited." },
+      { q: "Is a research brief on the free plan?", a: "Yes. The Free plan includes one research brief a month. Indie includes five; Studio is unlimited." },
       { q: "Can the brief tell me whether the idea will make money?", a: "No. It reports observable monetization and recurring complaints with the evidence. Willingness to pay and viability are decisions it leaves to you, and it says so." },
       { q: "What happens to the research after I launch?", a: "The market keeps refreshing. When you add your owned app, it joins the same market with its evidence intact." },
     ],

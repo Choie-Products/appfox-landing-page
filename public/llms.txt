@@ -4,7 +4,7 @@
 
 Appfox is an intelligence layer and operations partner for mobile apps (iOS and Android). It is built for the person who runs the whole app: product, growth, store presence, pricing, and support. Signals are detected deterministically from stored facts; AI then explains them in plain language and cites the reviews, listings, and metrics it used. Every integration is read-only. Appfox drafts review replies, store copy, tasks, and experiment plans, but never publishes, sends, or changes anything outside your workspace. A quiet day is reported as a quiet day.
 
-Website: https://appfox.app. Contact: hello@appfox.app. Pricing starts free; paid plans are Indie ($29/month), Studio ($99/month), and Scale ($299/month).
+Website: https://appfox.app. Contact: hello@appfox.app. Pricing starts free; paid plans are Indie ($29/month) and Studio ($99/month).
 
 ## Product
 
@@ -13,7 +13,7 @@ Website: https://appfox.app. Contact: hello@appfox.app. Pricing starts free; pai
 - [Operate a live app](https://appfox.app/live-app): Add an app by store URL and get a daily ranked feed of customer, competitor, release, and monetization changes with evidence and a suggested action. Four kinds of empty are kept apart: quiet, not enough data, sync failed, collecting.
 - [Mobile session replay](https://appfox.app/replay): A first-party SDK for React Native and Expo on iOS and Android that records privacy-masked snapshots and events, never keyboard values, and replays completed sessions inside Appfox.
 - [Integrations](https://appfox.app/integrations): App Store and Google Play public data and RevenueCat at launch, all read-only. App Store Connect, Google Play Console, GitHub, product analytics, Linear, and Notion are planned.
-- [Pricing](https://appfox.app/pricing): Free, Indie $29/month ($24 annual), Studio $99/month ($79 annual), Scale $299/month ($249 annual). Every plan has the same evidence ledger and read-only boundary.
+- [Pricing](https://appfox.app/pricing): Free, Indie $29/month ($24 annual), Studio $99/month ($79 annual). Every plan has the same evidence ledger and read-only boundary.
 
 ## Solutions
 

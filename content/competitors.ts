@@ -35,14 +35,14 @@ export type Competitor = {
 export const APPFOX = {
   category: "Mobile app intelligence and operations",
   bestFor: "Indie founders and small studios who want the reading done for them, with evidence",
-  pricing: "Free plan; Indie from $29 a month, Studio $99, Scale $299. Proposed plans.",
+  pricing: "Free plan; Indie from $29 a month, Studio $99. Proposed plans.",
 };
 
 /** The Appfox side of every comparison row, in a fixed order. */
 const US = {
   category: "Mobile app intelligence and operations: tracking, explanation, and action in one workspace",
   free: "Yes. Both journeys on one app and one market, 30 days of history, 20 AI runs a month",
-  from: "$29 a month (Indie), $99 (Studio), $299 (Scale). Annual rates lower. Proposed plans",
+  from: "$29 a month (Indie), $99 (Studio). Annual rates lower. Proposed plans",
   stores: "App Store and Google Play, one country and language per market",
   reviews: "Yes. Reviews grouped into themes with exact counts, denominators, trend, and affected versions. Every number links to the original review",
   keywords: "Tracked search queries with current and previous rank. Not a keyword research suite: no volume estimates",

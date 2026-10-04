@@ -43,12 +43,12 @@ export const ORG_ID = `${SITE_URL}/#organization`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 export const APP_ID = `${SITE_URL}/#software`;
 
-/** The published plans, used for the SoftwareApplication offers. Keep in sync with the pricing table. */
+/** The plans, used for the SoftwareApplication offers. Keep in sync with the pricing table; hidden plans are left out. */
 export const PLANS = [
   { name: "Free", monthly: 0, annual: 0 },
   { name: "Indie", monthly: 29, annual: 24 },
   { name: "Studio", monthly: 99, annual: 79 },
-  { name: "Scale", monthly: 299, annual: 249 },
+  { name: "Scale", monthly: 299, annual: 249, hidden: true },
 ] as const;
 
 export const FEATURES = [
@@ -163,7 +163,7 @@ export function softwareApplicationJsonLd() {
     },
     author: { "@id": ORG_ID },
     publisher: { "@id": ORG_ID },
-    offers: PLANS.map((plan) => ({
+    offers: PLANS.filter((plan) => !("hidden" in plan && plan.hidden)).map((plan) => ({
       "@type": "Offer",
       name: `${plan.name} plan`,
       price: String(plan.monthly),

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useRef, useState } from "react";
+import { type CSSProperties, useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { ChevronDown, Info } from "lucide-react";
 import Container from "@/components/ui/container";
@@ -38,8 +38,14 @@ export const plans = [
     cta: "Talk to us",
     style: "outline",
     href: "/contact",
+    /** Kept for later; not shown anywhere on the site for now. */
+    hidden: true,
   },
 ] as const;
+
+/** Indexes of the plans that are shown, so each row's cells can be filtered to match. */
+const shownIndexes = plans.flatMap((plan, i) => ("hidden" in plan && plan.hidden ? [] : [i]));
+export const shownPlans = shownIndexes.map((i) => plans[i]);
 
 const off: Cell = { text: "Off", tone: "muted" };
 const none: Cell = { text: "—", tone: "muted" };
@@ -49,7 +55,7 @@ const yes: Cell = { text: "✓", tone: "accent" };
  * One data point per row, each with a short explanation for the info tooltip.
  * `key` rows stay visible when the table is collapsed on the pricing page.
  */
-const rows: { label: string; info: string; cells: Cell[]; key?: boolean }[] = [
+const allRows: { label: string; info: string; cells: Cell[]; key?: boolean }[] = [
   {
     label: "Seats",
     info: "People in your workspace. Owners, admins, and viewers each take a seat.",
@@ -137,6 +143,14 @@ const rows: { label: string; info: string; cells: Cell[]; key?: boolean }[] = [
     cells: [none, none, none, yes],
   },
 ];
+
+/** Rows that at least one shown plan offers; a row that is only on hidden plans would read as all dashes. */
+const rows = allRows.filter((row) =>
+  shownIndexes.some((i) => {
+    const cell = row.cells[i];
+    return typeof cell === "string" || cell.tone !== "muted";
+  }),
+);
 
 /** A small info button beside a feature name; hovering or focusing it shows what the feature means. */
 function InfoTip({ label, text }: { label: string; text: string }) {
@@ -291,22 +305,22 @@ export function PricingGrid({
           {/* Raised soft gray panel behind the Indie column (second plan column), drawn under the table */}
           <div
             aria-hidden="true"
-            className="absolute -top-7 bottom-5 left-[calc(260px_+_(100%_-_260px)_/_4)] w-[calc((100%_-_260px)_/_4)] soft-surface rounded-[24px] lg:left-[calc(360px_+_(100%_-_360px)_/_4)] lg:w-[calc((100%_-_360px)_/_4)]"
+            style={{ "--plans": shownPlans.length } as CSSProperties}
+            className="absolute -top-7 bottom-5 left-[calc(260px_+_(100%_-_260px)_/_var(--plans))] w-[calc((100%_-_260px)_/_var(--plans))] soft-surface rounded-[24px] lg:left-[calc(360px_+_(100%_-_360px)_/_var(--plans))] lg:w-[calc((100%_-_360px)_/_var(--plans))]"
           />
           <table className="relative w-full table-fixed border-collapse text-left">
             <colgroup>
               <col className="w-[260px] lg:w-[360px]" />
-              <col />
-              <col />
-              <col />
-              <col />
+              {shownPlans.map((plan) => (
+                <col key={plan.name} />
+              ))}
             </colgroup>
             <thead>
               <tr className="border-b border-line align-bottom">
                 <th scope="col" className={`label-mono pb-[18px] pt-4 font-normal ${headCell(false)}`}>
                   Plan
                 </th>
-                {plans.map((plan) => (
+                {shownPlans.map((plan) => (
                   <th
                     key={plan.name}
                     scope="col"
@@ -341,9 +355,9 @@ export function PricingGrid({
                     {row.label}
                     <InfoTip label={row.label} text={row.info} />
                   </th>
-                  {row.cells.map((cell, i) => (
+                  {shownIndexes.map((i) => (
                     <td key={i} className="px-6 py-3.5">
-                      <CellText cell={cell} />
+                      <CellText cell={row.cells[i]} />
                     </td>
                   ))}
                 </tr>
@@ -352,7 +366,7 @@ export function PricingGrid({
             <tfoot>
               <tr>
                 <td
-                  colSpan={5}
+                  colSpan={shownPlans.length + 1}
                   className="pt-5 text-[12px] leading-4 text-quiet"
                 >
                   All plans: read-only integrations, row-level isolation,

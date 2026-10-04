@@ -13,9 +13,9 @@ import Reveal from "@/components/reveal";
 
 const PAGE = {
   path: "/pricing",
-  title: "Pricing: Free, Indie $29, Studio $99, Scale $299",
+  title: "Pricing: Free, Indie $29, Studio $99",
   description:
-    "Appfox app tracker pricing. Start free with both journeys and the full evidence ledger, then upgrade to Indie at $29, Studio at $99, or Scale at $299 a month. Every plan is read-only and metered in the open.",
+    "Appfox app tracker pricing. Start free with both journeys and the full evidence ledger, then upgrade to Indie at $29 or Studio at $99 a month. Every plan is read-only and metered in the open.",
 };
 
 export const metadata = pageMetadata(PAGE);
@@ -63,7 +63,7 @@ const faq = [
   },
   {
     q: "How does annual billing work?",
-    a: "Annual prices are shown as a monthly rate. Indie is $24, Studio is $79, and Scale is $249 a month when billed annually.",
+    a: "Annual prices are shown as a monthly rate. Indie is $24 and Studio is $79 a month when billed annually.",
   },
   {
     q: "What counts as an AI run?",
@@ -76,10 +76,6 @@ const faq = [
   {
     q: "Do I need to connect RevenueCat?",
     a: "No. RevenueCat is optional and read-only. It is available on Indie and above, alongside verified competitor revenue.",
-  },
-  {
-    q: "What does Scale add over Studio?",
-    a: "More seats and owned apps, unlimited markets, 50 competitors per market, daily ads monitoring, 90-day replay retention, and SSO alongside the API.",
   },
   {
     q: "Are these prices final?",

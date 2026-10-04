@@ -49,7 +49,7 @@ Four kinds of empty are kept apart: nothing significant changed (a quiet day, wi
 - Review themes: AI groups reviews into themes with exact counts and denominators; the customer's own words stay one click away.
 - Drafts (coming soon): review replies and store copy drafted from evidence, for you to copy. Appfox never posts or submits anything.
 - Ask Fox (coming soon): ask a question in plain words and get an answer built from your own reviews, releases, and metrics, with sources linked.
-- AI runs are metered per plan: 20 per month on Free, 200 on Indie, 1,000 on Studio, 5,000 on Scale. Research briefs: 1, 5, unlimited, unlimited.
+- AI runs are metered per plan: 20 per month on Free, 200 on Indie, 1,000 on Studio. Research briefs: 1, 5, unlimited.
 
 ## Mobile session replay (https://appfox.app/replay)
 
@@ -64,7 +64,6 @@ At launch: App Store and Google Play public listings, reviews, and ranks; Revenu
 - Free: $0. Both journeys on one app and one market, 30 days of evidence history, 20 AI runs and 1 research brief a month, 1,000 replay sessions with 7-day retention.
 - Indie: $29 per month, or $24 per month billed annually. For a solo founder with a few apps. 12 months of evidence history, 200 AI runs and 5 briefs, RevenueCat and verified competitor revenue, 10,000 replay sessions with 14-day retention.
 - Studio: $99 per month, or $79 annually. For a small studio across several apps. Full history, 1,000 AI runs and unlimited briefs, 50,000 replay sessions with 30-day retention.
-- Scale: $299 per month, or $249 annually. For teams running many apps and markets. 5,000 AI runs, unlimited markets, 50 competitors per market, daily ads monitoring, 250,000 replay sessions with 90-day retention, SSO and API.
 
 Every plan includes both journeys, every surface, evidence on every finding, read-only integrations, workspace isolation with owner, admin, and viewer roles, and visible usage history. Limits are enforced on the server before any paid provider job starts; jobs reserve budget first and settle at actual cost; at a limit the control stops and says why, and nothing collected goes away. Prices are proposed plans and may change.
 
