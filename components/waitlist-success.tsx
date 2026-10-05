@@ -59,12 +59,7 @@ export default function WaitlistSuccess({
   }
 
   return (
-    <div
-      className={cn(
-        "rise w-full border p-5 sm:p-6",
-        dark ? "border-dark-line bg-dark-surface" : "border-line bg-surface",
-      )}
-    >
+    <div className="rise w-full">
       <div className="flex items-start gap-4">
         <span className="flex size-10 shrink-0 items-center justify-center rounded-full bg-accent text-white">
           <Check className="size-5" strokeWidth={2.25} />
