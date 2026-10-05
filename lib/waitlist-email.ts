@@ -24,7 +24,8 @@ export function waitlistConfirmationText() {
 export function waitlistConfirmationHtml() {
   // Inline light styles survive email clients that strip <style>. Supported
   // clients opt into the recipient's current dark preference, not signup-time
-  // browser state. Keep the transparent product mark readable in both modes.
+  // browser state. The PNGs render the landing page's Logo component, including
+  // its wordmark, with the same currentColor behavior for each color scheme.
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -53,6 +54,8 @@ export function waitlistConfirmationHtml() {
         .email-muted { color: #a1a1aa !important; }
         .email-rule { border-color: #3f3f46 !important; }
         .email-button { background-color: #fafafa !important; color: #18181b !important; }
+        .email-logo-light { display: none !important; }
+        .email-logo-dark { display: block !important; max-height: none !important; overflow: visible !important; }
       }
       /* Outlook adds this attribute instead of honoring the media query. */
       [data-ogsc] .email-page { background-color: #09090b !important; }
@@ -62,6 +65,8 @@ export function waitlistConfirmationHtml() {
       [data-ogsc] .email-muted { color: #a1a1aa !important; }
       [data-ogsc] .email-rule { border-color: #3f3f46 !important; }
       [data-ogsc] .email-button { background-color: #fafafa !important; color: #18181b !important; }
+      [data-ogsc] .email-logo-light { display: none !important; }
+      [data-ogsc] .email-logo-dark { display: block !important; max-height: none !important; overflow: visible !important; }
     </style>
   </head>
   <body class="email-page" style="margin:0;padding:0;background-color:#f3f3f4;color:#18181b;font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;">
@@ -78,18 +83,14 @@ export function waitlistConfirmationHtml() {
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                   <tr>
                     <td style="padding-bottom:36px;">
-                      <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                        <tr>
-                          <td width="34" valign="middle" style="width:34px;">
-                            <a href="https://www.appfox.app" style="text-decoration:none;">
-                              <img src="https://www.appfox.app/email/appfox-mark.png" width="34" height="36" alt="Appfox fox mark" style="display:block;width:34px;height:36px;border:0;" />
-                            </a>
-                          </td>
-                          <td valign="middle" style="padding-left:10px;">
-                            <a class="email-ink" href="https://www.appfox.app" style="font-family:'Geist','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;font-size:24px;font-weight:700;line-height:32px;letter-spacing:-0.8px;color:#18181b;text-decoration:none;">Appfox</a>
-                          </td>
-                        </tr>
-                      </table>
+                      <a href="https://www.appfox.app" style="display:inline-block;text-decoration:none;">
+                        <img class="email-logo-light" src="https://www.appfox.app/email/appfox-logo-light.png" width="140" height="36" alt="Appfox" style="display:block;width:140px;height:36px;border:0;" />
+                        <!--[if !mso]><!-->
+                        <span class="email-logo-dark" style="display:none;max-height:0;overflow:hidden;mso-hide:all;">
+                          <img src="https://www.appfox.app/email/appfox-logo-dark.png" width="140" height="36" alt="Appfox" style="display:block;width:140px;height:36px;border:0;" />
+                        </span>
+                        <!--<![endif]-->
+                      </a>
                     </td>
                   </tr>
                   <tr>
