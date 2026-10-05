@@ -10,7 +10,7 @@ export const metadata = pageMetadata({
 
 export default function PrivacyPage() {
   return (
-    <LegalShell title="Privacy Policy" updated="September 18, 2026">
+    <LegalShell title="Privacy Policy" updated="October 5, 2026">
       <section>
         <h2>1. Introduction</h2>
         <p>
@@ -32,6 +32,11 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>Usage data:</strong> such as pages visited and interactions with the waitlist form.
+          </li>
+          <li>
+            <strong>Request attribution:</strong> campaign source, medium, and campaign labels from your arrival URL,
+            plus the referring website&apos;s origin when available. We retain these in session storage during your
+            visit and attach them to your access request to understand which content brings relevant interest.
           </li>
           <li>
             <strong>Device information:</strong> including device type, operating system, and browser type.
@@ -61,6 +66,11 @@ export default function PrivacyPage() {
           service providers who help us operate the site (for example, email delivery and analytics),
           but only to the extent necessary for them to perform their services. We may also disclose
           information if required by law or to protect our rights.
+        </p>
+        <p>
+          Resend stores access-request contact details, optional role information, and request attribution, and sends
+          request receipts. Our custom analytics events record request clicks, submission outcomes, and optional role
+          selections; we do not include your email address in those event parameters.
         </p>
       </section>
 

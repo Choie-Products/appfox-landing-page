@@ -16,15 +16,19 @@ const ROLES = [
 export default function WaitlistSuccess({
   email,
   alreadyJoined,
+  confirmation,
   tone = "light",
 }: {
   email: string;
   alreadyJoined: boolean;
+  confirmation?: "sent" | "failed" | "not_requested";
   tone?: "light" | "dark";
 }) {
   const headingRef = useRef<HTMLHeadingElement>(null);
   const [role, setRole] = useState<string | null>(null);
   const [roleSaved, setRoleSaved] = useState(false);
+  const [roleError, setRoleError] = useState(false);
+  const [savingRole, setSavingRole] = useState(false);
   const dark = tone === "dark";
 
   useEffect(() => {
@@ -33,16 +37,24 @@ export default function WaitlistSuccess({
 
   async function saveRole(nextRole: string) {
     setRole(nextRole);
+    setRoleSaved(false);
+    setRoleError(false);
+    setSavingRole(true);
     try {
-      await fetch("/api/waitlist", {
+      const response = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, role: nextRole }),
       });
+      const data = await response.json();
+      if (!response.ok || !data.ok || !data.saved) throw new Error("profile_not_saved");
       setRoleSaved(true);
       track("secondary_profile_completed", { role: nextRole });
     } catch {
       setRoleSaved(false);
+      setRoleError(true);
+    } finally {
+      setSavingRole(false);
     }
   }
 
@@ -66,7 +78,8 @@ export default function WaitlistSuccess({
             {alreadyJoined ? "You're already on the list." : "You're on the list."}
           </h3>
           <p className={cn("mt-1.5 text-sm leading-relaxed", dark ? "text-dark-muted" : "text-muted")}>
-            We sent a note to {email}. We'll email you when your workspace is ready.
+            We will contact you at {email} when a beta invitation is available. Access is not immediate.
+            {confirmation === "failed" ? " Your request is saved, but we could not send a confirmation email. You do not need to submit again." : null}
           </p>
         </div>
       </div>
@@ -80,6 +93,7 @@ export default function WaitlistSuccess({
               <button
                 key={item.id}
                 type="button"
+                disabled={savingRole}
                 onClick={() => saveRole(item.id)}
                 className={cn(
                   "rounded-full border px-3.5 py-1.5 text-sm transition-colors",
@@ -95,9 +109,9 @@ export default function WaitlistSuccess({
             );
           })}
         </div>
-        {roleSaved ? (
+        {roleSaved || roleError ? (
           <p className={cn("mt-3 text-sm", dark ? "text-dark-muted" : "text-muted")} aria-live="polite">
-            Got it. That helps us shape early access.
+            {roleError ? "Your access request is saved. We couldn't save your role; choose it again to retry." : "Got it. That helps us shape early access."}
           </p>
         ) : null}
       </div>

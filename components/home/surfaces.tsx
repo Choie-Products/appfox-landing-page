@@ -6,17 +6,17 @@ const CARDS = [
   {
     name: "Today",
     Art: TodayArt,
-    body: "The ranked list of what needs you today. Severity, freshness, and evidence set the order. A quiet day shows as a quiet day.",
+    body: "See what needs attention first, why it matters, and the evidence behind it. When nothing significant changes, Appfox says so.",
   },
   {
     name: "Market",
     Art: MarketArt,
-    body: "Your confirmed competitors, with every listing and price change kept as history. A living market, not a one-off report.",
+    body: "Follow the competitors you choose. See how their listings, prices, and rankings change over time, without checking each app yourself.",
   },
   {
     name: "Customers",
     Art: CustomersArt,
-    body: "Reviews grouped into themes with exact counts and denominators. The customer\u2019s own words stay one click away.",
+    body: "Find recurring complaints, feature requests, and what people love. See how many collected reviews mention each theme, then read the originals.",
   },
 ];
 
@@ -26,8 +26,8 @@ export default function Surfaces() {
       <Container className="pt-40 lg:pt-64">
         <Reveal>
         <h2 className="mx-auto max-w-[1000px] text-balance text-center text-display-md text-ink">
-          Every day, Appfox reads your app, its reviews, and its competitors, then ranks what changed. It all lives in
-          three places:
+          Know what changed, what customers need, and where competitors are moving. Appfox brings the evidence
+          together around three questions:
         </h2>
         </Reveal>
       </Container>

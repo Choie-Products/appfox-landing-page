@@ -16,7 +16,7 @@ const PAGE = {
   path: "/about",
   title: "About: Mobile App Intelligence for Founders",
   description:
-    "Why Appfox exists: indie founders and small studios should not be the integration layer between their tools. An AI app tracker built on four rules: evidence before advice, facts first, honest coverage, human approval.",
+    "Appfox is based in Milan, Italy. We help mobile developers research ideas and understand their apps through reviews, rankings, competitors, and evidence.",
 };
 
 export const metadata = pageMetadata(PAGE);
@@ -166,7 +166,7 @@ const RULES = [
   },
   {
     title: "Human approval",
-    body: "Appfox drafts. It never publishes, sends, or changes anything outside your workspace.",
+    body: "Appfox explains the evidence; you decide what ships. Reply drafts are planned, with publishing left to you.",
     Visual: ApprovalTile,
   },
 ];
@@ -178,11 +178,11 @@ export default function AboutPage() {
       <PageIntro
         kicker="About"
         title="Built for the person who runs the whole app."
-        lead="Indie founders and small studios ship fast and own everything: product, growth, store presence, pricing, support. Appfox exists so that one person can operate an app with the awareness of a team."
+        lead="Appfox is based in Milan, Italy. Indie founders and small studios ship fast and own everything: product, growth, store presence, pricing, support. Appfox exists so that one person can operate an app with the awareness of a team."
       >
         <div className="flex flex-wrap justify-center gap-4">
           <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
-            Start for free
+            Request access
           </ButtonLink>
           <ButtonLink href="/product" variant="secondary" size="hero">
             See the product
@@ -282,7 +282,7 @@ export default function AboutPage() {
 
       <CtaBand
         title="See whether it changes how you decide."
-        lead="Start free. Research an idea, operate a live app, or both, with the evidence on every finding."
+        lead="Request a private beta invitation. Research an idea or improve a live app, with the evidence behind each finding."
       />
     </>
   );

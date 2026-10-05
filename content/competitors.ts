@@ -1,378 +1,146 @@
-/**
- * Comparison and alternatives content. Every claim about another product comes from that
- * product's own website or public listings, checked in October 2026. Pricing changes; each
- * page links to the vendor's pricing page and says when the figures were checked.
- */
-
-export const CHECKED = "October 2026";
-
-/** One row of the side-by-side table. `them` is written per competitor; `us` is constant. */
+/** Editorial comparisons based on the linked vendor pages, not hands-on benchmarks. */
+export const CHECKED = "5 October 2026";
 export type Row = { label: string; them: string; us: string };
-
 export type Competitor = {
-  slug: string;
-  name: string;
-  website: string;
-  pricingUrl: string;
-  /** How the vendor describes its own category. */
-  category: string;
-  /** Who it serves best, in our honest reading. */
-  bestFor: string;
-  summary: string;
-  pricing: { free: boolean; from: string; note: string };
-  strengths: string[];
-  /** Where the two products genuinely diverge. Written as differences, not faults. */
-  differences: string[];
-  /** When the other product is the better choice. */
-  chooseThem: string[];
-  chooseUs: string[];
-  rows: Row[];
-  /** Why people search for alternatives to this tool, written from public reviews and pricing. */
-  alternativesIntro: string;
-  faq: { q: string; a: string }[];
+  slug: string; name: string; website: string; pricingUrl: string;
+  category: string; bestFor: string; summary: string;
+  pricing: { free: boolean; freeLabel?: string; from: string; note: string };
+  strengths: string[]; differences: string[]; chooseThem: string[]; chooseUs: string[];
+  rows: Row[]; alternativesIntro: string; faq: { q: string; a: string }[];
+  sources: { label: string; href: string }[];
 };
 
 export const APPFOX = {
-  category: "Mobile app intelligence and operations",
-  bestFor: "Indie founders and small studios who want the reading done for them, with evidence",
-  pricing: "Free plan; Indie from $29 a month, Studio $99. Proposed plans.",
+  category: "App intelligence for research and product decisions",
+  bestFor: "App developers, from first-time builders to small studios, who want findings they can trace to sources",
+  pricing: "Private beta by invitation. Proposed plans: Free, Indie $29/month, Studio $99/month.",
 };
-
-/** The Appfox side of every comparison row, in a fixed order. */
-const US = {
-  category: "Mobile app intelligence and operations: tracking, explanation, and action in one workspace",
-  free: "Yes. Both journeys on one app and one market, 30 days of history, 20 AI runs a month",
-  from: "$29 a month (Indie), $99 (Studio). Annual rates lower. Proposed plans",
-  stores: "App Store and Google Play, one country and language per market",
-  reviews: "Yes. Reviews grouped into themes with exact counts, denominators, trend, and affected versions. Every number links to the original review",
-  keywords: "Tracked search queries with current and previous rank. Not a keyword research suite: no volume estimates",
-  competitors: "Yes. Confirm competitors once; every listing, rating, and price change is kept as history",
-  revenue: "RevenueCat, read-only, on Indie and above. Revenue, active subscriptions, trials, paid conversions",
-  daily: "Yes. Today ranks what changed by severity, freshness, and evidence. A quiet day is reported as quiet",
-  ai: "Yes. Deterministic signals, then an AI explanation that cites the evidence it used",
-  research: "Yes. AI research briefs for new ideas, with the evidence for and against",
-  replay: "Yes. Privacy-masked mobile session replay for React Native and Expo, on every plan",
-  writes: "Never. Appfox drafts replies and store copy; you post them. Every integration is read-only",
-  builtFor: "Indie founders and small studios running the whole app",
-};
-
-const labels = [
-  "Category",
-  "Free plan",
-  "Paid plans from",
-  "Stores",
-  "Review monitoring",
-  "Keyword and rank tracking",
-  "Competitor tracking",
-  "Revenue data",
-  "Daily ranked findings",
-  "AI explanations with citations",
-  "Research briefs for new ideas",
-  "Mobile session replay",
-  "Writes to stores or providers",
-  "Built for",
-] as const;
 
 const usValues = [
-  US.category, US.free, US.from, US.stores, US.reviews, US.keywords, US.competitors, US.revenue,
-  US.daily, US.ai, US.research, US.replay, US.writes, US.builtFor,
+  "App intelligence: research briefs, daily findings, reviews, and competitors",
+  "Proposed Free plan; current access is invite-only",
+  "Proposed: Indie $29/month and Studio $99/month; final terms may change",
+  "App Store and Google Play, scoped by market",
+  "Review themes, sampled and classified counts, and links to original reviews",
+  "Tracked queries and rank observations with market and collection context",
+  "Collected competitor listings, reviews, ratings, prices, and rank changes",
+  "RevenueCat is planned and unavailable in the beta; provider estimates are not verified earnings",
+  "Daily findings with supporting evidence and collection context",
+  "Research and finding explanations linked to their sources",
+  "Research briefs for app ideas and markets",
+  "Planned; unavailable in the beta",
+  "No store posting. Reply and store-copy drafts are planned",
+  "Newcomers, vibe coders, experienced developers, and small studios",
 ];
-
+const labels = ["Category", "Free plan", "Paid plans from", "Stores", "Review monitoring", "Keyword and rank tracking", "Competitor tracking", "Revenue data", "Daily ranked findings", "AI explanations with citations", "Research briefs for new ideas", "Mobile session replay", "Writes to stores or providers", "Built for"];
 function rows(them: string[]): Row[] {
+  if (them.length !== labels.length) throw new Error("Comparison row count mismatch");
   return labels.map((label, i) => ({ label, them: them[i], us: usValues[i] }));
 }
 
 export const competitors: Competitor[] = [
   {
-    slug: "appfigures",
-    name: "Appfigures",
-    website: "https://appfigures.com",
+    slug: "appfigures", name: "Appfigures", website: "https://appfigures.com",
     pricingUrl: "https://appfigures.com/platform/pricing",
-    category: "App analytics, intelligence, and ASO tools",
-    bestFor: "Teams that want downloads, revenue, and ad-network data for many apps in one reporting tool",
-    summary:
-      "Appfigures is one of the longest-running app analytics platforms. It aggregates downloads, revenue, and ad-network data across the App Store and Google Play, adds keyword rank tracking, competitor keyword tracking, and review management, and exposes most of it through an API. It is priced per plan with five apps included and a small fee per extra app.",
-    pricing: {
-      free: true,
-      from: "$9.99 a month",
-      note: "Six tiers from Free to Amplify at $1,399.99 a month, about 20 percent off annually, five apps included and $1.99 per extra app, as listed in October 2026.",
-    },
-    strengths: [
-      "Unified sales, download, and revenue reporting across stores and ad networks",
-      "A genuinely useful free plan and a very low entry price",
-      "Keyword rank tracking and competitor keyword tracking, scaled by tier",
-      "Review monitoring with replies from inside the product",
-      "A mature API and long historical coverage",
-    ],
+    category: "App analytics, market intelligence, and ASO",
+    bestFor: "Teams comparing store performance, revenue, and acquisition across apps",
+    summary: "Appfigures combines connected app analytics with market intelligence, keyword tools, and review management. Its product range includes competitor estimates and an API. Feature access and tracked-app allowances depend on the plan.",
+    pricing: { free: true, from: "$9.99/month, monthly billing", note: "Connect is $9.99/month on monthly billing; a free Starter plan is listed. Higher tiers add different capabilities. Check app limits and extra-app charges before comparing totals." },
+    strengths: ["Connected download and revenue reporting", "Market and competitor intelligence", "Keyword discovery and rank monitoring", "Review monitoring and reply tools", "API access for custom reporting"],
     differences: [
-      "Appfigures is organized by dataset: sales, ads, keywords, reviews, each with its own reports. Appfox is organized by question: what needs attention today, who is in the market, what customers are saying, did the change help.",
-      "Appfigures reports numbers for you to read. Appfox reads them first and ranks what changed, with the evidence attached and quiet days reported as quiet.",
-      "Appfigures covers ad-network revenue and many apps cheaply. Appfox covers monetization through a read-only RevenueCat connection and is built around a handful of apps per workspace.",
-      "Appfigures posts review replies from inside the product. Appfox drafts replies and store copy but never writes to a store.",
-      "Appfox adds research briefs for ideas you have not built yet and privacy-masked session replay. Appfigures does not try to do either.",
+      "Appfigures covers connected business reporting. Appfox's current beta focuses on public store research and product decisions.",
+      "Appfigures offers market estimates and ASO tools. Appfox brings selected market observations into research briefs and daily findings.",
+      "For portfolio reporting, compare the exact app allowance and data coverage you need. Appfox's proposed prices are not current subscription offers.",
+      "Appfigures provides review reply tools. Appfox does not post to stores; reply drafts are planned.",
+      "For idea research, test whether Appfox's brief answers your specific question and whether its cited sources are sufficient. This is a workflow choice, not a benchmark of accuracy.",
     ],
-    chooseThem: [
-      "You need ad-network and store revenue aggregated in one report",
-      "You manage many apps and want the cheapest per-app analytics",
-      "You want to reply to reviews from the same tool that tracks them",
-      "You rely on an established API for your own dashboards",
-    ],
-    chooseUs: [
-      "You want a ranked daily list of what changed, not dashboards to read",
-      "You want every finding to cite the reviews, listings, and metrics behind it",
-      "You are deciding whether to build an idea and want a brief from real listings and reviews",
-      "You want competitor history, review themes, and session replay in one workspace with a read-only boundary",
-    ],
-    rows: rows([
-      "App analytics and ASO tools, organized by dataset",
-      "Yes, with review management and basic revenue tracking",
-      "$9.99 a month (Connect), up to $1,399.99 (Amplify)",
-      "App Store, Google Play, and ad networks",
-      "Yes, with sentiment and replies from inside the product",
-      "Yes. Rank tracking, popularity scores, and competitor keywords, 25 to 2,500 keywords by tier",
-      "Keyword-level competitor tracking",
-      "Store sales and ad-network revenue, aggregated",
-      "Alerts on metrics; reports are read by you",
-      "AI-assisted features; reports remain the primary surface",
-      "No",
-      "No",
-      "Yes. Review replies are posted from the product",
-      "Developers, publishers, and marketing teams of any size",
-    ]),
-    alternativesIntro:
-      "People look for Appfigures alternatives for three reasons that show up repeatedly in public reviews: the per-app pricing adds up across a portfolio, the product is organized as reports rather than recommendations, and newer tools add things Appfigures does not try to do, such as AI explanations, research briefs, or session replay.",
+    chooseThem: ["You need connected store revenue reporting", "You need portfolio-level analytics", "You want review reply tools", "You need a public data API today"],
+    chooseUs: ["You want a research brief before building", "You want daily findings with linked evidence", "You want review themes alongside competitor changes", "You are comfortable with invite-only beta access"],
+    rows: rows(["Analytics, market intelligence, and ASO", "Yes, Starter", "$9.99/month, monthly billing", "App Store and Google Play, plus connected sources", "Review monitoring and replies", "Keyword research and rank tracking", "App intelligence and competitor keywords", "Connected analytics and market estimates", "Performance alerts and reports; workflow differs", "AI keyword suggestions; citation coverage not assessed", "Market research tools; equivalent brief workflow not verified", "Not documented in the sources reviewed", "Review reply tools", "Developers, publishers, and growth teams"]),
+    alternativesIntro: "Compare Appfigures alternatives around the work you need to do: connected revenue reporting, keyword research, review operations, or deciding what to build. The options below serve different jobs; this is our editorial comparison, not a survey of switching customers.",
     faq: [
-      {
-        q: "Is Appfox a replacement for Appfigures?",
-        a: "For an indie founder or small studio that wants a ranked daily reading of reviews, rankings, competitors, and RevenueCat revenue, yes. If you need ad-network revenue aggregation or the cheapest analytics for dozens of apps, Appfigures remains the stronger fit.",
-      },
-      {
-        q: "Does Appfox track keywords like Appfigures?",
-        a: "Appfox tracks the search queries you follow and reports current and previous rank for each. It does not estimate search volume or suggest keywords. Appfigures includes a fuller keyword toolkit.",
-      },
-      {
-        q: "Can I use both?",
-        a: "Yes. Appfox reads public store data and RevenueCat; it does not need Appfigures and does not conflict with it.",
-      },
+      { q: "Can Appfox replace Appfigures?", a: "It depends on the job. Appfox may fit public-store research and daily product investigation. Its beta does not replace connected revenue reporting or API workflows." },
+      { q: "Does Appfox track keywords?", a: "Yes. It tracks queries and rank observations within a market. Compare the keyword coverage and research tools you need in a real trial; these products are not interchangeable feature for feature." },
+      { q: "Can I use both?", a: "Yes. Public store research in Appfox can complement your existing reporting. RevenueCat support in Appfox is planned, not available in the beta." },
     ],
+    sources: [{ label: "Appfigures product overview", href: "https://appfigures.com/" }, { label: "Appfigures plans and limits", href: "https://appfigures.com/platform/pricing" }],
   },
   {
-    slug: "appfollow",
-    name: "AppFollow",
-    website: "https://appfollow.io",
+    slug: "appfollow", name: "AppFollow", website: "https://appfollow.io",
     pricingUrl: "https://appfollow.io/pricing",
-    category: "Review management and ASO platform",
-    bestFor: "Support and marketing teams that reply to reviews at volume and route them into helpdesk tools",
-    summary:
-      "AppFollow is a review management and ASO platform. Its core is review monitoring across stores with AI-assisted replies, sentiment analysis, and integrations into Slack, Zendesk, Salesforce, and Helpshift, alongside keyword rank tracking, ASO reporting, and competitor monitoring. It is priced for teams, with a free tier for small apps.",
-    pricing: {
-      free: true,
-      from: "$179 a month",
-      note: "Free plan for two apps in two countries with 20 keywords and 20 replies a month; Essential at $179 a month, Team at $599, Enterprise on request, as listed in October 2026.",
-    },
-    strengths: [
-      "Review replies at scale, including AI-assisted and automated replies",
-      "Helpdesk and chat integrations: Zendesk, Salesforce, Helpshift, Slack",
-      "Sentiment analysis and customizable reporting",
-      "Keyword rank tracking and ASO reports with competitor monitoring",
-      "Unlimited team members on paid plans",
-    ],
+    category: "Review management and ASO",
+    bestFor: "Teams managing review responses, reputation, and store visibility",
+    summary: "AppFollow brings together review analysis, response workflows, integrations, and ASO tools. Its plan guide distinguishes a focused ASO plan from broader review-management plans, with a free option and unlimited users.",
+    pricing: { free: true, from: "$19/month, billed yearly (ASO)", note: "The vendor's plan guide lists ASO from $19/month billed yearly. Essential is $179/month on monthly billing or $129/month billed yearly. These are different plans; confirm included workflows and taxes on the pricing page." },
+    strengths: ["Review response workflows", "AI-assisted review handling", "Team and helpdesk integrations", "ASO and competitor monitoring", "Unlimited users in the published plan guide"],
     differences: [
-      "AppFollow is a workflow tool for answering reviews. Appfox is a reading tool for deciding what to do. It groups reviews into themes with exact counts and tells you which theme moved after which release.",
-      "AppFollow posts replies to the stores. Appfox drafts them and leaves posting to you, because every Appfox integration is read-only.",
-      "AppFollow adds revenue context through store connections. Appfox reads monetization from RevenueCat and keeps project totals, app-level series, and matched cohorts separate.",
-      "Appfox includes research briefs for ideas you have not shipped and competitor history for apps you confirm. AppFollow's competitor features are keyword and rating oriented.",
-      "AppFollow's paid plans start at team prices. Appfox starts at $29 a month for a solo founder.",
+      "AppFollow supports teams working through review replies. Appfox's beta helps investigate reviews and decide what to build.",
+      "Both include review analysis. Compare one theme in each and inspect the underlying reviews before judging usefulness.",
+      "AppFollow lists free and dedicated ASO options. A fair price comparison depends on the workflow and billing term, not just the headline fee.",
+      "Appfox adds a research brief workflow for ideas. RevenueCat and replay remain planned and should not influence a purchase decision about today's beta.",
     ],
-    chooseThem: [
-      "A support team replies to hundreds of reviews a month and needs them in Zendesk or Salesforce",
-      "You want automated replies and SLAs on response time",
-      "You need unlimited seats on one plan",
-    ],
-    chooseUs: [
-      "You are one person or a small studio and want the reading done, not the replying automated",
-      "You want to know which review theme rose after which release, with the counts to prove it",
-      "You want competitors, revenue, and reviews in one ranked feed with evidence on every finding",
-      "You prefer a tool that never writes to your store listing or replies on your behalf",
-    ],
-    rows: rows([
-      "Review management and ASO platform",
-      "Yes. Two apps, two countries, 20 keywords and 20 replies a month",
-      "$179 a month (Essential), $599 (Team), Enterprise on request",
-      "App Store, Google Play, and others",
-      "Yes. Replies, AI-assisted replies, sentiment, helpdesk routing",
-      "Yes. Keyword tracking and ASO reporting",
-      "Yes. Ratings, keywords, and benchmarking",
-      "Through store connections and reporting",
-      "Alerts and dashboards; prioritization is yours",
-      "AI-assisted replies and summaries",
-      "No",
-      "No",
-      "Yes. Replies are posted to the stores",
-      "Support, product, and marketing teams",
-    ]),
-    alternativesIntro:
-      "People look for AppFollow alternatives when the team pricing does not fit a solo founder, when they want analysis more than reply automation, or when they prefer a tool that never posts to the store on their behalf.",
+    chooseThem: ["You need review reply automation", "You need reviews in team workflows", "You want an ASO subscription available today", "You need broad team access"],
+    chooseUs: ["You are deciding which problem to investigate", "You want a brief for an app idea", "You want reviews and competitors in the same research context", "You want to inspect the evidence behind daily findings"],
+    rows: rows(["Review management and ASO", "Yes", "$19/month billed yearly for ASO; review plans differ", "App Store, Google Play, and additional sources", "Analysis, replies, and automation", "ASO tools and keyword tracking", "Competitor monitoring", "Confirm required metrics and integrations with vendor", "Alerts and review workflows; workflow differs", "AI review features; citation coverage not assessed", "ASO research; equivalent brief workflow not verified", "Not documented in the sources reviewed", "Review replies and automation", "Support, product, and marketing teams"]),
+    alternativesIntro: "Start an AppFollow comparison by separating review response work from product research. A tool that routes and answers reviews solves a different problem from a brief that helps you evaluate an idea. Compare coverage, automation, and total cost for your actual workload.",
     faq: [
-      {
-        q: "Does Appfox reply to reviews like AppFollow?",
-        a: "No. Appfox drafts review replies from the evidence for you to copy and post. It never writes to the App Store or Google Play. AppFollow posts replies directly and automates them.",
-      },
-      {
-        q: "Which is better for a solo founder?",
-        a: "Appfox starts at $29 a month and its free plan covers one app and one market. AppFollow's free plan covers two apps with limited replies and keywords, and paid plans start at $179 a month.",
-      },
-      {
-        q: "Does Appfox integrate with Zendesk or Slack?",
-        a: "Not at launch. Appfox's launch integrations are public store data and RevenueCat, all read-only. Helpdesk routing is AppFollow's strength.",
-      },
+      { q: "Does Appfox reply to reviews like AppFollow?", a: "No. Appfox does not post replies to stores. Reply drafts are planned and unavailable in the current beta." },
+      { q: "Which is better for a solo developer?", a: "Choose based on the task. AppFollow has free and ASO options; Appfox is invite-only. Try one real review investigation or research question before choosing." },
+      { q: "Does Appfox include helpdesk routing?", a: "It is not part of the confirmed beta. Check AppFollow's integrations if routing reviews into your support workflow is essential." },
     ],
+    sources: [{ label: "AppFollow product overview", href: "https://appfollow.io/" }, { label: "AppFollow plan guide", href: "https://appfollow.io/blog/new-plans-at-appfollow-and-how-to-choose-the-right-one" }, { label: "AppFollow pricing", href: "https://appfollow.io/pricing" }],
   },
   {
-    slug: "appbot",
-    name: "Appbot",
-    website: "https://appbot.co",
-    pricingUrl: "https://appbot.co/pricing",
-    category: "Review and sentiment analytics",
-    bestFor: "Product and support teams that want sentiment and topic analysis across app stores and other review sources",
-    summary:
-      "Appbot specializes in review analytics. It collects reviews from the app stores and other sources, classifies sentiment with a proprietary model, detects topics such as bugs, performance, onboarding, and pricing, supports custom topics, and routes findings into Slack, Zendesk, and similar tools. Ask Appbot adds natural-language questions over your reviews on the larger plans.",
-    pricing: {
-      free: false,
-      from: "about $49 a month",
-      note: "Entry plans around $49 a month billed annually for a handful of apps, with larger tiers from about $159 a month for more seats and sources, as listed in October 2026. A free trial is offered.",
-    },
-    strengths: [
-      "Sentiment classification with a published accuracy claim above 93 percent",
-      "Automatic topic detection plus custom topics for themes specific to your app",
-      "Sources beyond the app stores, so one view covers more than iOS and Android",
-      "Integrations into Slack, Zendesk, and other team tools",
-      "Ask Appbot for natural-language questions over reviews",
-    ],
+    slug: "appbot", name: "Appbot", website: "https://appbot.co", pricingUrl: "https://appbot.co/plans/",
+    category: "Review analysis and response tools",
+    bestFor: "Teams investigating feedback and managing review responses across sources",
+    summary: "Appbot analyzes sentiment and topics in reviews, supports competitor comparisons, and connects feedback to team tools. Its larger plans include direct and automated replies, Ask Appbot, and MCP access for working with reviews in AI assistants.",
+    pricing: { free: false, from: "$59/month, monthly billing", note: "Small is $59/month on monthly billing or $49/month billed annually. Large starts at $219/month monthly or $166/month billed annually. A 14-day trial is listed; advanced reply and AI tools are plan-dependent." },
+    strengths: ["Sentiment and topic analysis", "Custom topics and dashboards", "Review sources beyond iOS and Android", "Team integrations and competitor review comparisons", "Direct replies and AI tools on eligible plans"],
     differences: [
-      "Appbot is deep on reviews and stops there. Appfox reads reviews alongside rankings, releases, competitors, and RevenueCat revenue, so a review spike is shown next to the release that preceded it.",
-      "Appbot reports sentiment scores and topic trends. Appfox reports exact counts with denominators and links each count to the original review, and it refuses percentage alarms when the sample is too small.",
-      "Appbot covers review sources beyond the app stores. Appfox covers the App Store and Google Play only.",
-      "Appfox adds competitor history, research briefs, and session replay. Appbot does not.",
+      "Appbot specializes in feedback analysis and response. Appfox also includes market research briefs and keyword rank tracking.",
+      "Both help investigate themes. Evaluate the review sample, filters, and source traceability on the same question rather than assuming one model is more accurate.",
+      "Appbot covers additional review sources. Appfox's beta is scoped to App Store and Google Play evidence.",
+      "Ask Appbot and MCP are advertised on eligible plans. Ask Fox and Appfox API access remain planned and unavailable in the beta.",
     ],
-    chooseThem: [
-      "Reviews are the whole problem and you want the deepest sentiment model",
-      "You need review sources beyond the App Store and Google Play",
-      "You route review findings into Zendesk or Slack today",
-    ],
-    chooseUs: [
-      "You want reviews read in the context of releases, rankings, competitors, and revenue",
-      "You want exact counts and denominators rather than scores, with the customer's words one click away",
-      "You want one ranked feed across every source, with a quiet day reported as quiet",
-      "You want session replay and competitor tracking in the same workspace",
-    ],
-    rows: rows([
-      "Review and sentiment analytics",
-      "No. Free trial",
-      "About $49 a month billed annually; larger tiers from about $159",
-      "App Store, Google Play, and other review sources",
-      "Yes. Sentiment, automatic and custom topics, trend tracking",
-      "Keyword tracking inside reviews, not store search rank",
-      "Limited to review comparisons",
-      "No",
-      "Alerts and reports on review changes",
-      "Ask Appbot answers questions over reviews on larger plans",
-      "No",
-      "No",
-      "Routes to team tools; replying depends on integrations",
-      "Product, support, and customer experience teams",
-    ]),
-    alternativesIntro:
-      "People look for Appbot alternatives when they want reviews read together with rankings, releases, and revenue instead of in isolation, when they want exact counts rather than sentiment scores, or when they need competitor tracking in the same tool.",
+    chooseThem: ["You need review response tools", "You need additional review sources", "You want review data in team tools or AI assistants today"],
+    chooseUs: ["You want research briefs for an idea", "You want competitor and rank context alongside reviews", "You want daily findings with their evidence", "You can work within the current private beta scope"],
+    rows: rows(["Review analysis and response", "No permanent free plan listed; 14-day trial", "$59/month monthly or $49/month billed annually", "iOS, Google Play, Windows, and other sources", "Sentiment, topics, filters, and replies", "Review text analysis; store rank tracking not documented", "Review, rating, and sentiment comparisons", "Not documented in the sources reviewed", "Review reports and alerts; workflow differs", "Ask Appbot and MCP on eligible plans", "Equivalent idea-brief workflow not documented", "Not documented in the sources reviewed", "Direct and automated replies on eligible plans", "Product, support, and customer experience teams"]),
+    alternativesIntro: "When comparing Appbot alternatives, decide whether you mainly need review analysis and responses or broader app research. Keep required integrations and sources on the checklist, and test the same customer question in each tool. We have not measured switching behavior or model accuracy.",
     faq: [
-      {
-        q: "How does Appfox's review analysis differ from Appbot's sentiment analysis?",
-        a: "Appbot classifies each review's sentiment and detects topics. Appfox groups reviews into themes with total mentions, share of reviews, trend against the previous period, rating distribution, and affected versions, and every count links back to the original review text. When the sample is too small, Appfox shows the individual reviews instead of a percentage.",
-      },
-      {
-        q: "Does Appfox cover review sources other than the app stores?",
-        a: "No. Appfox reads the App Store and Google Play. Appbot covers additional sources.",
-      },
-      {
-        q: "Does Appfox have something like Ask Appbot?",
-        a: "Ask Fox is coming soon: ask a question in plain words and get an answer built from your own reviews, releases, and metrics, with the sources linked.",
-      },
+      { q: "How does Appfox's review analysis compare?", a: "Appfox groups collected reviews into themes and lets you inspect the source reviews. Appbot offers sentiment and topic analysis too. This comparison does not establish that either model is more accurate." },
+      { q: "Does Appfox cover other review sources?", a: "The current beta covers App Store and Google Play evidence. Check Appbot's source coverage if you need additional stores or feedback channels." },
+      { q: "Does Appfox have something like Ask Appbot?", a: "Ask Fox is planned, with no announced release date. It is not available in the beta. Appbot advertises Ask Appbot and MCP on eligible plans." },
     ],
+    sources: [{ label: "Appbot product and source coverage", href: "https://appbot.co/" }, { label: "Appbot plans and billing terms", href: "https://appbot.co/plans/" }],
   },
   {
-    slug: "apptweak",
-    name: "AppTweak",
-    website: "https://www.apptweak.com",
-    pricingUrl: "https://www.apptweak.com/en/pricing",
-    category: "ASO and app store intelligence platform",
-    bestFor: "ASO specialists and growth teams who live in keyword research and Apple Search Ads",
-    summary:
-      "AppTweak is an App Store Optimization platform. Its strengths are keyword research with proprietary volume estimates, live rank tracking, competitor keyword overlap, Apple Search Ads and Google Ads insights, storefront analytics across more than 100 languages, and market intelligence estimates. Plans are sized by keyword count and history length.",
-    pricing: {
-      free: false,
-      from: "$79 a month",
-      note: "Essential at $79 a month for 500 keywords and six months of history, Grow at $299, Grow Plus at $549, Enterprise on request, with a seven-day free trial, as listed in October 2026.",
-    },
-    strengths: [
-      "Keyword research with volume estimates that specialists rate highly",
-      "Live keyword rank tracking and competitor keyword overlap",
-      "Apple Search Ads and Google Ads insights in the same tool",
-      "Storefront and localization coverage in more than 100 languages",
-      "AI agents for position analysis on newer plans",
-    ],
+    slug: "apptweak", name: "AppTweak", website: "https://www.apptweak.com", pricingUrl: "https://www.apptweak.com/en/pricing",
+    category: "App store marketing and intelligence",
+    bestFor: "Growth teams working on ASO, Apple Ads, reviews, and market research",
+    summary: "AppTweak offers multiple products: ASO Intelligence, Campaign Manager, App Reviews Manager, Market Intelligence, and API access. Plans and billing differ by product, so an ASO subscription price should not be read as the price of the full suite.",
+    pricing: { free: true, freeLabel: "Some products; ASO trial", from: "$79/month equivalent, annual ASO billing", note: "ASO Essential is displayed at $79/month with $949 billed annually and a 7-day trial. Market Intelligence lists a free Starter tier; Campaign Manager has free options. Other products have separate plans. Confirm currency and billing at checkout." },
+    strengths: ["Keyword research and rank monitoring", "Competitor and market intelligence", "Apple Ads campaign tools", "A separate review-management product", "Product-specific plans and API options"],
     differences: [
-      "AppTweak is a keyword-first platform. Appfox treats ASO as one workflow among several: tracked search queries and listing history are there, but the product is organized around what needs attention across customers, competitors, releases, and revenue.",
-      "AppTweak estimates search volume and downloads per keyword. Appfox does not estimate; it reports what it observed, with the collection window and sample shown.",
-      "AppTweak covers paid search. Appfox has no ads features.",
-      "Appfox adds review themes with exact counts, read-only RevenueCat monetization, research briefs, and session replay. AppTweak's review features are secondary to keywords.",
-      "AppTweak starts at $79 a month with no free plan. Appfox starts free and its first paid plan is $29.",
+      "AppTweak offers specialist app-store marketing products. Appfox's beta combines public-store research, review themes, and daily findings for product decisions.",
+      "Both may show observed and estimated data. Keep a recorded rank separate from a popularity or revenue estimate; neither proves demand on its own.",
+      "AppTweak includes Apple Ads tools. Ads campaign management is outside Appfox's current beta.",
+      "AppTweak has a dedicated review-management product. Compare the actual review workflow rather than treating reviews as an incidental feature.",
+      "Some AppTweak products have free options, while ASO has a trial. Appfox's Free plan remains proposed and access is by invitation.",
     ],
-    chooseThem: [
-      "Keyword research and search volume estimates drive your growth work",
-      "You run Apple Search Ads and want organic and paid in one place",
-      "You localize listings across many storefronts and languages",
-    ],
-    chooseUs: [
-      "You want to know what changed across your whole app, not only in search rank",
-      "You want reviews, competitors, and revenue read for you with evidence on every finding",
-      "You prefer observed facts with windows and samples to estimated volumes",
-      "You want a free plan and a $29 tier built for one founder",
-    ],
-    rows: rows([
-      "ASO and app store intelligence, keyword-first",
-      "No. Seven-day free trial",
-      "$79 a month (Essential), $299 (Grow), $549 (Grow Plus)",
-      "App Store and Google Play, 100+ languages",
-      "Review features exist; keywords are the focus",
-      "Yes. Live rank tracking, research, volume estimates, 500 to 3,000 keywords by tier",
-      "Yes. Keyword overlap, metadata, and market intelligence estimates",
-      "Estimated downloads and revenue for the market",
-      "Alerts and dashboards; AI agents assist on newer plans",
-      "AI agents for position analysis",
-      "Market intelligence estimates, not idea briefs",
-      "No",
-      "No store writes; ads management is separate",
-      "ASO specialists, growth and marketing teams",
-    ]),
-    alternativesIntro:
-      "People look for AppTweak alternatives when they are not ASO specialists and the keyword-first workflow is more than they need, when there is no free plan to start on, or when they want reviews, competitors, and revenue read together instead of keywords alone.",
+    chooseThem: ["ASO research is central to your work", "You need Apple Ads campaign tools", "You need specialist app-store marketing products today"],
+    chooseUs: ["You want a research brief before building", "You want reviews and competitors around one product question", "You want to inspect sources behind daily findings", "You are comfortable evaluating a private beta"],
+    rows: rows(["App store marketing and intelligence", "Some products; ASO has a 7-day trial", "ASO Essential: $949/year, displayed as $79/month", "App Store and Google Play", "Dedicated App Reviews Manager product", "ASO keyword research and rank tracking", "ASO and market intelligence products", "Market download and revenue estimates", "Product-specific analytics and AI; workflow differs", "AI features; citation coverage not assessed", "Market research products; equivalent brief workflow not verified", "Not documented in the sources reviewed", "Review replies and ads tools in separate products", "Growth, ASO, support, and marketing teams"]),
+    alternativesIntro: "AppTweak is a suite, so start by naming the product you need an alternative to. Keyword research, Apple Ads, review responses, and idea research need different comparisons. Include free tiers, billing terms, and additional product costs in your shortlist.",
     faq: [
-      {
-        q: "Is Appfox an ASO tool like AppTweak?",
-        a: "ASO is one workflow inside Appfox, not the whole product. Appfox tracks the search queries you follow and keeps listing history, but it does not estimate search volume or suggest keywords. AppTweak is the stronger choice for keyword research.",
-      },
-      {
-        q: "Does Appfox estimate competitor downloads and revenue?",
-        a: "No. Appfox reports what it observed on listings and in reviews, with the window and sample shown, and reads verified competitor revenue only where it is available on Indie and above. It refuses to present estimates as facts.",
-      },
-      {
-        q: "Can Appfox replace AppTweak for a solo developer?",
-        a: "If you want to know what changed across reviews, rankings, releases, competitors, and revenue each day, yes. If keyword research drives your growth, keep AppTweak and use Appfox for everything else.",
-      },
+      { q: "Is Appfox an ASO tool like AppTweak?", a: "Rank tracking is one Appfox workflow. AppTweak offers a broader set of specialist marketing products. Test the keyword coverage and analysis you need before replacing an existing ASO workflow." },
+      { q: "Are competitor revenue numbers verified earnings?", a: "A provider estimate is not a competitor's verified financial result. Check the source, scope, and label. Appfox's planned RevenueCat connection concerns connected first-party data and is unavailable in the beta." },
+      { q: "Can Appfox replace AppTweak for a solo developer?", a: "It may fit research and product investigation, but it does not replace paid-ad management or every specialist ASO workflow. Appfox is currently invite-only." },
     ],
+    sources: [{ label: "AppTweak product overview", href: "https://www.apptweak.com/en" }, { label: "AppTweak product-specific pricing", href: "https://www.apptweak.com/en/pricing" }],
   },
 ];
 
 export function getCompetitor(slug: string) {
-  return competitors.find((c) => c.slug === slug);
+  return competitors.find((competitor) => competitor.slug === slug);
 }

@@ -13,9 +13,9 @@ import Reveal from "@/components/reveal";
 
 const PAGE = {
   path: "/pricing",
-  title: "Pricing: Free, Indie $29, Studio $99",
+  title: "Proposed Pricing: Free, Indie & Studio",
   description:
-    "Appfox app tracker pricing. Start free with both journeys and the full evidence ledger, then upgrade to Indie at $29 or Studio at $99 a month. Every plan is read-only and metered in the open.",
+    "Explore proposed Appfox plans: Free, Indie at $29/month, and Studio at $99/month. Appfox is in private beta. Prices, features, and limits are not final.",
 };
 
 export const metadata = pageMetadata(PAGE);
@@ -24,7 +24,7 @@ const EVERY_PLAN = [
   { t: "Both journeys", b: "Research an idea and operate a live app in one workspace." },
   { t: "Every surface", b: "Today, Market, My App, Customers, Actions, and Integrations." },
   { t: "Evidence on every finding", b: "Each recommendation links to the reviews, listings, and metrics behind it." },
-  { t: "Read-only integrations", b: "Appfox never writes to your stores or providers. Credentials stay server-side." },
+  { t: "Read-only integrations", b: "Private integrations are planned. The beta starts with public store data." },
   { t: "Workspace isolation", b: "Row-level isolation, with owner, admin, and viewer roles." },
   { t: "Usage you can see", b: "A per-workspace history of what was spent, on what, and when." },
 ];
@@ -51,11 +51,11 @@ const METERING = [
 const faq = [
   {
     q: "Can I start for free?",
-    a: "Yes. The Free plan includes both journeys for one owned app and one market, with 30 days of evidence history, 20 AI runs, and one research brief a month.",
+    a: "Appfox is currently invite-only. The proposed Free plan includes one app, one market, 30 days of evidence history, 20 AI runs, and one research brief a month. Request access and confirm the terms of your beta invitation; the form does not create a workspace or start a subscription.",
   },
   {
     q: "How does annual billing work?",
-    a: "Annual prices are shown as a monthly rate. Indie is $24 and Studio is $79 a month when billed annually.",
+    a: "The proposed annual rates are $24 per month for Indie ($288 billed yearly) and $79 per month for Studio ($948 billed yearly). Monthly billing would be $29 and $99 respectively. Pricing is not final.",
   },
   {
     q: "What counts as an AI run?",
@@ -63,11 +63,11 @@ const faq = [
   },
   {
     q: "What happens when I hit a plan limit?",
-    a: "The control that would start new paid work stops and says why. Nothing you already collected goes away, and nothing is silently retried. Upgrade when the limits get in the way.",
+    a: "The proposed approach is to pause new work when a limit is reached and explain why, while keeping collected evidence available. Limits are being tested during the private beta; confirm those that apply to your workspace when invited.",
   },
   {
     q: "Do I need to connect RevenueCat?",
-    a: "No. RevenueCat is optional and read-only. It is available on Indie and above, alongside verified competitor revenue.",
+    a: "No. The beta works with public store data. RevenueCat is planned as an optional, read-only connection and is not available in the current beta. Its placement in the table is a proposal, not a current entitlement.",
   },
   {
     q: "Are these prices final?",
@@ -81,12 +81,12 @@ export default function PricingPage() {
       <PageJsonLd path={PAGE.path} name={PAGE.title} description={PAGE.description} extra={[faqJsonLd(faq)]} />
       <PageIntro
         kicker="Pricing"
-        title="Priced in the open. Start free, pay when you outgrow it."
-        lead="Every plan has the same evidence ledger and the same read-only boundary. The tiers change how much you can watch, how far back you can look, and how many people can look with you."
+        title="Plans for your first app and the ones after it."
+        lead="Appfox is in private beta. Explore proposed plans for solo developers and growing studios, then request an invitation. Prices, features, and limits may change before public launch."
       >
         <div className="flex flex-wrap justify-center gap-4">
           <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
-            Start for free
+            Request access
           </ButtonLink>
           <ButtonLink href="#plans" variant="secondary" size="hero">
             See plans
@@ -100,13 +100,13 @@ export default function PricingPage() {
           <PricingGrid className="pt-12" collapsible showFits />
         </Reveal>
         <p className="pt-6 text-center text-[13px] leading-5 text-quiet">
-          Proposed plans. Prices are per month, with the annual rate where it applies.
+          Proposed plans, not current beta entitlements. Annual rates are per month, billed yearly. Planned features are unavailable in the beta.
         </p>
       </Section>
 
       {/* Included in every plan */}
       <Section>
-        <SectionHeading title="Included in every plan:" sub="the same evidence ledger." className="max-w-[640px]" />
+        <SectionHeading title="The plan for every tier:" sub="evidence you can check." className="max-w-[640px]" />
         <div className="mt-10 grid gap-x-10 sm:grid-cols-2 lg:mt-16 lg:grid-cols-3">
           {EVERY_PLAN.map((item, i) => (
             <Reveal key={item.t} delay={(i % 3) * 80} className="border-t border-line py-5">
@@ -124,9 +124,9 @@ export default function PricingPage() {
       <Section>
         <div className="grid gap-12 lg:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] lg:gap-20">
           <SectionHeading
-            title="Metered,"
-            sub="so the free plan can stay free."
-            lead="Paid provider jobs and AI runs count against your plan. The accounting is the same on every tier, and you can always see it."
+            title="Usage you can understand,"
+            sub="as your needs grow."
+            lead="The proposed plans include limits for AI work and data collection. These are the principles behind the limits; beta allowances may change."
           />
           <Reveal delay={100}>
           <dl className="grid gap-x-10 sm:grid-cols-2">

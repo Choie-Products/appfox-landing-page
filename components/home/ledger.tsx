@@ -19,7 +19,7 @@ const SURFACES: { name: string; question: string; icon: LucideIcon }[] = [
 const JOURNEY_LINKS = [
   { label: "Research an idea", href: "/research" },
   { label: "Operate a live app", href: "/live-app" },
-  { label: "Watch session replays", href: "/replay" },
+  { label: "Session replay — planned", href: "/replay" },
 ];
 
 /* Desktop drawing space: three cards a side, the ledger plate in the middle. */
@@ -127,9 +127,9 @@ function SurfaceCard({
 function LedgerCaption() {
   return (
     <div className="text-center">
-      <p className="font-mono text-[14px] font-medium uppercase leading-5 text-ink">One ledger</p>
+      <p className="font-mono text-[14px] font-medium uppercase leading-5 text-ink">Shared evidence</p>
       <p className="pt-2 text-[15px] leading-[22px] text-muted">
-        Every finding keeps its evidence, whichever surface it shows up on.
+        The original sources stay attached as you explore each finding.
       </p>
     </div>
   );
@@ -144,12 +144,12 @@ export default function Ledger() {
     <Container as="section" className="py-24 lg:py-40">
       <Reveal className="mx-auto max-w-[560px] text-center">
         <h2 className="text-display-md text-ink">
-          <span className="block">Where it all lives:</span>
-          <span className="block text-quiet">six surfaces, one ledger.</span>
+          <span className="block">One place to understand your app.</span>
+          <span className="block text-quiet">Six views, shared evidence.</span>
         </h2>
         <p className="pt-4 text-[16px] leading-[26px] text-muted">
-          Today, Market, My App, Customers, Actions, and Integrations. No keyword silo, no review silo, no revenue
-          silo. Each surface answers a question you actually ask.
+          Today, Market, My App, Customers, Actions, and Integrations each answer a different question.
+          Start with store data in the beta; private integrations and reply drafts are planned.
         </p>
       </Reveal>
 

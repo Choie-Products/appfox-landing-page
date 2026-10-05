@@ -6,12 +6,13 @@ import { isValidEmail, normalizeEmail } from "@/lib/email";
 import { track } from "@/lib/track";
 import { cn } from "@/lib/utils";
 import WaitlistSuccess from "@/components/waitlist-success";
+import { captureAttribution } from "@/lib/attribution";
 
 type FormStatus =
   | { type: "idle" }
   | { type: "invalid"; message: string }
   | { type: "loading" }
-  | { type: "success"; alreadyJoined: boolean }
+  | { type: "success"; alreadyJoined: boolean; confirmation?: "sent" | "failed" | "not_requested" }
   | { type: "error"; message: string };
 
 export default function WaitlistForm({
@@ -42,13 +43,13 @@ export default function WaitlistForm({
     event.preventDefault();
     const trimmed = email.trim();
 
-    if (!trimmed) return flashError("Enter your work email.");
+    if (!trimmed) return flashError("Enter your email address.");
     if (!isValidEmail(normalizeEmail(trimmed))) return flashError("That email doesn't look right.");
 
     setStatus({ type: "loading" });
     track("waitlist_submit", { source });
 
-    const params = new URLSearchParams(window.location.search);
+    const attribution = captureAttribution();
 
     try {
       const res = await fetch("/api/waitlist", {
@@ -57,21 +58,20 @@ export default function WaitlistForm({
         body: JSON.stringify({
           email: trimmed,
           website: honeypot,
-          utmSource: params.get("utm_source") ?? undefined,
-          utmMedium: params.get("utm_medium") ?? undefined,
-          utmCampaign: params.get("utm_campaign") ?? undefined,
-          referrer: document.referrer || undefined,
+          ...attribution,
         }),
       });
 
       const data = (await res.json().catch(() => ({}))) as {
         ok?: boolean;
+        saved?: boolean;
         alreadyJoined?: boolean;
+        confirmation?: "sent" | "failed" | "not_requested";
         error?: string;
         message?: string;
       };
 
-      if (!res.ok) {
+      if (!res.ok || !data.ok || (data.saved !== true && !honeypot)) {
         const message =
           data.error === "invalid_email"
             ? "That email doesn't look right."
@@ -79,21 +79,23 @@ export default function WaitlistForm({
               ? "Too many tries. Wait a moment and try again."
               : data.message || "Something went wrong. Try again in a moment.";
         flashError(message, "error");
+        track("waitlist_error", { source, error_type: data.error === "rate_limited" ? "rate_limited" : "request_failed" });
         return;
       }
 
       const alreadyJoined = Boolean(data.alreadyJoined);
-      setStatus({ type: "success", alreadyJoined });
-      track("waitlist_success", { already_joined: alreadyJoined, source });
+      setStatus({ type: "success", alreadyJoined, confirmation: data.confirmation });
+      if (data.saved) track(alreadyJoined ? "waitlist_existing" : "waitlist_success", { source });
     } catch {
       flashError("Couldn't reach Appfox. Try again.", "error");
+      track("waitlist_error", { source, error_type: "network_error" });
     }
   }
 
   if (status.type === "success") {
     return (
       <div className={cn("w-full", className)}>
-        <WaitlistSuccess email={email} alreadyJoined={status.alreadyJoined} tone={tone} />
+        <WaitlistSuccess email={email} alreadyJoined={status.alreadyJoined} confirmation={status.confirmation} tone={tone} />
       </div>
     );
   }
@@ -107,7 +109,7 @@ export default function WaitlistForm({
     <div className={cn("w-full", className)}>
       <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-2">
         <label htmlFor={inputId} className="sr-only">
-          Work email
+          Email address
         </label>
         <div className={cn("flex flex-col gap-2 sm:flex-row", shake && "shake")}>
           <input
@@ -116,7 +118,7 @@ export default function WaitlistForm({
             type="email"
             autoComplete="email"
             inputMode="email"
-            placeholder="you@company.com"
+            placeholder="you@example.com"
             value={email}
             disabled={isBusy}
             onChange={(event) => {
@@ -142,7 +144,7 @@ export default function WaitlistForm({
               "k3d k3d-accent text-white",
             )}
           >
-            {isBusy ? "Joining" : compact ? "Join" : "Start for free"}
+            {isBusy ? "Sending" : compact ? "Request access" : "Request access"}
           </button>
         </div>
 
@@ -161,7 +163,7 @@ export default function WaitlistForm({
             </p>
           ) : (
             <p className={cn("text-[12px] leading-[18px]", dark ? "text-dark-muted" : "text-quiet")}>
-              Free to start. Both journeys, full evidence ledger, no time expiry.
+              Private beta. We will email you when an invitation is available.
             </p>
           )}
         </div>

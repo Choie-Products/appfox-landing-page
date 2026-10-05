@@ -26,25 +26,25 @@ const LAYERS: Layer[] = [
     name: "Facts",
     icon: Database,
     side: "left",
-    body: "Listings, reviews, ranks, releases, and metrics. Stored once, never backdated.",
+    body: "Store listings, reviews, ranks, and releases, kept as history. Revenue data is planned.",
   },
   {
     name: "Signals",
     icon: Activity,
     side: "right",
-    body: "Deterministic detections with a threshold, a minimum sample, and a cooldown.",
+    body: "Changes checked against earlier data, with enough evidence before they become a finding.",
   },
   {
     name: "Insights",
     icon: null,
     side: "left",
-    body: "AI joins independent sources into one plain explanation and cites its evidence.",
+    body: "AI explains what changed and why it may matter, with links to the sources it used.",
   },
   {
     name: "Outcomes",
     icon: Target,
     side: "right",
-    body: "You accept, dismiss, or snooze. Matched windows then show whether it helped.",
+    body: "You decide what to investigate or change. A finding is a starting point, not a verdict.",
   },
 ];
 
@@ -504,8 +504,8 @@ export default function LayerStack() {
     <section ref={ref} className="mx-auto w-full max-w-site px-5 py-24 sm:px-8 lg:px-10 lg:py-40">
       <Reveal>
         <h2 className="mx-auto max-w-[640px] text-balance text-center text-display-md text-ink">
-          <span className="block">So we built it in four layers.</span>
-          <span className="block text-quiet">Every answer traces back to its source.</span>
+          <span className="block">From store data to a decision.</span>
+          <span className="block text-quiet">See the evidence at every step.</span>
         </h2>
       </Reveal>
 

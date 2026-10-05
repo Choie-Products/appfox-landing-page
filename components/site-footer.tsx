@@ -14,8 +14,8 @@ export default function SiteFooter() {
               <Logo className="h-[26px] w-auto" />
             </Link>
             <p className="mt-4 max-w-[340px] text-[16px] leading-[26px] text-muted">
-              The AI app tracker for indie founders and mobile studios. Reviews, rankings, releases, revenue, and
-              competitors, read for you. Evidence on every finding, and quiet days reported as quiet days.
+              App intelligence for iOS and Android developers. Research ideas, understand reviews, and track
+              competitors with evidence you can check. Built for your first app and every app after it. Now in private beta.
             </p>
             <a
               href={`mailto:${CONTACT_EMAIL}`}

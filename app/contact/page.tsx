@@ -30,7 +30,7 @@ export default function ContactPage() {
             Email us
           </ButtonLink>
           <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="secondary" size="hero">
-            Start for free
+            Request access
           </ButtonLink>
         </div>
       </PageIntro>

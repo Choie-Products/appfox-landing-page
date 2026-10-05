@@ -8,7 +8,7 @@ import {
   RevenueArt,
   ThemesArt,
 } from "@/components/home/journey-art";
-import { MonoLabel, SoftCard, PanelCard, Section, Split } from "@/components/ui/blocks";
+import { MonoLabel, MonoLink, SoftCard, PanelCard, Section, Split } from "@/components/ui/blocks";
 import { ButtonLink } from "@/components/ui/button";
 import PageIntro from "@/components/ui/page-intro";
 import SceneFrame from "@/components/ui/scene-frame";
@@ -18,9 +18,9 @@ import SectionHeading from "@/components/ui/section-heading";
 
 const PAGE = {
   path: "/product",
-  title: "Product: One App Tracker, Six Surfaces",
+  title: "App Intelligence for Research, Reviews & Competitor Tracking",
   description:
-    "See how Appfox tracks a mobile app: Today ranks what changed, Market watches competitors, Customers groups reviews into themes, My App joins sources, Actions records outcomes, and Integrations stay read-only.",
+    "Explore Appfox's research briefs, daily findings, review themes, and competitor and rank tracking. See how the private beta helps you choose what to build next.",
 };
 
 export const metadata = pageMetadata(PAGE);
@@ -37,35 +37,35 @@ const surfaces = [
     id: "market",
     name: "Market",
     question: "Who is out there, and what is changing?",
-    body: "An editable market scope with confirmed direct and adjacent competitors, a saved research brief, metadata and pricing comparisons, rating and review movement, tracked search queries, and newly discovered apps. History is append-only, so you can see change over time rather than a snapshot.",
+    body: "Choose the market you want to understand, review direct and adjacent competitors, and open a research brief. Compare collected listings, prices, ratings, and reviews. Saved observations let you see changes over time; coverage depends on the store, market, and collection history.",
     mock: <CompetitorsArt />,
   },
   {
     id: "customers",
     name: "Customers",
     question: "What are people telling us?",
-    body: "A review browser and a theme view. Themes carry total mentions, share of reviews, trend against the previous period, rating distribution, and affected versions. Every count links back to the original review text, and the collection window, locale, and cap are always shown.",
+    body: "Open Customers to see recurring praise, friction, and requests in collected reviews. Follow a theme into the review browser and filter by market, sentiment, rating, or reason. Check the sampled and classified review counts before treating a theme as representative of all your users.",
     mock: <ThemesArt />,
   },
   {
     id: "my-app",
     name: "My App",
     question: "How is my app doing, across sources?",
-    body: "Your owned app in one place: public store identity and listing history, customer evidence, store and manual release context, and supported RevenueCat metrics with exact project or app scope. The overview merges sources rather than mirroring each provider dashboard.",
+    body: "Your app in one place: public store identity, listing history, customer evidence, and release context. RevenueCat metrics are planned and unavailable in the current beta. The aim is to connect the evidence around your app, with the source and scope clear.",
     mock: <MyAppArt />,
   },
   {
     id: "actions",
     name: "Actions",
     question: "What did we decide, and did it help?",
-    body: "A deliberately small task list. Accept, edit, dismiss, complete, and record an assessment. Each task keeps its rationale and evidence. Completed tasks get a matched-window comparison and your own verdict, because an observed change is not a proven cause.",
+    body: "Keep a decision close to the research that led to it. Research briefs let you record a decision and follow up on suggested actions. Write down what you will test and how you will judge the result. A change in reviews or rank is evidence to investigate, not proof that your release caused it.",
     mock: <OutcomeArt />,
   },
   {
     id: "integrations",
     name: "Integrations",
     question: "What does Appfox read, and can it write?",
-    body: "Every connection card shows the data read, permissions requested, last sync, sync status, usage against provider limits, and a disconnect control. All launch integrations are read-only. Credentials are stored server-side in a vault.",
+    body: "The beta uses public store data. Private connections, including RevenueCat, are planned. Connection cards are designed to show what is read, permissions, sync status, usage limits, and a disconnect control. Private integrations are intended to be read-only.",
     mock: <RevenueArt />,
   },
 ];
@@ -101,17 +101,18 @@ export default function ProductPage() {
       <PageJsonLd path={PAGE.path} name={PAGE.title} description={PAGE.description} />
       <PageIntro
         kicker="Product"
-        title="Six surfaces. One question each."
-        lead="Appfox is an app tracker organized around attention, not datasets. There is no keywords tab, reviews tab, or revenue tab at the top level. Each surface answers something you actually ask about your app, and AI explains every finding with its evidence attached."
+        title="Six questions. A clearer view of your app."
+        lead="Appfox is an app intelligence platform for research and day-to-day decisions. The beta navigation brings together Dashboard, Customers, Market, Keywords, and Settings. The six areas below explain the questions it helps you answer, including what is still planned."
       >
         <div className="flex flex-wrap justify-center gap-4">
           <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
-            Start for free
+            Request access
           </ButtonLink>
           <ButtonLink href="#surfaces" variant="secondary" size="hero">
-            See the surfaces
+            Explore the product
           </ButtonLink>
         </div>
+        <MonoLink href="/how-it-works">Follow the product walkthrough</MonoLink>
       </PageIntro>
 
       <Section id="surfaces" className="scroll-mt-24 space-y-24 pt-4 lg:space-y-40 lg:pt-8">

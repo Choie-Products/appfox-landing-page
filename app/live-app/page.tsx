@@ -16,7 +16,7 @@ const PAGE = {
   path: "/live-app",
   title: "Operate a Live App: Daily App Monitoring",
   description:
-    "Track a live iOS or Android app from one ranked feed. Add it by store URL, optionally connect RevenueCat read-only, and let Today surface the review, competitor, release, and revenue changes that matter, with evidence.",
+    "Track reviews, rankings, and competitor changes for your iOS or Android app. Appfox explains daily findings with sources attached. Available by private beta invitation.",
 };
 
 export const metadata = pageMetadata(PAGE);
@@ -24,7 +24,7 @@ export const metadata = pageMetadata(PAGE);
 const steps = [
   { t: "Add your app", b: "Paste an App Store or Google Play URL. Appfox builds the initial market and suggests competitors for you to confirm." },
   { t: "Get public evidence", b: "Listing history, collected reviews, and tracked search queries start immediately, with collection progress shown while data is pending." },
-  { t: "Connect RevenueCat, optionally", b: "Appfox verifies the project and app binding first, then reads a small set of supported metrics with exact scope. Nothing is written back." },
+  { t: "RevenueCat connection — planned", b: "A future read-only integration is intended to add revenue and subscription context. The current beta uses public store data." },
   { t: "Read Today", b: "Meaningful customer, competitor, release, and monetization changes, ranked, with evidence and a suggested action." },
   { t: "Act and record", b: "Inspect the evidence, accept, dismiss, or snooze the finding, and note what you did." },
   { t: "Revisit the result", b: "Comparable windows and your own assessment show whether the change you shipped moved the thing you meant to move." },
@@ -150,11 +150,11 @@ export default function LiveAppPage() {
       <PageIntro
         kicker="Operate a live app"
         title="Stop checking five tools every morning."
-        lead="Appfox tracks your app every day. Today tells you what changed across your customers, your competitors, your releases, and your monetization, why it may matter, and what to do next."
+        lead="Appfox turns changes in reviews, rankings, releases, and competitors into daily findings. See what changed, why it may matter, and the sources behind it. RevenueCat data is planned."
       >
         <div className="flex flex-wrap justify-center gap-4">
           <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
-            Start for free
+            Request access
           </ButtonLink>
           <ButtonLink href="#how-it-works" variant="secondary" size="hero">
             How it works
@@ -173,10 +173,10 @@ export default function LiveAppPage() {
           }
         >
           <p>
-            A negative review spike, a trial conversion drop, a rank acceleration, a new competitor, a price change, a
-            post-release crash increase. Each is computed from stored facts with a baseline window, a comparison
-            window, and a minimum sample. Only then does AI connect them into a sentence you can act on, citing the
-            evidence IDs it used.
+            A change in review sentiment, a rank movement, a new competitor, or a price change can be a reason to
+            investigate. Appfox compares collected store data and uses AI to explain findings with the sources
+            attached. Revenue and crash data require integrations beyond the current beta; a finding is a clue,
+            not proof of what caused a change.
           </p>
           <p>
             Each signal has a stable fingerprint, so an ongoing episode updates instead of re-alerting, and revised
@@ -195,7 +195,7 @@ export default function LiveAppPage() {
       <Section>
         <Split
           reverse
-          title="Real monetization context,"
+          title="Planned: monetization context,"
           sub="with exact scope."
           visual={
             <SceneFrame>
@@ -204,10 +204,10 @@ export default function LiveAppPage() {
           }
         >
           <p>
-            RevenueCat is the first first-party integration. Appfox keeps project totals and app-level series
-            separate, records currency, timezone, and window for every observation, never sums stocks like active
-            subscriptions across days, and computes trial-to-paid from matched mature cohorts rather than today&rsquo;s
-            ratio.
+            RevenueCat is a planned integration. The intended approach keeps project totals separate from app-level
+            data and records currency, timezone, and reporting period. Subscription counts and trial conversion
+            need careful comparisons; these requirements describe the planned experience, not revenue analytics
+            available in the beta.
           </p>
           <p>
             Accounts without a connection get a clearly labeled public-data experience. Nothing is hidden behind a

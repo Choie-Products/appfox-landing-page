@@ -27,7 +27,7 @@ function meta(slug: string) {
     others,
     path: `/alternatives/${c.slug}`,
     title: `${c.name} Alternatives (${YEAR}): Appfox, ${others.join(", ")}`,
-    description: `The best ${c.name} alternatives for indie founders and small studios in ${YEAR}: Appfox, ${others.join(", ")}. Pricing, free plans, what each does best, and how to choose, checked ${CHECKED}.`,
+    description: `Compare ${c.name} alternatives for app developers in ${YEAR}: Appfox, ${others.join(", ")}. Explore workflows, billing terms, free options, and beta availability.`,
   };
 }
 
@@ -38,9 +38,9 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 const HOW_TO_CHOOSE = [
   "Start with the question you ask most mornings. If it is \"what changed and what should I do\", you want a reading tool. If it is \"how many downloads did we get\", you want reporting.",
-  "Check the free plan and the first paid tier against your app count. Per-app pricing is cheap for one app and expensive for a portfolio.",
-  "Ask whether the tool writes to your store. Automated replies save time for support teams and are a risk for a solo founder.",
-  "Look for windows and samples on every number. A percentage without a denominator is a guess with a decimal point.",
+  "Price the same workload in each tool: apps, markets, seats, keywords, and replies. Compare the same billing period and include any required add-ons.",
+  "Decide whether you need store replies or analysis only. If you need automation, check approval controls, permissions, and the plan that includes it.",
+  "Test one real question in each product. Inspect the source reviews, date windows, sample sizes, and limitations before deciding which answer helps you most.",
 ];
 
 export default async function AlternativesPage({ params }: { params: Promise<{ slug: string }> }) {
@@ -52,19 +52,19 @@ export default async function AlternativesPage({ params }: { params: Promise<{ s
   const faq = [
     {
       q: `What is the best ${c.name} alternative for an indie developer?`,
-      a: `For one founder or a small studio that wants reviews, rankings, releases, revenue, and competitors read daily with evidence, Appfox: a free plan and a $29 Indie tier. ${others
+      a: `Appfox may fit app research, review themes, and daily findings, with access by invitation. Its Free and paid plans are proposed; RevenueCat and replay are unavailable in the beta. ${others
         .map((o) => `${o.name} is the stronger choice if ${o.chooseThem[0].charAt(0).toLowerCase()}${o.chooseThem[0].slice(1)}`)
         .join(". ")}.`,
     },
     {
       q: `Is there a free ${c.name} alternative?`,
-      a: `Appfox has a free plan covering one app and one market. ${others
+      a: `Appfox has a proposed Free plan, but current access is invite-only. ${others
         .filter((o) => o.pricing.free)
-        .map((o) => `${o.name} also offers a free plan`)
+        .map((o) => `${o.name} lists ${o.pricing.freeLabel ? "free options for some products" : "a free plan"}`)
         .join(", ")}${others.some((o) => !o.pricing.free) ? `. ${others.filter((o) => !o.pricing.free).map((o) => o.name).join(" and ")} offer trials rather than free plans` : ""}, as listed ${CHECKED}.`,
     },
     {
-      q: `Why do people switch from ${c.name}?`,
+      q: `How should I compare alternatives to ${c.name}?`,
       a: c.alternativesIntro,
     },
   ];
@@ -98,7 +98,7 @@ export default async function AlternativesPage({ params }: { params: Promise<{ s
       >
         <div className="flex flex-wrap justify-center gap-4">
           <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
-            Start Appfox free
+            Request Appfox access
           </ButtonLink>
           <ButtonLink href={`/compare/${c.slug}`} variant="secondary" size="hero">
             Appfox vs {c.name}
@@ -110,7 +110,7 @@ export default async function AlternativesPage({ params }: { params: Promise<{ s
         <SectionHeading
           title={`Four ${c.name} alternatives,`}
           sub="each for a different job."
-          lead={`We build Appfox, so it is listed first and labeled as ours. The others are described from their own websites, checked ${CHECKED}.`}
+          lead={`We build Appfox, so it is listed first and labeled as ours. Vendor pages were checked ${CHECKED}. This is an editorial shortlist, not a ranking or a hands-on benchmark.`}
           className="max-w-[640px]"
         />
         <ol className="mt-10 grid gap-5">
@@ -125,20 +125,20 @@ export default async function AlternativesPage({ params }: { params: Promise<{ s
               <dl className="pt-4 text-[14px] leading-5">
                 <div className="flex justify-between gap-4 border-t border-line py-2.5">
                   <dt className="text-quiet">Free plan</dt>
-                  <dd className="text-ink">Yes</dd>
+                  <dd className="text-ink">Proposed; invite-only beta</dd>
                 </div>
                 <div className="flex justify-between gap-4 border-t border-line py-2.5">
                   <dt className="text-quiet">Paid from</dt>
-                  <dd className="text-right text-ink">$29 a month</dd>
+                  <dd className="text-right text-ink">Proposed: $29/month</dd>
                 </div>
               </dl>
             </div>
             <div>
               <p className="text-[16px] leading-[26px] text-muted">
                 Best for {APPFOX.bestFor.charAt(0).toLowerCase()}
-                {APPFOX.bestFor.slice(1)}. Appfox reads App Store and Google Play reviews, rankings, releases, revenue,
-                and competitors every day and ranks what changed with the evidence attached. It adds AI research briefs
-                for new ideas and privacy-masked session replay, and it never writes to a store or provider.
+                {APPFOX.bestFor.slice(1)}. The private beta includes research briefs, daily findings, review themes,
+                and competitor and rank tracking. RevenueCat, replay, reply drafts, Ask Fox, and API access are
+                planned and unavailable in the beta.
               </p>
               <CheckList items={c.chooseUs.slice(0, 3)} className="pt-3" />
               <div className="flex flex-wrap gap-x-8 gap-y-2 pt-5">
@@ -159,7 +159,7 @@ export default async function AlternativesPage({ params }: { params: Promise<{ s
                 <dl className="pt-4 text-[14px] leading-5">
                   <div className="flex justify-between gap-4 border-t border-line py-2.5">
                     <dt className="text-quiet">Free plan</dt>
-                    <dd className="text-ink">{o.pricing.free ? "Yes" : "No, trial"}</dd>
+                    <dd className="text-ink">{o.pricing.freeLabel ?? (o.pricing.free ? "Yes" : "No, trial")}</dd>
                   </div>
                   <div className="flex justify-between gap-4 border-t border-line py-2.5">
                     <dt className="text-quiet">Paid from</dt>
@@ -173,6 +173,12 @@ export default async function AlternativesPage({ params }: { params: Promise<{ s
                   {o.bestFor.slice(1)}. {o.summary}
                 </p>
                 <CheckList items={o.strengths.slice(0, 3)} className="pt-3" />
+                <p className="pt-3 text-[13px] leading-5 text-quiet">
+                  {o.pricing.note}{" "}
+                  Sources: {o.sources.map((source, index) => (
+                    <span key={source.href}>{index > 0 ? " · " : ""}<a href={source.href} className="underline underline-offset-2 hover:text-ink">{source.label}</a></span>
+                  ))}.
+                </p>
                 <div className="flex flex-wrap gap-x-8 gap-y-2 pt-5">
                   <MonoLink href={`/compare/${o.slug}`}>Appfox vs {o.name}</MonoLink>
                   <MonoLink href={o.website}>Visit {o.name}</MonoLink>
@@ -206,7 +212,7 @@ export default async function AlternativesPage({ params }: { params: Promise<{ s
 
       <FaqBlock title={`${c.name} alternatives,`} sub="common questions." items={faq} />
 
-      <CtaBand title="Try the alternative that shows its evidence." lead="Start free. Public store data works from day one, and nothing is ever written back." />
+      <CtaBand title="Try the alternative that shows its evidence." lead="Request a private beta invitation. Start with public store data and findings you can check." />
     </>
   );
 }

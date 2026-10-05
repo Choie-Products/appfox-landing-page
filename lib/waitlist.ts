@@ -1,9 +1,7 @@
+import { createHash } from "node:crypto";
 import { getResend, getResendFrom, getWaitlistSegmentId } from "@/lib/resend";
-import {
-  waitlistConfirmationHtml,
-  waitlistConfirmationSubject,
-  waitlistConfirmationText,
-} from "@/lib/waitlist-email";
+import { resendRequest } from "@/lib/resend-request";
+import { waitlistConfirmationHtml, waitlistConfirmationSubject, waitlistConfirmationText } from "@/lib/waitlist-email";
 
 export type WaitlistSignup = {
   email: string;
@@ -14,124 +12,87 @@ export type WaitlistSignup = {
   referrer?: string;
 };
 
-type ResendIssue = {
-  message: string;
-  statusCode?: number | null;
-  name?: string;
-} | null;
+type ResendIssue = { name?: string; statusCode?: number | null } | null;
 
-function logResend(label: string, error: ResendIssue) {
-  if (!error) return;
-  console.error(label, error.name ?? "", error.statusCode ?? "", error.message);
+function providerFailure(operation: string, error: ResendIssue): never {
+  // Provider messages can contain the submitted email. Log codes, never applicant data.
+  console.error("waitlist_provider_failure", { operation, code: error?.name, status: error?.statusCode });
+  throw new Error("waitlist_persist_failed");
 }
 
-function contactProperties(input: WaitlistSignup) {
-  const properties: Record<string, string> = {
-    source: "waitlist",
-  };
+function contactProperties(input: WaitlistSignup, existing: Record<string, { value: string | number }> = {}) {
+  const properties: Record<string, string> = { source: "waitlist" };
   if (input.role) properties.role = input.role;
-  if (input.utmSource) properties.utm_source = input.utmSource;
-  if (input.utmMedium) properties.utm_medium = input.utmMedium;
-  if (input.utmCampaign) properties.utm_campaign = input.utmCampaign;
-  if (input.referrer) properties.referrer = input.referrer;
+  // Keep first-touch attribution when the optional role is saved or someone returns.
+  const attribution = { utm_source: input.utmSource, utm_medium: input.utmMedium, utm_campaign: input.utmCampaign, referrer: input.referrer };
+  for (const [key, value] of Object.entries(attribution)) {
+    if (value && !existing[key]?.value) properties[key] = value;
+  }
   return properties;
 }
 
 export async function saveWaitlistSignup(input: WaitlistSignup) {
-  const stored = await storeWaitlistContact(input);
-  const emailed =
-    stored.alreadyJoined ? true : await sendWaitlistConfirmation(input.email);
-
-  if (!stored.saved && !emailed) {
-    throw new Error("waitlist_persist_failed");
-  }
-
-  return { alreadyJoined: stored.alreadyJoined };
-}
-
-async function storeWaitlistContact(input: WaitlistSignup) {
-  try {
-    const resend = getResend();
-    const { data: existing, error: getError } = await resend.contacts.get({
-      email: input.email,
-    });
-
-    if (existing) {
-      const { error: updateError } = await resend.contacts.update({
-        email: input.email,
-        properties: contactProperties(input),
-      });
-      logResend("Resend contact update failed:", updateError);
-      return { saved: true, alreadyJoined: true };
-    }
-
-    if (getError && getError.statusCode !== 404 && getError.name !== "not_found") {
-      logResend("Resend contact lookup failed:", getError);
-    }
-
-    const segmentId = getWaitlistSegmentId();
-    const created = await createContact(input, segmentId);
-    if (created) return { saved: true, alreadyJoined: false };
-
-    return { saved: false, alreadyJoined: false };
-  } catch (error) {
-    const message = error instanceof Error ? error.message : "unknown_contact_error";
-    console.error("Resend contacts unavailable:", message);
-    return { saved: false, alreadyJoined: false };
-  }
-}
-
-async function createContact(input: WaitlistSignup, segmentId?: string) {
   const resend = getResend();
-  const attempts = [
-    {
+  const segmentId = getWaitlistSegmentId();
+  const found = await resendRequest(() => resend.contacts.get({ email: input.email }));
+  if (found.error && found.error.statusCode !== 404 && found.error.name !== "not_found") {
+    providerFailure("lookup", found.error);
+  }
+
+  let existing = found.data;
+  let alreadyJoined = existing?.properties?.source?.value === "waitlist";
+  if (!existing) {
+    const created = await resendRequest(() => resend.contacts.create({
       email: input.email,
       unsubscribed: false,
       properties: contactProperties(input),
       ...(segmentId ? { segments: [{ id: segmentId }] } : {}),
-    },
-    {
-      email: input.email,
-      unsubscribed: false,
-    },
-  ];
-
-  for (const payload of attempts) {
-    const { error } = await resend.contacts.create(payload);
-    if (!error) return true;
-
-    const already =
-      error.statusCode === 409 || /already exists|already been taken/i.test(error.message);
-    if (already) return true;
-
-    logResend("Resend contact create failed:", error);
+    }));
+    if (created.error) {
+      if (created.error.statusCode !== 409) providerFailure("create", created.error);
+      // Another request may have created the same contact between lookup and create.
+      const raced = await resendRequest(() => resend.contacts.get({ email: input.email }));
+      if (raced.error || !raced.data) providerFailure("confirm_duplicate", raced.error);
+      existing = raced.data;
+      alreadyJoined = existing.properties?.source?.value === "waitlist";
+    } else if (!created.data?.id) {
+      providerFailure("confirm_create", null);
+    }
   }
 
-  return false;
-}
+  if (existing) {
+    const contactId = existing.id;
+    if (segmentId) {
+      const membership = await resendRequest(() => resend.contacts.segments.add({ contactId, segmentId }));
+      if (membership.error) providerFailure("segment", membership.error);
+    }
+    const properties = contactProperties(input, existing.properties);
+    const updated = await resendRequest(() => resend.contacts.update({
+      id: contactId,
+      properties,
+      // Preserve subscription preferences; submitting again must not resubscribe a contact.
+    }));
+    if (updated.error || !updated.data?.id) providerFailure("update", updated.error);
+  }
 
-async function sendWaitlistConfirmation(email: string) {
-  const fromAddresses = [getResendFrom(), "Appfox <onboarding@resend.dev>"].filter(
-    (value, index, all) => all.indexOf(value) === index,
-  );
-
-  const resend = getResend();
-
-  for (const from of fromAddresses) {
-    const { error } = await resend.emails.send(
-      {
-        from,
-        to: [email],
+  // Receipt delivery can fail without losing a successfully persisted access request.
+  let confirmation: "sent" | "failed" | "not_requested" = "not_requested";
+  if (!alreadyJoined) {
+    try {
+      const sent = await resendRequest(() => resend.emails.send({
+        from: getResendFrom(),
+        to: [input.email],
+        replyTo: "hello@appfox.app",
         subject: waitlistConfirmationSubject(),
         text: waitlistConfirmationText(),
         html: waitlistConfirmationHtml(),
-      },
-      { idempotencyKey: `waitlist-welcome/${email}/${from}` },
-    );
-
-    if (!error) return true;
-    logResend(`Resend waitlist email failed (${from}):`, error);
+      }, { idempotencyKey: `beta-receipt/${createHash("sha256").update(input.email).digest("hex")}` }));
+      confirmation = sent.error || !sent.data?.id ? "failed" : "sent";
+      if (confirmation === "failed") console.error("waitlist_receipt_failed", { code: sent.error?.name, status: sent.error?.statusCode });
+    } catch {
+      confirmation = "failed";
+      console.error("waitlist_receipt_failed", { code: "transport_error" });
+    }
   }
-
-  return false;
+  return { saved: true as const, alreadyJoined, confirmation };
 }

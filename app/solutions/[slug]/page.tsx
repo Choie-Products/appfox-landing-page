@@ -65,7 +65,7 @@ export default async function SolutionPage({ params }: { params: Promise<{ slug:
       >
         <div className="flex flex-wrap justify-center gap-4">
           <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
-            Start for free
+            Request access
           </ButtonLink>
           <ButtonLink href="#how-it-works" variant="secondary" size="hero">
             How it works

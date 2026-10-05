@@ -1,4 +1,5 @@
-export const SITE_URL = "https://appfox.app";
+// Match the canonical host currently served by the production domain redirect.
+export const SITE_URL = "https://www.appfox.app";
 export const SITE_NAME = "Appfox";
 export const CONTACT_EMAIL = "hello@appfox.app";
 export const GA_ID = "G-5H68LE3WEB";
@@ -6,20 +7,20 @@ export const GA_ID = "G-5H68LE3WEB";
 /** Public profiles, used as schema.org sameAs links. Add them as they go live, e.g. an X or LinkedIn URL. */
 export const SOCIAL_LINKS: string[] = [];
 
-/** Set NEXT_PUBLIC_APP_URL once the product is reachable; "Start for free" then points at the app. */
+/** Optional destination for access requests when the product handles beta invitations. */
 export const APP_URL = process.env.NEXT_PUBLIC_APP_URL?.trim() || null;
 
-/** Where every "Start for free" button goes. */
+/** Where access-request buttons go during private beta. */
 export const CTA_HREF = APP_URL ?? "/waitlist";
 
 export type NavLink = { label: string; href: string; description?: string };
 
 export const productLinks: NavLink[] = [
-  { label: "Overview", href: "/product", description: "The surfaces inside Appfox and how they connect" },
+  { label: "Overview", href: "/product", description: "Research, daily findings, and the evidence behind them" },
   { label: "Research an idea", href: "/research", description: "A saved brief with evidence for and against" },
-  { label: "Operate a live app", href: "/live-app", description: "Today, customers, competitors, and outcomes" },
-  { label: "Mobile session replay", href: "/replay", description: "Privacy-masked replays of your own app" },
-  { label: "Integrations", href: "/integrations", description: "RevenueCat first, read-only by default" },
+  { label: "Operate a live app", href: "/live-app", description: "Daily findings, review themes, and competitor changes" },
+  { label: "Mobile session replay", href: "/replay", description: "Planned: privacy-masked replays of your own app" },
+  { label: "Integrations", href: "/integrations", description: "Public store data now; RevenueCat is planned" },
 ];
 
 export const primaryNav: NavLink[] = [
@@ -50,6 +51,7 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
     heading: "Product",
     links: [
       { label: "Overview", href: "/product" },
+      { label: "Product walkthrough", href: "/how-it-works" },
       { label: "Today", href: "/product#today" },
       { label: "Market", href: "/product#market" },
       { label: "Customers", href: "/product#customers" },
@@ -71,6 +73,10 @@ export const footerColumns: { heading: string; links: NavLink[] }[] = [
       { label: "Privacy", href: "/privacy" },
       { label: "Terms", href: "/terms" },
       { label: "Cookies", href: "/cookies" },
+      { label: "Sample report", href: "/sample-report" },
+      { label: "Evidence & methodology", href: "/methodology" },
+      { label: "Developer guides", href: "/guides" },
+      { label: "Beta features", href: "/beta" },
     ],
   },
 ];

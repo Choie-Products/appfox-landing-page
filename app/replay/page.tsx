@@ -8,9 +8,9 @@ import { pageMetadata } from "@/lib/seo";
 
 const PAGE = {
   path: "/replay",
-  title: "Mobile Session Replay for React Native & Expo",
+  title: "Planned Mobile Session Replay for React Native & Expo",
   description:
-    "Privacy-first mobile session replay for iOS and Android. A small React Native and Expo SDK records masked snapshots and events, never keyboard values, and replays completed sessions inside Appfox. On every plan.",
+    "Explore planned mobile session replay for React Native and Expo. Privacy-masked snapshots and events are the intended approach. Replay is not in the current beta.",
 };
 
 export const metadata = pageMetadata(PAGE);
@@ -44,9 +44,9 @@ export default function ReplayPage() {
     <>
       <PageJsonLd path={PAGE.path} name={PAGE.title} description={PAGE.description} />
       <PageIntro
-        kicker="Mobile session replay"
+        kicker="Mobile session replay · Planned"
         title="See what customers actually did, without seeing what they typed."
-        lead="A small session replay SDK for React Native and Expo apps on iOS and Android. It captures masked native snapshots and a short event timeline, uploads completed sessions, and plays them back in Appfox."
+        lead="Session replay is planned and is not available in the current beta. This page outlines the intended React Native and Expo SDK, privacy controls, and playback experience. No release date is announced."
       />
 
       <Section className="pt-4 lg:pt-8">
@@ -59,7 +59,7 @@ export default function ReplayPage() {
         <SectionHeading
           title="Snapshots and events,"
           sub="not video."
-          lead="Replay uses masked native snapshots plus a small event timeline, reconstructed by the Appfox browser player. There is no continuous screen video and no server-side transcoding, which keeps payloads small and masking verifiable."
+          lead="The planned approach uses masked native snapshots and a short event timeline instead of continuous video. The controls below describe design requirements for a future release, not capabilities available today."
         />
         <StepCards steps={controls} className="mt-10" />
       </Section>
@@ -67,12 +67,12 @@ export default function ReplayPage() {
       <Section>
         <div className="grid gap-5 lg:grid-cols-2">
           <SoftCard>
-            <MonoLabel>Platforms</MonoLabel>
+            <MonoLabel>Planned platforms</MonoLabel>
             <ol className="pt-3">
               {[
                 ["React Native with Expo, iOS and Android", "Development and production builds, delivered first."],
                 [
-                  "Private beta",
+                  "Future replay beta",
                   "Documented compatibility, retention, deletion, consent, privacy controls, and operational limits.",
                 ],
                 [
@@ -112,7 +112,7 @@ export default function ReplayPage() {
 
       <CtaBand
         title="See what your customers actually did."
-        lead="Session replay is on every plan, starting with 1,000 sessions and 7-day retention on Free."
+        lead="Replay is planned. The proposed Free plan includes 1,000 sessions with 7-day retention, but availability and limits are not final. Request access to the current research and monitoring beta."
       />
     </>
   );

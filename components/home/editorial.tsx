@@ -1,5 +1,6 @@
 import { ChangedArt, DecisionArt } from "@/components/illustrations/iso-art";
 import Container from "@/components/ui/container";
+import { MonoLink } from "@/components/ui/blocks";
 import Reveal from "@/components/reveal";
 
 /** Two editorial rows: copy on the left, an illustration on the right. */
@@ -33,27 +34,29 @@ function Row({
 export default function Editorial() {
   return (
     <Container as="section" className="flex flex-col gap-24 py-24 lg:gap-40 lg:py-40">
-      <Row lead="What changed:" title="the reading is no longer the job." illustration={
+      <Row lead="You can build faster." title="Knowing what to build still takes work." illustration={
           <ChangedArt className="mx-auto h-auto w-full max-w-[460px]" />
         }>
         <p>
-          AI can now read every review, ranking, and release for you in minutes. Gathering information is no longer
-          the hard part. Knowing what matters is.
+          Whether you write every line or build with AI, shipping an app is only the start. Reviews, rankings, and
+          competitors hold clues about what to do next. Reading them all takes time.
         </p>
         <p className="pt-3.5">
-          Appfox only flags a change when the data clearly backs it up, and shows you the proof. On a quiet day, it
-          says so.
+          Appfox brings those clues together in plain language, with the sources attached. Spend less time
+          gathering information and more time deciding what deserves your next release.
         </p>
+        <MonoLink href="/product" className="mt-5">See how Appfox works</MonoLink>
       </Row>
 
-      <Row lead="What didn’t change:" title="the last 10 percent is still yours." illustration={
+      <Row lead="Get a clearer picture." title="Make the call yourself." illustration={
           <DecisionArt className="mx-auto h-auto w-full max-w-[460px]" />
         }>
         <p>
-          The decision was never the machine&rsquo;s to make, and it still isn&rsquo;t. Appfox drafts review
-          replies, store copy, tasks, and experiment plans, but it never publishes, sends, or changes anything
-          outside your workspace.
+          A research brief can challenge your idea. A review theme can point to a problem worth investigating.
+          Appfox shows you the evidence and its limits. You bring the context, choose the next step,
+          and decide what ships.
         </p>
+        <MonoLink href="/methodology" className="mt-5">How to read the evidence</MonoLink>
       </Row>
     </Container>
   );

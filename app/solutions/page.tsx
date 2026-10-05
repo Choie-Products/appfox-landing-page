@@ -11,7 +11,7 @@ const PAGE = {
   path: "/solutions",
   title: "Solutions: Review Monitoring, Competitor Tracking, Idea Validation & More",
   description:
-    "What Appfox is used for: App Store and Google Play review monitoring, competitor tracking, app idea validation, RevenueCat analytics, and rank tracking, each with the evidence attached.",
+    "Explore Appfox for app review monitoring, competitor tracking, idea research, and rank tracking in private beta. RevenueCat analytics is planned.",
 };
 
 export const metadata = pageMetadata(PAGE);

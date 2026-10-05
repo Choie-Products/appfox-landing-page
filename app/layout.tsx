@@ -5,6 +5,7 @@ import "./globals.css";
 import { JsonLd } from "@/components/json-ld";
 import SiteHeader from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
+import SiteMeasurement from "@/components/site-measurement";
 import {
   OG_IMAGE,
   SITE_DESCRIPTION,
@@ -114,6 +115,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <JsonLd data={siteGraph} />
       </head>
       <body className={`${inter.className} antialiased`}>
+        <SiteMeasurement />
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
         <Script id="gtag-init" strategy="afterInteractive">
           {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}

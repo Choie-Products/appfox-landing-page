@@ -36,7 +36,7 @@ function group(agents: string[]) {
 }
 
 const body = [
-  "# Appfox, https://appfox.app",
+  `# Appfox, ${SITE_URL}`,
   "# Search engines and AI assistants are welcome to read and cite this site.",
   "",
   "User-agent: *",

@@ -53,7 +53,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
       >
         <div className="flex flex-wrap justify-center gap-4">
           <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
-            Start Appfox free
+            Request Appfox access
           </ButtonLink>
           <ButtonLink href="#table" variant="secondary" size="hero">
             See the table
@@ -71,7 +71,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
               {[
                 ["Category", c.category],
                 ["Best for", c.bestFor],
-                ["Free plan", c.pricing.free ? "Yes" : "No"],
+                ["Free plan", c.pricing.freeLabel ?? (c.pricing.free ? "Yes" : "No, trial")],
                 ["Paid plans from", c.pricing.from],
               ].map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-6 border-t border-line py-3">
@@ -86,16 +86,16 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
           <SoftCard>
             <MonoLabel className="text-accent-ink">Appfox</MonoLabel>
             <p className="pt-3 text-[16px] leading-[26px] text-muted">
-              Appfox reads your App Store and Google Play reviews, rankings, releases, revenue, and competitors every
-              day, then ranks what changed with the evidence attached. Signals are deterministic; AI explains them and
-              cites its sources. Every integration is read-only, and a quiet day is reported as quiet.
+              Appfox is an app intelligence platform for iOS and Android developers. The private beta includes
+              research briefs, daily findings, review themes, and competitor and rank tracking, with sources to
+              inspect. RevenueCat, session replay, reply drafts, Ask Fox, and API access are planned.
             </p>
             <dl className="pt-5">
               {[
                 ["Category", APPFOX.category],
                 ["Best for", APPFOX.bestFor],
-                ["Free plan", "Yes"],
-                ["Paid plans from", "$29 a month (Indie)"],
+                ["Free plan", "Proposed · invite-only beta"],
+                ["Paid plans from", "Proposed: $29/month (Indie)"],
               ].map(([k, v]) => (
                 <div key={k} className="flex justify-between gap-6 border-t border-line py-3">
                   <dt className="font-mono text-[12px] font-medium uppercase leading-5 text-ink">{k}</dt>
@@ -106,11 +106,11 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
             <MonoLabel className="pt-6">Strengths</MonoLabel>
             <CheckList
               items={[
-                "One ranked daily feed across reviews, rankings, releases, revenue, and competitors",
+                "Daily findings across reviews, rankings, releases, and competitors",
                 "Every finding cites the reviews, listings, and metrics behind it",
                 "Review themes with exact counts and denominators",
                 "AI research briefs for ideas you have not built yet",
-                "Privacy-masked mobile session replay on every plan",
+                "Planned: privacy-masked mobile session replay",
               ]}
               className="pt-2"
             />
@@ -123,7 +123,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
         <SectionHeading
           title="Side by side,"
           sub="feature by feature."
-          lead={`${c.name} details are taken from its website and public listings, checked ${CHECKED}. Pricing changes; confirm on their pricing page.`}
+          lead={`Published by Appfox. Vendor pages checked ${CHECKED}; this is a documentation-based comparison, not a hands-on performance test. “Not documented” means we could not verify a feature from the sources below.`}
         />
         <div className="mt-10">
           <ComparisonTable name={c.name} rows={c.rows} />
@@ -134,6 +134,11 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
             Current {c.name} pricing
           </a>
           . Appfox plans are proposed and may change before general availability.
+        </p>
+        <p className="pt-5 text-[13px] leading-5 text-quiet">
+          Sources: {c.sources.map((source, index) => (
+            <span key={source.href}>{index > 0 ? " · " : ""}<a href={source.href} className="underline underline-offset-2 hover:text-ink">{source.label}</a></span>
+          ))}. For Appfox, check the <a href="/beta" className="underline underline-offset-2 hover:text-ink">current beta features</a> and <a href="/how-it-works" className="underline underline-offset-2 hover:text-ink">product walkthrough</a>.
         </p>
       </Section>
 
@@ -194,7 +199,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
         </div>
       </Section>
 
-      <CtaBand title="See whether it changes how you decide." lead="Start free. Appfox reads public store data from day one and never writes anything back." />
+      <CtaBand title="See whether it changes how you decide." lead="Request access to the private beta for app research, daily findings, and review and competitor tracking." />
     </>
   );
 }

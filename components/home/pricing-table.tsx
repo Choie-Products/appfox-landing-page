@@ -11,16 +11,16 @@ export default function PricingTable() {
         <Reveal className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between lg:gap-16">
           <div className="max-w-[520px]">
             <h2 className="text-display-md text-ink">
-              Priced in the open. Start free, pay when you outgrow it.
+              Plans for your first app and the ones after it.
             </h2>
             <p className="label-mono pt-3">
-              Proposed plans · monthly, annual in brackets
+              Proposed pricing · Private beta
             </p>
           </div>
           <p className="max-w-[480px] text-[16px] leading-[26px] text-muted">
-            Every plan has the same evidence ledger and the same read-only
-            boundary. The tiers change how much you can watch, how far back you
-            can look, and how many people can look with you.
+            Appfox is invite-only. These proposed plans show how pricing may grow
+            with your apps, history, and team. Features and limits may change;
+            planned features are not included in the current beta.
           </p>
         </Reveal>
 

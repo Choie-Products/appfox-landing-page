@@ -33,9 +33,9 @@ export const terms: Term[] = [
       "A good app tracker is judged on three things: coverage (which stores, which signals, which competitors), honesty (whether every number shows its window and sample), and whether it tells you what deserves attention rather than making you look.",
     ],
     inAppfox: [
-      "Reads reviews, rankings, releases, revenue, and competitors every day for the App Store and Google Play",
+      "Reads App Store and Google Play reviews, rankings, releases, and competitors in private beta; RevenueCat data is planned",
       "Ranks what changed on one feed, with the evidence attached and a quiet day reported as quiet",
-      "Never writes to a store or provider; it drafts, you decide",
+      "Does not write to a store or provider; reply drafts are planned, and you decide what ships",
     ],
     related: ["mobile-app-intelligence", "app-review-monitoring", "competitor-tracking"],
     links: [
@@ -57,7 +57,7 @@ export const terms: Term[] = [
     ],
     inAppfox: [
       "Four layers: facts stored once, deterministic signals, AI insights that cite their evidence, and recorded outcomes",
-      "Six surfaces organized by question: Today, Market, Customers, My App, Actions, Integrations",
+      "Navigation for Dashboard, Customers, Market, Keywords, and Settings; research and live-app workflows share the workspace",
       "Two journeys in one workspace: research an idea, operate a live app",
     ],
     related: ["app-tracker", "app-store-optimization", "competitor-tracking"],
@@ -81,7 +81,7 @@ export const terms: Term[] = [
     inAppfox: [
       "Tracked search queries with current and previous rank, for you and your competitors",
       "Listing history, so a rank movement can be read against a subtitle or screenshot change",
-      "Store copy drafted from evidence, never submitted for you. No search volume estimates",
+      "Planned: store-copy drafts for human review. Read observed ranks separately from any sourced popularity or other estimates",
     ],
     related: ["app-tracker", "competitor-tracking", "mobile-app-intelligence"],
     links: [
@@ -148,9 +148,9 @@ export const terms: Term[] = [
       "Replay answers a narrow question well: what did this person actually do? It does not replace analytics, and it should not record keyboard values, audio, or request bodies.",
     ],
     inAppfox: [
-      "A first-party SDK for React Native and Expo on iOS and Android, snapshots and events rather than video",
+      "Planned, not in the current beta: a first-party SDK for React Native and Expo on iOS and Android, using snapshots and events rather than video",
       "Masking on the device before anything leaves it; no keyboard values, audio, or request bodies",
-      "On every plan, starting with 1,000 sessions and 7-day retention on Free",
+      "Proposed for every plan, starting with 1,000 sessions and 7-day retention on Free; replay is unavailable in the current beta",
     ],
     related: ["app-tracker", "mobile-app-intelligence"],
     links: [

@@ -10,7 +10,7 @@ export const metadata = pageMetadata({
 
 export default function CookiesPage() {
   return (
-    <LegalShell title="Cookie Policy" updated="September 18, 2026">
+    <LegalShell title="Cookie Policy" updated="October 5, 2026">
       <section>
         <h2>1. What Are Cookies</h2>
         <p>
@@ -62,6 +62,11 @@ export default function CookiesPage() {
             </tbody>
           </table>
         </div>
+        <p>
+          We also use session storage named appfox_access_attribution to carry campaign labels and a referring
+          website&apos;s origin between pages during your visit. It does not contain your email address. If browser
+          storage is unavailable, the access form still works and uses any attribution available on that page.
+        </p>
       </section>
 
       <section>

@@ -6,8 +6,8 @@ import Reveal from "@/components/reveal";
 
 /** Closing call to action for inner pages: a black card that sends people to sign up or to pricing. */
 export default function CtaBand({
-  title = "Stop being the integration layer.",
-  lead = "Start free with both journeys and the full evidence ledger. Upgrade when you outgrow the limits.",
+  title = "Build your next release with a clearer picture.",
+  lead = "Research your idea, understand your reviews, and follow your competitors. Request an invitation to the Appfox private beta.",
   secondary = { label: "See pricing", href: "/pricing" },
   spacing = "py-16 lg:py-24",
 }: {
@@ -25,7 +25,7 @@ export default function CtaBand({
           <div className="relative grid items-end gap-10 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)] lg:gap-16">
             <div>
               <p className="font-mono text-[14px] font-medium uppercase leading-5 tracking-normal text-[#ff8a4c]">
-                Get started
+                Private beta
               </p>
               <h2 className="max-w-[640px] pt-4 font-display text-[34px] font-bold leading-[1.08] tracking-[-0.035em] text-white sm:text-[50px]">
                 {title}
@@ -35,7 +35,7 @@ export default function CtaBand({
             <div className="lg:justify-self-end">
               <div className="flex flex-wrap gap-3">
                 <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="primary" size="lg">
-                  Start for free
+                  Request access
                 </ButtonLink>
                 <ButtonLink
                   href={secondary.href}
@@ -47,7 +47,7 @@ export default function CtaBand({
                 </ButtonLink>
               </div>
               <p className="pt-4 text-[13px] leading-5 text-[#8a8a8a]">
-                Start on the Free plan. Upgrade when you outgrow it.
+                Invitations are sent by email.
               </p>
             </div>
           </div>

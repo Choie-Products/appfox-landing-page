@@ -219,7 +219,7 @@ export default function ResearchPage() {
 
       <CtaBand
         title="Research your next idea."
-        lead="The Free plan includes a research brief every month. Start with the idea and the store you plan to launch in."
+        lead="Research briefs are available to invited beta users. Request access with an idea and the store you plan to launch in."
       />
     </>
   );

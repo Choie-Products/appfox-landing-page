@@ -7,31 +7,31 @@ import Reveal from "@/components/reveal";
 export const homeFaq: { q: string; a: string }[] = [
   {
     q: "What is Appfox?",
-    a: "Appfox is an AI app tracker and intelligence layer for mobile apps. It reads your App Store and Google Play reviews, rankings, releases, revenue, and the competitors you confirm every day, then ranks what changed with the evidence attached. It is built for indie founders and small mobile studios.",
+    a: "Appfox is an AI app intelligence tool for iOS and Android developers. It turns App Store and Google Play reviews, rankings, and competitor changes into research briefs and daily findings, with links to the sources. Appfox is in private beta; access is by invitation.",
   },
   {
     q: "What exactly does Appfox do?",
-    a: "It turns what changed across reviews, rankings, releases, revenue, and competitors into a ranked list of findings, each with the reviews, listings, and metrics behind it. It drafts replies, store copy, tasks, and experiment plans. You decide what ships.",
+    a: "Invited beta users can research an app idea, read daily findings, explore review themes, and track competitors and rankings. RevenueCat, session replay, reply drafts, and API access are planned and are not available in the current beta.",
   },
   {
     q: "Does Appfox use AI?",
-    a: "Yes. Signals are detected deterministically from stored facts, then AI joins independent sources into one plain-language explanation that cites the evidence it used. AI also writes research briefs for new ideas, groups reviews into themes with exact counts, and drafts review replies and store copy. Ask Fox, a question-and-answer layer over your own evidence, is coming soon.",
+    a: "Yes. AI helps write research briefs, group reviews into themes, and explain findings in plain language. Explanations link to the evidence they use so you can check the original sources. A pattern in reviews can suggest what to investigate; it does not prove demand, revenue potential, or what caused a change. Reply drafts and Ask Fox are planned.",
   },
   {
     q: "Which stores and platforms does Appfox support?",
-    a: "The Apple App Store and Google Play, one country and language per market. Mobile session replay supports React Native and Expo apps on iOS and Android first, with native UIKit, SwiftUI, Views, and Compose to follow.",
+    a: "Appfox uses public data from the Apple App Store and Google Play, with a country and language selected for each market. The beta runs in your browser. Mobile session replay is planned, with React Native and Expo as the intended first platforms.",
   },
   {
     q: "Is Appfox an ASO tool or an app analytics dashboard?",
-    a: "Neither on its own. App Store Optimization is one workflow inside Appfox: tracked search queries, listing history, and competitor metadata comparisons are all there. But Appfox is organized around what needs your attention across customers, competitors, releases, and revenue, and it reads the data for you instead of leaving you a dashboard. A quiet day is reported as a quiet day.",
+    a: "Appfox includes workflows for App Store Optimization (ASO), such as rank tracking and competitor listing comparisons. It also brings in review themes and research briefs to help you decide what to build or improve. It complements your existing analytics; it does not promise higher rankings or replace every specialist tool.",
   },
   {
     q: "Who built Appfox?",
-    a: "A small team building for indie founders and mobile studios. The product is specified before it is built, including the claims it refuses to make.",
+    a: "Appfox is based in Milan, Italy, and is built for people who research, build, and grow mobile apps, from first-time developers and vibe coders to experienced founders and studios. The About page explains the thinking behind the product. You can reach the people building Appfox at hello@appfox.app.",
   },
   {
     q: "Do I need to connect private data?",
-    a: "No. Appfox is useful with public store data alone: discovery, listings, collected reviews, and tracked search queries. Connecting RevenueCat adds real monetization context. Connections are optional, read-only, and shown with exactly what they read.",
+    a: "No. The beta uses public store listings, collected reviews, and tracked rankings. You do not need to connect private revenue data or install an SDK for these features. An optional, read-only RevenueCat integration is planned.",
   },
   {
     q: "Is my data safe? Does Appfox write anything?",
@@ -39,11 +39,27 @@ export const homeFaq: { q: string; a: string }[] = [
   },
   {
     q: "What is the difference between research and live-app?",
-    a: "Research starts from an idea: describe it, confirm a competitor set, and get a saved brief with the evidence for and against. Live-app starts from an app you already ship: Today ranks what needs attention across customers, competitors, releases, and revenue. Both share one workspace and one evidence ledger, so a researched idea keeps its market when it becomes a launched app.",
+    a: "Research helps before you build: describe an idea, choose competitors, and get a brief with evidence for and against it. Live-app monitoring helps after you launch: follow reviews, rankings, and competitor changes through daily findings. Both are available to invited beta users, including developers building their first app.",
   },
   {
     q: "What happens when I hit a plan limit?",
-    a: "The control that would start new paid work stops and says why. Nothing you already collected goes away, and nothing is silently retried. Upgrade when the limits get in the way.",
+    a: "The pricing table shows proposed plans and limits, which may change during the private beta. Request access to be considered for an invitation; submitting the form does not start a paid subscription. Confirm the available features and limits for your workspace when you are invited.",
+  },
+  {
+    q: "Can I use Appfox before I have a published app?",
+    a: "Yes. Invited beta users can start with an idea, a target store and country, and a set of relevant competitors. Research briefs help organize what listings and reviews suggest about the idea. You still need to test demand with the people you want to serve.",
+  },
+  {
+    q: "Do I need to code or install an SDK to use the beta?",
+    a: "No SDK is needed for the current public store-data features. You use Appfox in your browser to research ideas and inspect app evidence. Session replay would require a separate integration, but it is planned and unavailable in the current beta.",
+  },
+  {
+    q: "What if my app has very few reviews?",
+    a: "A few reviews can reveal a specific problem to investigate, but they are not enough to represent all customers or establish a reliable trend. Read the original comments, look at relevant competitors, and combine what you learn with direct feedback and hands-on tests. Missing data should stay unknown, not become a confident conclusion.",
+  },
+  {
+    q: "Does Appfox build, fix, or publish my app?",
+    a: "No. Appfox helps you decide what to investigate or improve using research briefs, review themes, and tracking. You continue building, testing, and publishing with your existing tools, whether you code directly or work with an AI coding assistant. You decide what ships.",
   },
 ];
 
@@ -58,7 +74,14 @@ export default function FaqSection() {
             <a href={`mailto:${CONTACT_EMAIL}`} className="text-ink underline underline-offset-2 hover:text-accent">
               Email us
             </a>{" "}
-            and a person will reply.
+            and a person will reply. Prefer an example? Explore the{" "}
+            <a href="/sample-report" className="text-ink underline underline-offset-2 hover:text-accent">
+              sample report
+            </a>{" "}
+            or our{" "}
+            <a href="/guides" className="text-ink underline underline-offset-2 hover:text-accent">
+              developer guides
+            </a>.
           </p>
         </Reveal>
         <Reveal delay={100}>

@@ -17,9 +17,9 @@ import { Groove, Packet } from "@/components/illustrations/iso-art";
 
 const PAGE = {
   path: "/integrations",
-  title: "Integrations: RevenueCat, App Store & Google Play",
+  title: "Data Sources & Planned Integrations",
   description:
-    "Appfox integrations are read-only by default. Public App Store and Google Play data from day one, RevenueCat for revenue and subscriptions, and a roadmap for App Store Connect, Google Play Console, GitHub, and analytics.",
+    "Appfox uses public App Store and Google Play data in private beta. RevenueCat and other private integrations are planned, with read-only access intended.",
 };
 
 export const metadata = pageMetadata(PAGE);
@@ -37,7 +37,7 @@ const LAUNCH_NODES = [
   { name: "App Store and Google Play", meta: "Public listings, reviews, and ranks", icon: <Store className="size-4" strokeWidth={1.9} /> },
   {
     name: "RevenueCat",
-    meta: "Revenue, subscriptions, trials",
+    meta: "Planned · revenue, subscriptions, trials",
     icon: <Image src="/icons/revenuecat.jpg" alt="" width={36} height={36} className="size-9 rounded-[28%]" />,
     bare: true,
   },
@@ -98,7 +98,7 @@ function ConnectionMap() {
             <span className="block text-[14px] leading-5 text-muted">{node.meta}</span>
           </span>
           <span className="shrink-0 rounded-full bg-accent-soft px-2.5 py-1 text-[11px] font-semibold leading-3 text-accent-ink">
-            Launch
+            Source
           </span>
         </div>
       ))}
@@ -139,12 +139,12 @@ export default function IntegrationsPage() {
       <PageJsonLd path={PAGE.path} name={PAGE.title} description={PAGE.description} />
       <PageIntro
         kicker="Integrations"
-        title="Useful without a connection. Better with one."
-        lead="Appfox works as a public market-research product on its own. Each connection you add is optional, clearly permissioned, and read-only by default."
+        title="Start with public data. Connect more later."
+        lead="The private beta uses public store listings, reviews, and rankings. RevenueCat and the other private connections shown here are planned and are not available in the current beta."
       >
         <div className="flex flex-wrap justify-center gap-4">
           <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="dark" size="hero">
-            Start for free
+            Request access
           </ButtonLink>
           <ButtonLink href="#connections" variant="secondary" size="hero">
             See connections
@@ -182,9 +182,9 @@ export default function IntegrationsPage() {
       <Section id="connections" className="scroll-mt-24">
         <SectionHeading
           align="center"
-          title="Two sources at launch."
-          sub="More once they prove useful."
-          lead="Public store data and RevenueCat feed the same ledger from day one. The rest are designed and sequenced after the launch journeys."
+          title="Store data now. RevenueCat is planned."
+          sub="Other connections are on the roadmap."
+          lead="Public App Store and Google Play data power the beta. RevenueCat and the other connections below describe the roadmap, with no release dates announced."
         />
         <Reveal variant="scale" delay={100}>
           <ConnectionMap />
@@ -193,7 +193,7 @@ export default function IntegrationsPage() {
 
       <CtaBand
         title="Start with public data. Connect when you are ready."
-        lead="Store data works from day one. RevenueCat is available on Indie and above, always read-only."
+        lead="Request beta access to work with public store data. A read-only RevenueCat connection is planned; proposed plan placement may change."
       />
     </>
   );

@@ -7,12 +7,12 @@ import { CONTACT_EMAIL, SITE_NAME, SITE_URL, SOCIAL_LINKS } from "@/lib/site";
  * schema.org builders used by the JSON-LD components.
  */
 
-export const SITE_TITLE = "Appfox: AI App Store Tracker for iOS & Android";
+export const SITE_TITLE = "Appfox: App Research, Reviews & Competitor Tracking";
 export const SITE_TAGLINE = "Your app, explained.";
 
 /** The one-paragraph definition, reused in metadata, structured data, and llms.txt. */
 export const SITE_DESCRIPTION =
-  "Appfox is the AI app tracker for indie founders and mobile studios. It reads your App Store and Google Play reviews, rankings, releases, revenue, and competitors every day, then tells you what needs attention and why, with the evidence attached.";
+  "Research app ideas, understand reviews, and track competitors with Appfox. Evidence-backed insights for iOS and Android developers. Request private beta access.";
 
 export const SITE_KEYWORDS = [
   "app tracker",
@@ -43,7 +43,7 @@ export const ORG_ID = `${SITE_URL}/#organization`;
 export const WEBSITE_ID = `${SITE_URL}/#website`;
 export const APP_ID = `${SITE_URL}/#software`;
 
-/** The plans, used for the SoftwareApplication offers. Keep in sync with the pricing table; hidden plans are left out. */
+/** Proposed plan figures. Do not publish these as purchasable schema.org offers during private beta. */
 export const PLANS = [
   { name: "Free", monthly: 0, annual: 0 },
   { name: "Indie", monthly: 29, annual: 24 },
@@ -52,14 +52,14 @@ export const PLANS = [
 ] as const;
 
 export const FEATURES = [
-  "Daily ranked feed of what changed across reviews, rankings, releases, revenue, and competitors",
+  "Private beta: daily findings across reviews, rankings, releases, and competitors",
   "App Store and Google Play review monitoring with themes, exact counts, and the original review text",
-  "Competitor tracking with full listing, rating, and price history",
+  "Competitor tracking with collected listing, rating, and price observations",
   "AI research briefs for new app ideas, with the evidence for and against",
   "AI explanations that cite the reviews, listings, and metrics they used",
-  "Read-only RevenueCat integration for revenue, subscriptions, and trials",
-  "Privacy-masked mobile session replay for React Native and Expo",
-  "Drafted review replies and store copy, never published without you",
+  "Planned: read-only RevenueCat integration for revenue, subscriptions, and trials",
+  "Planned: privacy-masked mobile session replay for React Native and Expo",
+  "Planned: review replies and store copy drafted for human review",
   "Tracked App Store search queries with current and previous rank",
   "Workspace isolation with row-level security and server-side credential vault",
 ];
@@ -109,7 +109,7 @@ export function organizationJsonLd() {
     "@type": "Organization",
     "@id": ORG_ID,
     name: SITE_NAME,
-    legalName: SITE_NAME,
+    location: { "@type": "Place", name: "Milan, Italy" },
     url: SITE_URL,
     logo: { "@type": "ImageObject", url: LOGO_IMAGE, width: 192, height: 192 },
     image: OG_IMAGE,
@@ -149,37 +149,20 @@ export function softwareApplicationJsonLd() {
     alternateName: "Appfox app tracker",
     url: SITE_URL,
     image: OG_IMAGE,
-    screenshot: OG_IMAGE,
     description: SITE_DESCRIPTION,
     applicationCategory: "BusinessApplication",
     applicationSubCategory: "Mobile app intelligence and analytics",
     operatingSystem: "Web",
     browserRequirements: "Requires a modern web browser",
-    isAccessibleForFree: true,
+    creativeWorkStatus: "Private beta, access by invitation",
+    softwareHelp: `${SITE_URL}/beta`,
     featureList: FEATURES,
     audience: {
       "@type": "Audience",
-      audienceType: "Indie app founders, mobile developers, and small mobile studios",
+      audienceType: "First-time app developers, vibe coders, experienced mobile developers, and studios",
     },
     author: { "@id": ORG_ID },
     publisher: { "@id": ORG_ID },
-    offers: PLANS.filter((plan) => !("hidden" in plan && plan.hidden)).map((plan) => ({
-      "@type": "Offer",
-      name: `${plan.name} plan`,
-      price: String(plan.monthly),
-      priceCurrency: "USD",
-      url: `${SITE_URL}/pricing`,
-      availability: "https://schema.org/InStock",
-      category: "subscription",
-      priceSpecification: {
-        "@type": "UnitPriceSpecification",
-        price: String(plan.monthly),
-        priceCurrency: "USD",
-        billingIncrement: 1,
-        unitCode: "MON",
-        referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitCode: "MON" },
-      },
-    })),
   };
 }
 

@@ -48,10 +48,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const body = (await request.json()) as WaitlistBody;
+    let body: WaitlistBody;
+    try {
+      body = await request.json();
+      if (!body || typeof body !== "object" || Array.isArray(body)) throw new Error("invalid_body");
+    } catch {
+      return NextResponse.json({ error: "invalid_request", message: "Send a valid access request." }, { status: 400 });
+    }
 
     if (asOptionalString(body.website)) {
-      return NextResponse.json({ ok: true });
+      return NextResponse.json({ ok: true, saved: false });
     }
 
     if (!body.email || typeof body.email !== "string") {
@@ -86,7 +92,7 @@ export async function POST(request: Request) {
       referrer: asOptionalString(body.referrer),
     });
 
-    return NextResponse.json({ ok: true, alreadyJoined: result.alreadyJoined });
+    return NextResponse.json({ ok: true, ...result });
   } catch (error) {
     const message = error instanceof Error ? error.message : "";
     if (message === "missing_resend_key") {
@@ -101,7 +107,7 @@ export async function POST(request: Request) {
         );
       }
     } else if (message) {
-      console.error("Waitlist signup failed:", message);
+      console.error("Waitlist signup failed", { code: message === "waitlist_persist_failed" ? message : "provider_error" });
     }
     return NextResponse.json(
       { error: "server_error", message: "Something went wrong" },

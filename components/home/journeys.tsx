@@ -29,44 +29,44 @@ type Journey = {
 const JOURNEYS: Journey[] = [
   {
     title: "Research an idea before you build it",
-    body: "Describe the idea, the store, and the country. Appfox discovers candidates, you confirm the set, and a brief is written from real listings and reviews, including the evidence against the idea.",
+    body: "Start with your idea, target store, and country. Choose relevant competitors, then get a research brief from their listings and reviews: what users value, where they struggle, and what could challenge your idea.",
     href: "/research",
     Art: ResearchArt,
   },
   {
-    title: "Operate a live app from one ranked feed",
-    body: "Today ranks what changed across reviews, ratings, rankings, and the market, with the evidence attached. Each recommendation becomes one task you can follow up.",
+    title: "Know what needs attention in your live app",
+    body: "Open Today to see meaningful changes across reviews, ratings, rankings, and competitors. Each finding explains why it matters and links to the evidence, so you can decide what to investigate.",
     href: "/live-app",
     Art: OperateArt,
   },
   {
-    title: "Track competitors with full history",
-    body: "Confirm your competitors once. Every listing, rating, and price change is kept as history, so you can see what moved and when.",
+    title: "Track how your competitors change",
+    body: "Choose the apps you compete with and follow their listings, ratings, prices, and rankings over time. Spot a change without rebuilding your research from scratch.",
     href: "/product",
     Art: CompetitorsArt,
   },
   {
-    title: "Group reviews into exact themes",
-    body: "Reviews are grouped into themes with exact counts and denominators. Every number links back to the customer's own words.",
+    title: "Understand what customers keep asking for",
+    body: "Turn collected reviews into themes you can act on. See recurring complaints, requests, and praise, with counts and links to the original reviews.",
     href: "/product",
     Art: ThemesArt,
   },
   {
-    title: "Connect RevenueCat, read-only",
-    body: "Appfox verifies the project and app binding, then reads revenue, active subscriptions, trials, and paid conversions. Nothing is written back.",
+    title: "RevenueCat integration — planned",
+    body: "Planned: bring revenue, subscriptions, and trials alongside store data through a read-only RevenueCat connection. This integration is not available in the current beta.",
     href: "/integrations",
     Art: RevenueArt,
   },
   {
     title: "Draft replies and store copy",
-    body: "Appfox drafts review replies and store copy from the evidence, for you to copy. It never posts or submits anything.",
+    body: "Planned: prepare review replies and store copy from your evidence, ready for you to review and use. Drafts are not available in the current beta.",
     href: "/product",
     soon: true,
     Art: DraftsArt,
   },
   {
     title: "Ask Fox about your evidence",
-    body: "Ask a question in plain words and get an answer built from your own reviews, releases, and metrics, with the sources linked.",
+    body: "Planned: ask questions about your app in plain language and get answers linked to your evidence. Ask Fox is not available in the current beta.",
     href: "/product",
     soon: true,
     Art: AskFoxArt,
@@ -76,7 +76,7 @@ const JOURNEYS: Journey[] = [
 function Soon() {
   return (
     <span className="shrink-0 whitespace-nowrap rounded-full bg-accent-soft px-2 py-0.5 font-sans text-[10px] font-bold normal-case leading-3 text-accent-ink">
-      Coming soon
+      Planned
     </span>
   );
 }
@@ -235,9 +235,9 @@ export default function Journeys() {
   return (
     <Container as="section" className="py-24 lg:py-40">
       <Reveal>
-        <h2 className="text-display-md text-ink">What that lets you do.</h2>
+        <h2 className="text-display-md text-ink">From your first idea to your next release.</h2>
         <p className="pt-2 text-[16px] leading-[26px] text-muted">
-          Two journeys, one workspace, one evidence ledger. Research an idea or track a live app, and start wherever you are.
+          For first-time developers, vibe coders, and experienced teams. Research an idea or improve a live app. Explore the beta features and what is planned next.
         </p>
       </Reveal>
       <div className="mt-10 grid gap-8 lg:mt-16 lg:grid-cols-[minmax(0,1.2fr)_minmax(0,1fr)] lg:gap-12">

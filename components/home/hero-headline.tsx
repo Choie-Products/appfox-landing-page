@@ -6,7 +6,7 @@
  * reduced-motion settings the static headline is shown instead.
  */
 
-const TEXT = "Your app, Explained.";
+const TEXT = "Your app, explained.";
 const TEXT_ID = "hero-headline-text";
 const WIDTH = 1220;
 const HEIGHT = 144;

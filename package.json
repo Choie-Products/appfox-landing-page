@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "test": "node --test tests/*.test.cjs",
+    "setup:resend": "node scripts/setup-resend.cjs",
+    "check:resend": "node scripts/setup-resend.cjs --check",
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",

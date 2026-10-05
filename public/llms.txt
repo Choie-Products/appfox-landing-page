@@ -1,51 +1,62 @@
 # Appfox
 
-> Appfox is the AI app tracker for indie founders and mobile studios. It reads your App Store and Google Play reviews, rankings, releases, revenue, and competitors every day, then tells you what needs attention and why, with the evidence attached. Tagline: "Your app, explained."
+> Appfox is an AI app intelligence tool for iOS and Android developers, from first-time builders and vibe coders to experienced teams. It turns public App Store and Google Play reviews, rankings, and competitor changes into research briefs and daily findings, with sources attached. Appfox is in private beta; access is by invitation. Tagline: "Your app, explained."
 
-Appfox is an intelligence layer and operations partner for mobile apps (iOS and Android). It is built for the person who runs the whole app: product, growth, store presence, pricing, and support. Signals are detected deterministically from stored facts; AI then explains them in plain language and cites the reviews, listings, and metrics it used. Every integration is read-only. Appfox drafts review replies, store copy, tasks, and experiment plans, but never publishes, sends, or changes anything outside your workspace. A quiet day is reported as a quiet day.
+Current beta features: research briefs, daily findings, review themes, competitor tracking, and rank tracking. Appfox helps the person responsible for an app understand what to investigate next. Findings cite their sources. RevenueCat, mobile session replay, reply drafts, and API access are planned and unavailable in the current beta. Ask Fox is also planned. There are no announced release dates for these features.
 
-Website: https://appfox.app. Contact: hello@appfox.app. Pricing starts free; paid plans are Indie ($29/month) and Studio ($99/month).
+Website: https://www.appfox.app. Contact: hello@appfox.app. Appfox is based in Milan, Italy. Pricing is proposed: Free ($0), Indie ($29/month), and Studio ($99/month). Prices and limits are not final, and requesting access does not create a workspace or start a subscription.
 
 ## Product
 
-- [Product overview](https://appfox.app/product): Six surfaces, one question each. Today (what needs attention), Market (competitors and what is changing), Customers (reviews grouped into themes with exact counts), My App (one app across sources), Actions (decisions and whether they helped), Integrations (what Appfox reads, read-only).
-- [Research an idea](https://appfox.app/research): Describe an app idea, confirm a competitor set, and get an AI research brief written from real listings and reviews, including the evidence against the idea and what reviews cannot establish.
-- [Operate a live app](https://appfox.app/live-app): Add an app by store URL and get a daily ranked feed of customer, competitor, release, and monetization changes with evidence and a suggested action. Four kinds of empty are kept apart: quiet, not enough data, sync failed, collecting.
-- [Mobile session replay](https://appfox.app/replay): A first-party SDK for React Native and Expo on iOS and Android that records privacy-masked snapshots and events, never keyboard values, and replays completed sessions inside Appfox.
-- [Integrations](https://appfox.app/integrations): App Store and Google Play public data and RevenueCat at launch, all read-only. App Store Connect, Google Play Console, GitHub, product analytics, Linear, and Notion are planned.
-- [Pricing](https://appfox.app/pricing): Free, Indie $29/month ($24 annual), Studio $99/month ($79 annual). Every plan has the same evidence ledger and read-only boundary.
+- [Product overview](https://www.appfox.app/product): Six product questions, including planned capabilities. Today (what needs attention), Market (competitors and what is changing), Customers (reviews grouped into themes with exact counts), My App (one app across sources), Actions (decisions and whether they helped), Integrations (what Appfox reads, read-only).
+- [Research an idea](https://www.appfox.app/research): Describe an app idea, confirm a competitor set, and get an AI research brief written from real listings and reviews, including the evidence against the idea and what reviews cannot establish.
+- [Operate a live app](https://www.appfox.app/live-app): Add an app by store URL and get a daily ranked feed of customer, competitor, release, and rank changes with evidence and a suggested next step. RevenueCat context is planned. Four kinds of empty are kept apart: quiet, not enough data, sync failed, collecting.
+- [Mobile session replay](https://www.appfox.app/replay): Planned, unavailable in the current beta: a first-party SDK for React Native and Expo on iOS and Android, intended to record privacy-masked snapshots and events and replay completed sessions inside Appfox.
+- [Integrations](https://www.appfox.app/integrations): Public App Store and Google Play data in the beta. RevenueCat, App Store Connect, Google Play Console, GitHub, product analytics, Linear, and Notion are planned as read-only connections.
+- [Pricing](https://www.appfox.app/pricing): Proposed plans: Free, Indie $29/month ($24/month billed yearly at $288), Studio $99/month ($79/month billed yearly at $948). Features and limits may change; planned features are not beta entitlements.
 
 ## Solutions
 
-- [App review monitoring](https://appfox.app/solutions/app-review-monitoring): Reviews grouped into themes with exact counts, denominators, trend, and affected versions; every count links to the original review; spikes ranked on Today next to the release they followed.
-- [App Store competitor tracking](https://appfox.app/solutions/app-store-competitor-tracking): Confirm competitors once; listing, price, rating, and release changes kept as append-only history; new entrants discovered and scored.
-- [App idea validation](https://appfox.app/solutions/app-idea-validation): An AI research brief from real listings and reviews, with the evidence against the idea and what reviews cannot establish.
-- [RevenueCat analytics](https://appfox.app/solutions/revenuecat-analytics): Read-only revenue, subscriptions, trials, and paid conversions with exact scope, shown next to the release or review theme that explains a change.
-- [App Store rank tracking](https://appfox.app/solutions/app-store-rank-tracking): Tracked search queries with current and previous rank, movements explained against listing changes and competitors. No volume estimates.
+- [App review monitoring](https://www.appfox.app/solutions/app-review-monitoring): Reviews grouped into themes with exact counts, denominators, trend, and affected versions; every count links to the original review; spikes ranked on Today next to the release they followed.
+- [App Store competitor tracking](https://www.appfox.app/solutions/app-store-competitor-tracking): Confirm competitors once; listing, price, rating, and release changes kept as append-only history; new entrants discovered and scored.
+- [App idea validation](https://www.appfox.app/solutions/app-idea-validation): An AI research brief from real listings and reviews, with the evidence against the idea and what reviews cannot establish.
+- [RevenueCat analytics](https://www.appfox.app/solutions/revenuecat-analytics): Planned: read-only revenue, subscriptions, trials, and paid conversions alongside store evidence. RevenueCat is not available in the current beta, and correlation alone would not establish the cause of a change.
+- [App Store rank tracking](https://www.appfox.app/solutions/app-store-rank-tracking): Tracked search queries with current and previous rank, movements explained against listing changes and competitors. Read observed ranks separately from provider estimates.
 
 ## Compare
 
-- [All comparisons](https://appfox.app/compare): Honest side-by-side pages written from each vendor's own website, checked October 2026.
-- [Appfox vs Appfigures](https://appfox.app/compare/appfigures): Appfigures is app analytics organized by dataset with ad-network revenue and keyword tools from $9.99 a month; Appfox is a ranked daily reading with evidence.
-- [Appfox vs AppFollow](https://appfox.app/compare/appfollow): AppFollow is review management with automated replies and helpdesk integrations from $179 a month; Appfox drafts replies and never posts.
-- [Appfox vs Appbot](https://appfox.app/compare/appbot): Appbot is review sentiment analytics from about $49 a month; Appfox reads reviews together with releases, rankings, competitors, and revenue, with exact counts.
-- [Appfox vs AppTweak](https://appfox.app/compare/apptweak): AppTweak is keyword-first ASO with volume estimates from $79 a month; Appfox treats ASO as one workflow and reports observed facts only.
-- Alternatives pages: [Appfigures](https://appfox.app/alternatives/appfigures), [AppFollow](https://appfox.app/alternatives/appfollow), [Appbot](https://appfox.app/alternatives/appbot), [AppTweak](https://appfox.app/alternatives/apptweak).
+- [All comparisons](https://www.appfox.app/compare): Honest side-by-side pages written from each vendor's own website, checked 5 October 2026; editorial comparisons, not hands-on benchmarks.
+- [Appfox vs Appfigures](https://www.appfox.app/compare/appfigures): Appfigures offers analytics, market intelligence, and ASO. Connect is $9.99/month on monthly billing; Appfox is invite-only with proposed plans.
+- [Appfox vs AppFollow](https://www.appfox.app/compare/appfollow): AppFollow offers review management and ASO. ASO starts at $19/month billed yearly; Essential is $179/month on monthly billing. Appfox reply drafts are planned.
+- [Appfox vs Appbot](https://www.appfox.app/compare/appbot): Appbot offers review analysis and response tools. Small is $59/month monthly or $49/month billed annually. Direct replies, Ask Appbot, and MCP are on eligible plans. Appfox Ask Fox is planned.
+- [Appfox vs AppTweak](https://www.appfox.app/compare/apptweak): AppTweak offers separate ASO, ads, review, market intelligence, and API products. ASO Essential is $949/year, displayed as $79/month; some other products have free tiers. Appfox is an invite-only beta.
+- Alternatives pages: [Appfigures](https://www.appfox.app/alternatives/appfigures), [AppFollow](https://www.appfox.app/alternatives/appfollow), [Appbot](https://www.appfox.app/alternatives/appbot), [AppTweak](https://www.appfox.app/alternatives/apptweak).
 
 ## Glossary
 
-- [Glossary](https://appfox.app/glossary): Definitions of app tracker, mobile app intelligence, App Store Optimization, app review monitoring, competitor tracking, and mobile session replay.
+- [Glossary](https://www.appfox.app/glossary): Definitions of app tracker, mobile app intelligence, App Store Optimization, app review monitoring, competitor tracking, and mobile session replay.
 
 ## Company
 
-- [About](https://appfox.app/about): The thesis (the founder should not be the integration layer between their tools), the category (mobile app intelligence and operations; ASO is one workflow inside it), and the four rules: evidence before advice, facts first explained by AI, honest coverage, human approval.
-- [Security](https://appfox.app/security): Workspace isolation with Postgres row-level security, credentials in a server-side vault, read-only integrations, fail-closed reads, observability without payloads, explicit retention and deletion.
-- [Contact](https://appfox.app/contact): Email hello@appfox.app. Replies come from the people building the product.
-- [Start for free](https://appfox.app/waitlist): Request a workspace on the Free plan.
+- [About](https://www.appfox.app/about): The thesis (the founder should not be the integration layer between their tools), the category (mobile app intelligence and operations; ASO is one workflow inside it), and the four rules: evidence before advice, facts first explained by AI, honest coverage, human approval.
+- [Security](https://www.appfox.app/security): Workspace isolation with Postgres row-level security, credentials in a server-side vault, read-only integrations, fail-closed reads, observability without payloads, explicit retention and deletion.
+- [Contact](https://www.appfox.app/contact): Email hello@appfox.app. Replies come from the people building the product.
+- [Request beta access](https://www.appfox.app/waitlist): Request an invitation. Access is not immediate.
 
 ## Optional
 
-- [Full text for LLMs](https://appfox.app/llms-full.txt): Every page's substance in one Markdown file.
-- [Privacy policy](https://appfox.app/privacy)
-- [Terms of service](https://appfox.app/terms)
-- [Cookie policy](https://appfox.app/cookies)
+- [Sample report](https://www.appfox.app/sample-report): A clearly fictional worked example with 24 hand-labeled review records, two comparison periods, reproducible theme counts, open questions, and a next investigation. It is not a live export or customer result.
+- [Evidence and methodology](https://www.appfox.app/methodology): How to read source scope, theme counts, comparison windows, uncertainty, and research limitations. No guarantee of coverage or refresh intervals.
+- [Beta feature reference](https://www.appfox.app/beta): Current capabilities, planned features, what to prepare, invitation expectations, and proposed pricing boundaries.
+- [Developer guides](https://www.appfox.app/guides): Practical guidance for first-time app developers, vibe coders, and experienced teams.
+- [Research an app idea](https://www.appfox.app/guides/validate-an-app-idea): Select competitors, inspect reviews, write a brief, and test the riskiest assumption before building.
+- [Investigate reviews after a release](https://www.appfox.app/guides/analyze-reviews-after-a-release): Compare equivalent periods, inspect source text, reproduce a problem, and avoid treating correlation as causation.
+- [Improve your first app](https://www.appfox.app/guides/first-app-feedback-loop): A feedback loop from the core user task to a testable change and a follow-up check.
+
+- [Full text for LLMs](https://www.appfox.app/llms-full.txt): A product reference covering beta capabilities, planned features, and proposed pricing.
+- [Privacy policy](https://www.appfox.app/privacy)
+- [Terms of service](https://www.appfox.app/terms)
+- [Cookie policy](https://www.appfox.app/cookies)
+
+- [Product walkthrough](https://www.appfox.app/how-it-works): Current private-beta workflow, from app or idea to source-backed decisions.
+- [Meal-planning app research](https://www.appfox.app/research/meal-planning-apps): Editorial snapshot of three US App Store descriptions, checked 5 October 2026. Includes sources, a downloadable observation sheet, and limitations; not customer results.

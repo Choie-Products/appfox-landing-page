@@ -118,7 +118,7 @@ export default function SiteHeader() {
               variant="flat"
               size={scrolled ? "sm" : "md"}
             >
-              Start for free
+              Request access
             </ButtonLink>
           </div>
 
@@ -158,7 +158,7 @@ export default function SiteHeader() {
           </div>
           <div className="mt-6 flex flex-col gap-2">
             <ButtonLink href={CTA_HREF} size="lg" external={Boolean(APP_URL)}>
-              Start for free
+              Request access
             </ButtonLink>
             {APP_URL ? (
               <ButtonLink href={APP_URL} variant="secondary" size="lg" external>

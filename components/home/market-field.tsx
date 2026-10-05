@@ -152,12 +152,12 @@ export default function MarketField() {
         <Reveal className="flex flex-col items-center">
           <p className="label-mono text-ink">Your market</p>
           <h2 className="max-w-[640px] text-balance pt-4 text-display-md text-ink">
-            <span className="block">Every app you compete with,</span>
+            <span className="block">The competitors you choose,</span>
             <span className="block text-quiet">watched while you build.</span>
           </h2>
           <p className="max-w-[640px] text-balance pt-4 text-[16px] leading-[26px] text-muted">
-            Confirm your competitors once. Appfox keeps reading their listings, reviews, rankings, and releases, and
-            tells you when something changes.
+            Choose your competitors. Appfox tracks their listings, reviews, rankings, and releases while you build.
+            App icons below illustrate the market; they are not customer endorsements.
           </p>
         </Reveal>
       </Container>
