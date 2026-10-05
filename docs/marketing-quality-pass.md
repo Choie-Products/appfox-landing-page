@@ -32,7 +32,7 @@ RevenueCat, session replay, reply drafts, Ask Fox, and API access remain explici
 
 The API requires contact persistence before it returns `saved: true`. A new request receives a private-beta request receipt, not an invitation. Existing requests preserve unsubscribe preferences and first-touch attribution. The API does not silently retry a contact without its metadata or configured segment. A receipt failure leaves the saved request intact and is explained in the UI. Provider acceptance does not establish inbox delivery.
 
-Before deployment, run the following in an environment that already has the server-side Resend key:
+Production deployments run `setup:resend` automatically through the `npm run build` prebuild hook. The hook uses the sensitive key inside Vercel; it does not download or print it. It stops the deployment if the required configuration cannot be prepared. Local and preview builds skip this production setup. For a manual configuration check in an environment that already has the server-side Resend key:
 
 ```sh
 npm run check:resend
