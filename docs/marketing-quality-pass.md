@@ -26,7 +26,7 @@ The separate `appfox` application repository was read as a reference and not mod
 | Keyword observations, market scope, notes, provenance | `apps/web/components/keyword-monitor.tsx` |
 | Research briefs, decisions, actions and evidence records | `apps/web/app/w/[slug]/markets/[marketId]/research/page.tsx`, `apps/web/app/w/[slug]/markets/[marketId]/evidence/[evidenceId]/page.tsx` |
 
-RevenueCat, session replay, reply drafts, Ask Fox, and API access remain explicitly planned. Existing illustrative UI is not a claim that all pictured features are available. No founder biography, legal company name, customer testimonial, independent benchmark, or public social profile was invented. The confirmed public identity is Appfox, based in Milan, Italy.
+RevenueCat, session replay, reply drafts, and Ask Fox remain explicitly planned. Existing illustrative UI is not a claim that all pictured features are available. No founder biography, legal company name, customer testimonial, independent benchmark, or public social profile was invented. The confirmed public identity is Appfox, based in Milan, Italy.
 
 ## Resend access requests
 

@@ -102,7 +102,7 @@ export const methodology: LearningResource = {
       "id": "beta-boundaries",
       "title": "What is confirmed in the beta",
       "paragraphs": [
-        "Invited users can use research briefs, daily findings, review themes, and competitor and rank tracking. RevenueCat, session replay, reply drafts, and API access are planned. This page explains how to assess evidence; it is not an API specification or a guarantee of refresh intervals, retention, or coverage in every market.",
+        "Invited users can use research briefs, daily findings, review themes, and competitor and rank tracking. RevenueCat, session replay, and reply drafts are planned. This page explains how to assess evidence; it does not guarantee refresh intervals, retention, or coverage in every market.",
         "Ask about the specific store and country you need when discussing beta access. Prices and allowances shown on the pricing page are proposed, and no release dates are announced for planned capabilities."
       ],
       "links": [
@@ -175,7 +175,6 @@ export const beta: LearningResource = {
         "RevenueCat: an optional, read-only connection for revenue and subscription context.",
         "Mobile session replay: a planned way to review sessions from your own app.",
         "Reply and store-copy drafts: prepared text for you to review and publish yourself.",
-        "API access: programmatic access to workspace data.",
         "Ask Fox: questions and answers over your app evidence."
       ],
       "links": [

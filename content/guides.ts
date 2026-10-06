@@ -95,7 +95,7 @@ export const guides: LearningResource[] = [
         "title": "Where Appfox fits",
         "paragraphs": [
           "Invited Appfox beta users can produce research briefs from store evidence, explore review themes, and track competitors and rankings. You can start with an idea before you have a published app. A brief can organize the evidence; customer conversations and hands-on tests are still your work.",
-          "RevenueCat, session replay, reply drafts, and API access are planned. Use the beta feature reference to check current scope before relying on a capability for your workflow."
+          "RevenueCat, session replay, and reply drafts are planned. Use the beta feature reference to check current scope before relying on a capability for your workflow."
         ],
         "links": [
           {

@@ -59,7 +59,7 @@ export const competitors: Competitor[] = [
     rows: rows(["Analytics, market intelligence, and ASO", "Yes, Starter", "$9.99/month, monthly billing", "App Store and Google Play, plus connected sources", "Review monitoring and replies", "Keyword research and rank tracking", "App intelligence and competitor keywords", "Connected analytics and market estimates", "Performance alerts and reports; workflow differs", "AI keyword suggestions; citation coverage not assessed", "Market research tools; equivalent brief workflow not verified", "Not documented in the sources reviewed", "Review reply tools", "Developers, publishers, and growth teams"]),
     alternativesIntro: "Compare Appfigures alternatives around the work you need to do: connected revenue reporting, keyword research, review operations, or deciding what to build. The options below serve different jobs; this is our editorial comparison, not a survey of switching customers.",
     faq: [
-      { q: "Can Appfox replace Appfigures?", a: "It depends on the job. Appfox may fit public-store research and daily product investigation. Its beta does not replace connected revenue reporting or API workflows." },
+      { q: "Can Appfox replace Appfigures?", a: "It depends on the job. Appfox may fit public-store research and daily product investigation. Its beta does not replace connected revenue reporting." },
       { q: "Does Appfox track keywords?", a: "Yes. It tracks queries and rank observations within a market. Compare the keyword coverage and research tools you need in a real trial; these products are not interchangeable feature for feature." },
       { q: "Can I use both?", a: "Yes. Public store research in Appfox can complement your existing reporting. RevenueCat support in Appfox is planned, not available in the beta." },
     ],
@@ -101,7 +101,7 @@ export const competitors: Competitor[] = [
       "Appbot specializes in feedback analysis and response. Appfox also includes market research briefs and keyword rank tracking.",
       "Both help investigate themes. Evaluate the review sample, filters, and source traceability on the same question rather than assuming one model is more accurate.",
       "Appbot covers additional review sources. Appfox's beta is scoped to App Store and Google Play evidence.",
-      "Ask Appbot and MCP are advertised on eligible plans. Ask Fox and Appfox API access remain planned and unavailable in the beta.",
+      "Ask Appbot and MCP are advertised on eligible plans. Ask Fox remains planned and unavailable in the beta.",
     ],
     chooseThem: ["You need review response tools", "You need additional review sources", "You want review data in team tools or AI assistants today"],
     chooseUs: ["You want research briefs for an idea", "You want competitor and rank context alongside reviews", "You want daily findings with their evidence", "You can work within the current private beta scope"],

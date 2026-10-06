@@ -137,7 +137,7 @@ export default async function AlternativesPage({ params }: { params: Promise<{ s
               <p className="text-[16px] leading-[26px] text-muted">
                 Best for {APPFOX.bestFor.charAt(0).toLowerCase()}
                 {APPFOX.bestFor.slice(1)}. The private beta includes research briefs, daily findings, review themes,
-                and competitor and rank tracking. RevenueCat, replay, reply drafts, Ask Fox, and API access are
+                and competitor and rank tracking. RevenueCat, replay, reply drafts, and Ask Fox are
                 planned and unavailable in the beta.
               </p>
               <CheckList items={c.chooseUs.slice(0, 3)} className="pt-3" />

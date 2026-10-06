@@ -154,11 +154,6 @@ const ROWS: PlanRow[] = [
     cells: [none, yes, yes, yes],
   },
   {
-    label: "API access (planned)",
-    info: "Planned, not available in the current beta: programmatic access to workspace data.",
-    cells: [none, none, yes, yes],
-  },
-  {
     label: "Single sign-on",
     info: "Sign in through your company's identity provider.",
     cells: [none, none, none, yes],

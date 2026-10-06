@@ -78,7 +78,7 @@ export default function HowItWorksPage() {
           </div>
         ))}
       </Section>
-      <CtaBand title="Bring a real question about your app." lead="Request an invitation to the private beta. RevenueCat, session replay, reply drafts, Ask Fox, and API access are planned and are not part of the current beta." />
+      <CtaBand title="Bring a real question about your app." lead="Request an invitation to the private beta. RevenueCat, session replay, reply drafts, and Ask Fox are planned and are not part of the current beta." />
     </>
   );
 }

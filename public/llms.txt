@@ -2,7 +2,7 @@
 
 > Appfox is an AI app intelligence tool for iOS and Android developers, from first-time builders and vibe coders to experienced teams. It turns public App Store and Google Play reviews, rankings, and competitor changes into research briefs and daily findings, with sources attached. Appfox is in private beta; access is by invitation. Tagline: "Your app, explained."
 
-Current beta features: research briefs, daily findings, review themes, competitor tracking, and rank tracking. Appfox helps the person responsible for an app understand what to investigate next. Findings cite their sources. RevenueCat, mobile session replay, reply drafts, and API access are planned and unavailable in the current beta. Ask Fox is also planned. There are no announced release dates for these features.
+Current beta features: research briefs, daily findings, review themes, competitor tracking, and rank tracking. Appfox helps the person responsible for an app understand what to investigate next. Findings cite their sources. RevenueCat, mobile session replay, and reply drafts are planned and unavailable in the current beta. Ask Fox is also planned. There are no announced release dates for these features.
 
 Website: https://www.appfox.app. Contact: hello@appfox.app. Appfox is based in Milan, Italy. Pricing is proposed: Free ($0), Indie ($29/month), and Studio ($99/month). Prices and limits are not final, and requesting access does not create a workspace or start a subscription.
 

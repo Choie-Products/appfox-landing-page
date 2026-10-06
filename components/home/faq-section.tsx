@@ -11,7 +11,7 @@ export const homeFaq: { q: string; a: string }[] = [
   },
   {
     q: "What exactly does Appfox do?",
-    a: "Invited beta users can research an app idea, read daily findings, explore review themes, and track competitors and rankings. RevenueCat, session replay, reply drafts, and API access are planned and are not available in the current beta.",
+    a: "Invited beta users can research an app idea, read daily findings, explore review themes, and track competitors and rankings. RevenueCat, session replay, and reply drafts are planned and are not available in the current beta.",
   },
   {
     q: "Does Appfox use AI?",

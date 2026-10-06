@@ -88,7 +88,7 @@ export default async function ComparePage({ params }: { params: Promise<{ slug: 
             <p className="pt-3 text-[16px] leading-[26px] text-muted">
               Appfox is an app intelligence platform for iOS and Android developers. The private beta includes
               research briefs, daily findings, review themes, and competitor and rank tracking, with sources to
-              inspect. RevenueCat, session replay, reply drafts, Ask Fox, and API access are planned.
+              inspect. RevenueCat, session replay, reply drafts, and Ask Fox are planned.
             </p>
             <dl className="pt-5">
               {[
