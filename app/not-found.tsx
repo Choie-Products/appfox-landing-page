@@ -17,7 +17,7 @@ export default function NotFound() {
           Product overview
         </ButtonLink>
       </div>
-      <MissingArt className="mt-12 h-auto w-full max-w-[420px] lg:mt-16" />
+      <MissingArt className="mt-6 h-auto w-full max-w-[420px] lg:mt-10" />
     </PageIntro>
   );
 }

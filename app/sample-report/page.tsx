@@ -31,7 +31,7 @@ export default function SampleReportPage() {
           All app details, dates, and review text below are invented for this example.
           This is an editorial walkthrough, not a live Appfox export, customer result, or claim about a real app.
         </p>
-        <div className="flex flex-wrap justify-center gap-6 pt-5">
+        <div className="flex flex-wrap justify-center gap-6">
           <MonoLink href="#finding">Read the finding</MonoLink>
           <MonoLink href="#evidence">Inspect all 24 records</MonoLink>
         </div>

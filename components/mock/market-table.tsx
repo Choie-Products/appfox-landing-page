@@ -133,7 +133,7 @@ export default function MarketTable() {
               <th className="px-3 py-3 font-normal">Rating</th>
               <th className="px-3 py-3 font-normal">Price</th>
               <th className="px-3 py-3 font-normal">Released</th>
-              <th className="py-3 pl-3 pr-5 font-normal sm:pr-6">
+              <th className="relative py-3 pl-3 pr-5 font-normal sm:pr-6">
                 <span className="sr-only">Actions</span>
               </th>
             </tr>

@@ -36,7 +36,7 @@ export default function PageIntro({
           </Reveal>
         ) : null}
         {children ? (
-          <Reveal delay={270} className="flex w-full flex-col items-center pt-8">
+          <Reveal delay={270} className="flex w-full flex-col items-center gap-6 pt-8">
             {children}
           </Reveal>
         ) : null}
