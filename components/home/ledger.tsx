@@ -63,29 +63,29 @@ function LedgerPlate({ cx, cy, uid }: { cx: number; cy: number; uid: string }) {
     <g>
       <defs>
         <radialGradient id={`${uid}-glow`}>
-          <stop offset="0" stopColor="#fe5000" stopOpacity="0.28" />
-          <stop offset="1" stopColor="#fe5000" stopOpacity="0" />
+          <stop offset="0" stopColor="#ff6500" stopOpacity="0.42" />
+          <stop offset="1" stopColor="#ff6500" stopOpacity="0" />
         </radialGradient>
         <radialGradient id={`${uid}-top`} cx="0.5" cy="0.5" r="0.62">
-          <stop offset="0" stopColor="#ff7a3a" />
-          <stop offset="0.5" stopColor="#ffab80" />
-          <stop offset="1" stopColor="#ffd8c3" />
+          <stop offset="0" stopColor="#ff4f00" />
+          <stop offset="0.5" stopColor="#ff6a00" />
+          <stop offset="1" stopColor="#ff9500" />
         </radialGradient>
         <linearGradient id={`${uid}-side`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#f9bf9f" />
-          <stop offset="0.5" stopColor="#f3a479" />
-          <stop offset="1" stopColor="#ea8c5c" />
+          <stop offset="0" stopColor="#ff7900" />
+          <stop offset="0.5" stopColor="#ff5a00" />
+          <stop offset="1" stopColor="#f04400" />
         </linearGradient>
         <radialGradient id={`${uid}-disc`} cx="0.5" cy="0.35" r="0.7">
-          <stop offset="0" stopColor="#e94a06" />
-          <stop offset="1" stopColor="#fe5f17" />
+          <stop offset="0" stopColor="#e83d00" />
+          <stop offset="1" stopColor="#ff5a00" />
         </radialGradient>
       </defs>
       <ellipse className="fox-glow" cx={cx} cy={cy + 14} rx={REACH + 70} ry={(REACH + 70) * 0.55} fill={`url(#${uid}-glow)`} />
       <path d={platePath(cx, cy + T)} fill={`url(#${uid}-side)`} />
       <rect x={cx - REACH} y={cy} width={REACH * 2} height={T} fill={`url(#${uid}-side)`} />
-      <path d={platePath(cx, cy)} fill={`url(#${uid}-top)`} stroke="rgba(255,226,208,0.9)" strokeWidth={1.2} />
-      <ellipse cx={cx} cy={cy + 1.5} rx={36} ry={36 * K} fill="#ffc9ab" />
+      <path d={platePath(cx, cy)} fill={`url(#${uid}-top)`} stroke="#ffb300" strokeWidth={1.2} />
+      <ellipse cx={cx} cy={cy + 1.5} rx={36} ry={36 * K} fill="#ffb300" />
       <ellipse cx={cx} cy={cy} rx={36} ry={36 * K} fill={`url(#${uid}-disc)`} />
       <path d={FOX_PATH} fill="#ffffff" transform={`translate(${cx - 13.4} ${cy - 8.7}) scale(0.2 0.124)`} />
     </g>

@@ -137,7 +137,7 @@ export function ResearchArt() {
 
       <div className="absolute bottom-0 right-0 w-[196px]">
         <div className={`p-3.5 ${DARK}`}>
-          <p className="font-mono text-[10px] uppercase leading-3 text-[#ff8a4c]">Evidence against</p>
+          <p className="font-mono text-[10px] uppercase leading-3 text-[#ff9500]">Evidence against</p>
           <p className="pt-1.5 text-[12px] font-semibold leading-4">Three strong apps already sell for under $5 a month</p>
           <p className="pt-2 text-[10px] leading-3 text-dark-muted">Brief ready · 12 sources</p>
         </div>
@@ -306,7 +306,7 @@ const THEMES = [
   { name: "Pricing", count: 13, color: "#fe5000" },
   { name: "Bug", count: 11, color: "#111" },
   { name: "Support question", count: 9, color: "#9b9b97" },
-  { name: "Quality", count: 8, color: "#ffa24d" },
+  { name: "Quality", count: 8, color: "#ff9500" },
   { name: "Praise", count: 5, color: "#d6d6d3" },
 ];
 
@@ -642,7 +642,7 @@ export function OutcomeArt() {
 
       <div className="absolute bottom-0 right-0 w-[196px]">
         <div className={`p-3.5 ${DARK}`}>
-          <p className="font-mono text-[10px] uppercase leading-3 text-[#ff8a4c]">Matched windows</p>
+          <p className="font-mono text-[10px] uppercase leading-3 text-[#ff9500]">Matched windows</p>
           <p className="pt-1.5 text-[12px] font-semibold leading-4">500 reviews before, 100 after</p>
           <p className="pt-2 text-[10px] leading-3 text-dark-muted">Same topic, same denominators</p>
         </div>
@@ -714,7 +714,7 @@ export function MyAppArt() {
 
       <div className="absolute bottom-0 right-0 w-[200px]">
         <div className={`p-3.5 ${DARK}`}>
-          <p className="font-mono text-[10px] uppercase leading-3 text-[#ff8a4c]">Sources merged</p>
+          <p className="font-mono text-[10px] uppercase leading-3 text-[#ff9500]">Sources merged</p>
           <p className="pt-1.5 text-[12px] font-semibold leading-4">Listing, reviews, releases, and RevenueCat</p>
           <p className="pt-2 text-[10px] leading-3 text-dark-muted">One overview, exact scope</p>
         </div>
@@ -771,7 +771,7 @@ export function ConnectionArt() {
 
       <div className="absolute bottom-0 right-0 w-[180px]">
         <div className={`p-3.5 ${DARK}`}>
-          <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase leading-3 text-[#ff8a4c]">
+          <p className="flex items-center gap-1.5 font-mono text-[10px] uppercase leading-3 text-[#ff9500]">
             <Lock className="size-3" strokeWidth={2.4} />
             Read-only
           </p>
@@ -817,7 +817,7 @@ export function MorningArt() {
 
       <div className="absolute bottom-0 right-0 w-[190px]">
         <div className={`p-3.5 ${DARK}`}>
-          <p className="font-mono text-[10px] uppercase leading-3 text-[#ff8a4c]">Every morning</p>
+          <p className="font-mono text-[10px] uppercase leading-3 text-[#ff9500]">Every morning</p>
           <p className="pt-1.5 text-[12px] font-semibold leading-4">You are the integration layer between five tools</p>
         </div>
       </div>

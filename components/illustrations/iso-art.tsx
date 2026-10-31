@@ -2,7 +2,7 @@ import { FOX_PATH } from "@/components/fox-mark";
 
 /**
  * Small isometric scenes for the surface cards and the editorial rows, drawn in the soft style of the
- * layer stack: light gray and white slabs with solid sides, and an orange piece in each.
+ * layer stack: light gray and white slabs with solid sides, and a vivid orange piece in each.
  */
 
 const K = 0.5;
@@ -88,13 +88,13 @@ function Gradients({ id }: { id: string }) {
         <stop offset="1" stopColor="#d2d2cf" />
       </linearGradient>
       <radialGradient id={`${id}-top-brand`} cx="0.5" cy="0.5" r="0.65">
-        <stop offset="0" stopColor="#ff7a3a" />
-        <stop offset="0.55" stopColor="#ff9c66" />
-        <stop offset="1" stopColor="#ffc6a6" />
+        <stop offset="0" stopColor="#ff4f00" />
+        <stop offset="0.55" stopColor="#ff6a00" />
+        <stop offset="1" stopColor="#ff9500" />
       </radialGradient>
       <linearGradient id={`${id}-side-brand`} x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0" stopColor="#f6a77c" />
-        <stop offset="1" stopColor="#e3793f" />
+        <stop offset="0" stopColor="#ff7900" />
+        <stop offset="1" stopColor="#f04400" />
       </linearGradient>
       <radialGradient id={`${id}-shadow`}>
         <stop offset="0" stopColor="#111111" stopOpacity="0.16" />
@@ -116,7 +116,7 @@ function Slab({ id, shape, cx, cy, depth, tone }: { id: string; shape: Cmd[]; cx
       <path
         d={toPath(shape, cx, cy)}
         fill={`url(#${id}-top-${tone})`}
-        stroke={tone === "brand" ? "rgba(255,226,208,0.9)" : "rgba(255,255,255,0.95)"}
+        stroke={tone === "brand" ? "#ffb300" : "rgba(255,255,255,0.95)"}
         strokeWidth={1.2}
       />
     </g>
@@ -270,7 +270,7 @@ function Cylinder({ id, cx, cy, r, depth, tone }: { id: string; cx: number; cy: 
         rx={r}
         ry={r * K}
         fill={`url(#${id}-top-${tone})`}
-        stroke={tone === "brand" ? "rgba(255,226,208,0.9)" : "rgba(255,255,255,0.95)"}
+        stroke={tone === "brand" ? "#ffb300" : "rgba(255,255,255,0.95)"}
         strokeWidth={1.2}
       />
     </g>
@@ -528,7 +528,7 @@ function PressKey({
       rx={r}
       ry={r * K}
       fill={`url(#${id}-top-brand)`}
-      stroke="rgba(255,226,208,0.9)"
+      stroke="#ffb300"
       strokeWidth={1.2}
     />
   );

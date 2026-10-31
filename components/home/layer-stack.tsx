@@ -189,11 +189,11 @@ function Plate({
       <path
         d={platePath(cy)}
         fill={`url(#${uid}-top-${tone})`}
-        stroke={brand ? "rgba(255,226,208,0.9)" : "rgba(255,255,255,0.9)"}
+        stroke={brand ? "#ffb300" : "rgba(255,255,255,0.9)"}
         strokeWidth={1.2}
       />
       {/* Recessed disc with a light lower lip */}
-      <ellipse cx={CX} cy={cy + 1.5} rx={DISC.rx} ry={DISC.ry} fill={brand ? "#ffc9ab" : "#ffffff"} />
+      <ellipse cx={CX} cy={cy + 1.5} rx={DISC.rx} ry={DISC.ry} fill={brand ? "#ffb300" : "#ffffff"} />
       <ellipse cx={CX} cy={cy} rx={DISC.rx} ry={DISC.ry} fill={`url(#${uid}-disc-${tone})`} />
       <g transform={`translate(${CX} ${cy}) scale(1 ${ICON_SQUASH})`}>
         {Icon ? (
@@ -222,19 +222,15 @@ function seeded(n: number) {
   return x - Math.floor(x);
 }
 
-/** The soft orange cup that holds the lower layers, with embers drifting up through it. */
-function StackGlow({ uid, cupTop, cupBottom }: { uid: string; cupTop: number; cupBottom: number }) {
+/** The translucent orange cup that holds the lower layers, with embers drifting up through it. */
+function StackCup({ uid, cupTop, cupBottom }: { uid: string; cupTop: number; cupBottom: number }) {
   const inner = { half: S * 1.18, r: R * 1.4 };
   const innerReach = reach(inner.half, inner.r);
   return (
     <>
-      <g filter={`url(#${uid}-blur)`} opacity={0.6}>
-        <Walls top={cupTop - 30} bottom={cupBottom + 10} half={S * 1.34} r={R * 1.6} fill={`url(#${uid}-cup)`} />
-      </g>
       <g opacity={0.75}>
         <Walls top={cupTop} bottom={cupBottom} half={inner.half} r={inner.r} fill={`url(#${uid}-cup)`} />
       </g>
-      <ellipse cx={CX} cy={PLATE_Y[BRAND] + 8} rx={270} ry={140} fill={`url(#${uid}-glow)`} />
       <g className="iso-motion" filter={`url(#${uid}-soft)`}>
         {Array.from({ length: 14 }, (_, i) => {
           const x = CX + (seeded(i + 1) - 0.5) * innerReach * 1.7;
@@ -249,7 +245,7 @@ function StackGlow({ uid, cupTop, cupBottom }: { uid: string; cupTop: number; cu
               cx={x.toFixed(1)}
               cy={start.toFixed(1)}
               r={(2.5 + seeded(i + 37) * 2.5).toFixed(1)}
-              fill="#ff7a3a"
+              fill="#ff6a00"
               opacity={0}
             >
               <animateTransform
@@ -318,22 +314,18 @@ function StackArt({ active, full }: { active: number; full: boolean }) {
           <stop offset="1" stopColor="#efefed" />
         </radialGradient>
         <radialGradient id={`${uid}-top-brand`} cx="0.5" cy="0.5" r="0.62">
-          <stop offset="0" stopColor="#ff7a3a" />
-          <stop offset="0.5" stopColor="#ffab80" />
-          <stop offset="1" stopColor="#ffd8c3" />
+          <stop offset="0" stopColor="#ff4f00" />
+          <stop offset="0.5" stopColor="#ff6a00" />
+          <stop offset="1" stopColor="#ff9500" />
         </radialGradient>
         <linearGradient id={`${uid}-side-brand`} x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0" stopColor="#f9bf9f" />
-          <stop offset="0.5" stopColor="#f3a479" />
-          <stop offset="1" stopColor="#ea8c5c" />
+          <stop offset="0" stopColor="#ff7900" />
+          <stop offset="0.5" stopColor="#ff5a00" />
+          <stop offset="1" stopColor="#f04400" />
         </linearGradient>
         <radialGradient id={`${uid}-disc-brand`} cx="0.5" cy="0.35" r="0.7">
-          <stop offset="0" stopColor="#e94a06" />
-          <stop offset="1" stopColor="#fe5f17" />
-        </radialGradient>
-        <radialGradient id={`${uid}-glow`}>
-          <stop offset="0" stopColor="#fe5000" stopOpacity="0.3" />
-          <stop offset="1" stopColor="#fe5000" stopOpacity="0" />
+          <stop offset="0" stopColor="#e83d00" />
+          <stop offset="1" stopColor="#ff5a00" />
         </radialGradient>
         <linearGradient
           id={`${uid}-cup`}
@@ -343,20 +335,17 @@ function StackArt({ active, full }: { active: number; full: boolean }) {
           x2="0"
           y2={cupBottom + 110}
         >
-          <stop offset="0" stopColor="#ff9a66" stopOpacity="0" />
-          <stop offset="0.45" stopColor="#ff9a66" stopOpacity="0.14" />
-          <stop offset="1" stopColor="#ff9a66" stopOpacity="0.5" />
+          <stop offset="0" stopColor="#ff6500" stopOpacity="0" />
+          <stop offset="0.45" stopColor="#ff6500" stopOpacity="0.2" />
+          <stop offset="1" stopColor="#ff6500" stopOpacity="0.6" />
         </linearGradient>
         <filter id={`${uid}-soft`} x="-50%" y="-50%" width="200%" height="200%">
           <feGaussianBlur stdDeviation="1.4" />
         </filter>
-        <filter id={`${uid}-blur`} x="-30%" y="-30%" width="160%" height="160%">
-          <feGaussianBlur stdDeviation="16" />
-        </filter>
       </defs>
 
-      {/* A soft orange cup holds the lower layers */}
-      <StackGlow uid={uid} cupTop={cupTop} cupBottom={cupBottom} />
+      {/* A translucent orange cup holds the lower layers */}
+      <StackCup uid={uid} cupTop={cupTop} cupBottom={cupBottom} />
 
       {/* Drawn bottom up, so each plate sits over the one beneath it */}
       {PLATE_Y.map((_, i) => PLATE_Y.length - 1 - i).map((i) => (

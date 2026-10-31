@@ -31,15 +31,15 @@ const TILE_DEPTH = 30;
 
 type Rgb = [number, number, number];
 
-/** The floating tile's colors: a bright orange face lit from above, its sides from top to bottom, and its shading. */
+/** The floating tile's colors: a saturated orange face lit from above, its sides from top to bottom, and its shading. */
 const PALETTE = {
-  face: "radial-gradient(90% 75% at 30% 15%, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.12) 45%, rgba(255,255,255,0) 70%), linear-gradient(140deg, #ff8746 0%, #fe6a1e 55%, #f75f12 100%)",
-  sideTop: [255, 138, 74] as Rgb,
-  sideBottom: [228, 98, 34] as Rgb,
-  rim: "#ffd0b2",
+  face: "radial-gradient(90% 75% at 30% 15%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.04) 45%, rgba(255,255,255,0) 70%), linear-gradient(140deg, #ff9500 0%, #ff6a00 55%, #ff4f00 100%)",
+  sideTop: [255, 121, 0] as Rgb,
+  sideBottom: [240, 68, 0] as Rgb,
+  rim: "#ffb300",
   /** Shade color (r,g,b) for the bevel's lower inner edge and the fox's drop shadow. */
-  shade: "200,80,15",
-  contact: "rgba(160,60,10,0.24)",
+  shade: "200,55,0",
+  contact: "rgba(190,55,0,0.24)",
 };
 
 /**
@@ -62,8 +62,8 @@ const TILE_SHADOW = (() => {
   const [rx, ry] = step(1.5);
   const [cx, cy] = step(TILE_DEPTH + 10);
   const bevel = [
-    "inset 0 3px 1px rgba(255,255,255,0.6)",
-    "inset 3px 0 2px rgba(255,255,255,0.22)",
+    "inset 0 3px 1px rgba(255,255,255,0.26)",
+    "inset 3px 0 2px rgba(255,255,255,0.1)",
     `inset -3px 0 4px rgba(${p.shade},0.16)`,
     `inset 0 -7px 10px rgba(${p.shade},0.26)`,
   ];

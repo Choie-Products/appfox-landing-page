@@ -11,7 +11,7 @@ export default function Stars({
   return (
     <span className={`relative inline-block whitespace-nowrap leading-none ${className}`} aria-hidden="true">
       <span style={{ color: empty }}>★★★★★</span>
-      <span className="absolute inset-0 overflow-hidden text-[#ffa31a]" style={{ width: `${(value / 5) * 100}%` }}>
+      <span className="absolute inset-0 overflow-hidden text-[#ff9500]" style={{ width: `${(value / 5) * 100}%` }}>
         ★★★★★
       </span>
     </span>

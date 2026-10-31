@@ -71,7 +71,7 @@ const surfaces = [
 ];
 
 /** Dot colors from quiet to urgent, matching the homepage feed. */
-const LEVEL_DOTS = ["bg-[#c8c8c4]", "bg-ink", "bg-[#ffa24d]", "bg-accent"];
+const LEVEL_DOTS = ["bg-[#c8c8c4]", "bg-ink", "bg-[#ff9500]", "bg-accent"];
 
 const levels = [
   { level: "Low", where: "History only", when: "A small, expected movement worth keeping for later comparison." },

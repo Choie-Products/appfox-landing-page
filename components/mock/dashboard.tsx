@@ -41,7 +41,7 @@ function SentimentBar() {
       {ticks.map((color, i) => (
         <span key={i} className="w-[2px] flex-none rounded-full" style={{ backgroundColor: color }} />
       ))}
-      <span className="absolute left-[20%] top-[-3px] h-[36px] w-[6px] -translate-x-1/2 rounded-full bg-[#ff4d1f]" />
+      <span className="absolute left-[20%] top-[-3px] h-[36px] w-[6px] -translate-x-1/2 rounded-full bg-[#ff4f00]" />
     </div>
   );
 }

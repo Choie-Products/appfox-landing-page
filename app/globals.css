@@ -845,15 +845,15 @@ details[open] .faq-icon {
 /* The compact header pill, built like a light key. Shading comes from inset shadows,
    not a gradient, so it fades in with the bar's shape transition. */
 .nav-3d {
-  background-color: rgba(246, 246, 244, 0.94);
+  background-color: rgba(253, 253, 252, 0.96);
   box-shadow:
     inset 0 1px 0 #ffffff,
-    inset 0 -16px 20px -14px rgba(17, 17, 17, 0.09),
-    0 1px 0 #dcdcd9,
-    0 2px 0 #d6d6d3,
-    0 3px 0 #d0d0cd,
-    0 4px 0 #cacac7,
-    0 18px 30px -14px rgba(17, 17, 17, 0.32);
+    inset 0 -16px 20px -14px rgba(17, 17, 17, 0.04),
+    0 1px 0 #eeeeec,
+    0 2px 0 #e9e9e7,
+    0 3px 0 #e4e4e2,
+    0 4px 0 #dfdfdd,
+    0 18px 30px -14px rgba(17, 17, 17, 0.14);
 }
 
 @media (prefers-reduced-motion: reduce) {

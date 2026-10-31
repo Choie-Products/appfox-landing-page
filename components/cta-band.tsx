@@ -34,21 +34,18 @@ export default function CtaBand({
             </div>
             <div className="lg:justify-self-end">
               <div className="flex flex-wrap gap-3">
-                <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="primary" size="lg">
+                <ButtonLink href={CTA_HREF} external={Boolean(APP_URL)} variant="flat" size="lg">
                   Request access
                 </ButtonLink>
                 <ButtonLink
                   href={secondary.href}
                   variant="ghost"
                   size="lg"
-                  className="bg-white/10 text-white hover:bg-white/20"
+                  className="bg-[#282828] text-white hover:bg-[#333333]"
                 >
                   {secondary.label}
                 </ButtonLink>
               </div>
-              <p className="pt-4 text-[13px] leading-5 text-[#8a8a8a]">
-                Invitations are sent by email.
-              </p>
             </div>
           </div>
         </Reveal>
