@@ -4,7 +4,7 @@ import { FOX_PATH } from "@/components/fox-mark";
 import ScaleToFit from "@/components/mock/scale-to-fit";
 import Container from "@/components/ui/container";
 import Reveal from "@/components/reveal";
-import { Groove, Packet } from "@/components/illustrations/scene-art";
+import { Groove, Packet, PERSPECTIVE } from "@/components/illustrations/scene-art";
 
 /** The six surfaces, each with the question it answers (wording from the product page). */
 const SURFACES: { name: string; question: string; icon: LucideIcon }[] = [
@@ -33,24 +33,31 @@ const CARD_Y = [40, 196, 352];
 const STREAK_DUR = 3.6;
 const STREAK_BEGINS = [0, 1.8, 0.6, 2.4, 1.2, 3.0];
 
-/* The ledger plate: half side of its square, corner radius, isometric squash, thickness. */
+/* The ledger plate: half side of its square, corner radius, thickness, and the front-view camera
+   (same as components/illustrations/scene-art.tsx: widths stretch by SX, depths squash to SY). */
 const PLATE_CY = 206;
 const S = 106;
 const R = 24;
-const K = 0.46;
 const T = 20;
-const REACH = (2 * S - 0.5 * R) / Math.SQRT2;
+const SX = 1.2;
+const SY = 0.58;
+const Q = SY / SX;
+const REACH = S * SX;
 
-/** Projects a point on the plate (u, v in its own square) onto the canvas. */
-function iso(cx: number, cy: number, u: number, v: number) {
-  return `${(cx + (u - v) / Math.SQRT2).toFixed(1)} ${(cy + (K * (u + v)) / Math.SQRT2).toFixed(1)}`;
+/**
+ * Projects a point on the plate (u, v in its own square) onto the canvas, camera facing it from the front.
+ * The back edge draws narrower than the front edge, with the same perspective as the scene art.
+ */
+function proj(cx: number, cy: number, u: number, v: number) {
+  const y = v * SY;
+  return `${(cx + u * SX * (1 + PERSPECTIVE * y)).toFixed(1)} ${(cy + y).toFixed(1)}`;
 }
 
-/** A rounded square lying flat; quadratic corners stay exact under the projection. */
-function platePath(cx: number, cy: number) {
+/** A rounded square lying flat, its top face at cy; `drop` shifts the same outline down for the plate's sides. */
+function platePath(cx: number, cy: number, drop = 0) {
   const a = S;
   const b = S - R;
-  const p = (u: number, v: number) => iso(cx, cy, u, v);
+  const p = (u: number, v: number) => proj(cx, cy + drop, u, v);
   return `M${p(-b, -a)} L${p(b, -a)} Q${p(a, -a)} ${p(a, -b)} L${p(a, b)} Q${p(a, a)} ${p(b, a)} L${p(-b, a)} Q${p(-a, a)} ${p(-a, b)} L${p(-a, -b)} Q${p(-a, -a)} ${p(-b, -a)} Z`;
 }
 
@@ -82,11 +89,12 @@ function LedgerPlate({ cx, cy, uid }: { cx: number; cy: number; uid: string }) {
         </radialGradient>
       </defs>
       <ellipse className="fox-glow" cx={cx} cy={cy + 14} rx={REACH + 70} ry={(REACH + 70) * 0.55} fill={`url(#${uid}-glow)`} />
-      <path d={platePath(cx, cy + T)} fill={`url(#${uid}-side)`} />
-      <rect x={cx - REACH} y={cy} width={REACH * 2} height={T} fill={`url(#${uid}-side)`} />
+      {Array.from({ length: Math.ceil(T / 1.5) }, (_, i) => T - i * 1.5).map((d) => (
+        <path key={d} d={platePath(cx, cy, d)} fill={`url(#${uid}-side)`} />
+      ))}
       <path d={platePath(cx, cy)} fill={`url(#${uid}-top)`} stroke="#ffb300" strokeWidth={1.2} />
-      <ellipse cx={cx} cy={cy + 1.5} rx={36} ry={36 * K} fill="#ffb300" />
-      <ellipse cx={cx} cy={cy} rx={36} ry={36 * K} fill={`url(#${uid}-disc)`} />
+      <ellipse cx={cx} cy={cy + 1.5} rx={36} ry={36 * Q} fill="#ffb300" />
+      <ellipse cx={cx} cy={cy} rx={36} ry={36 * Q} fill={`url(#${uid}-disc)`} />
       <path d={FOX_PATH} fill="#ffffff" transform={`translate(${cx - 13.4} ${cy - 8.7}) scale(0.2 0.124)`} />
     </g>
   );
@@ -196,7 +204,7 @@ export default function Ledger() {
               style={{ left: CANVAS_W - CARD_W, top: CARD_Y[i], width: CARD_W, height: CARD_H }}
             />
           ))}
-          <div className="absolute w-[300px]" style={{ left: CX - 150, top: PLATE_CY + 2 * S * K * Math.SQRT1_2 + T + 34 }}>
+          <div className="absolute w-[300px]" style={{ left: CX - 150, top: PLATE_CY + S * SY + T + 34 }}>
             <LedgerCaption />
           </div>
         </div>

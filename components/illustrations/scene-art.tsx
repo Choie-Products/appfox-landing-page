@@ -4,34 +4,48 @@ import { FOX_PATH } from "@/components/fox-mark";
  * Small 3D scenes for the surface cards, the editorial rows, and the inner pages, drawn in the soft style
  * of the layer stack: light gray and white slabs with solid edges, and a vivid orange piece in each.
  * The camera faces the floor straight on from slightly above, so widths run left to right, depth runs up
- * the page, and every slab shows its top and front edge. Loops live in globals.css ("Scene loops").
+ * the page, and every slab shows its top and front edge. A gentle perspective narrows whatever sits
+ * farther back (higher on the page), so a slab's back edge is shorter than its front edge.
+ * Loops live in globals.css ("Scene loops").
  */
 
 /** Floor units to drawing units: across (S) and into the page (T). Their ratio flattens circles. */
 const S = 1.2;
 const T = 0.58;
 const Q = T / S;
+/** How much wider things get per drawing unit lower on the page, measured from HORIZON_Y. */
+export const PERSPECTIVE = 0.0024;
+const HORIZON_Y = 172;
+
+/** The perspective's width scale at drawing height y: under 1 farther back, over 1 closer. */
+function widen(y: number) {
+  return 1 + PERSPECTIVE * (y - HORIZON_Y);
+}
 
 type Cmd = ["M" | "L", number, number] | ["Q", number, number, number, number] | ["Z"];
 type Tone = "gray" | "white" | "brand";
 
 const f = (n: number) => n.toFixed(1);
 
-/** Projects a point on the floor (u across, v into the page) around (cx, cy) onto the drawing. */
-function proj(cx: number, cy: number, u: number, v: number): [number, number] {
-  return [cx + u * S, cy + v * T];
+/**
+ * Projects a point on the floor (u across, v into the page) around (cx, cy) onto the drawing. Widths
+ * follow the perspective at the point's depth; `yRef` sets that depth's origin, so a slab's lower layers
+ * can keep the same outline as its top face.
+ */
+function proj(cx: number, cy: number, u: number, v: number, yRef = cy): [number, number] {
+  return [cx + u * S * widen(yRef + v * T), cy + v * T];
 }
 
-function toPath(cmds: Cmd[], cx: number, cy: number) {
+function toPath(cmds: Cmd[], cx: number, cy: number, yRef = cy) {
   return cmds
     .map((c) => {
       if (c[0] === "Z") return "Z";
       if (c[0] === "Q") {
-        const [x1, y1] = proj(cx, cy, c[1], c[2]);
-        const [x, y] = proj(cx, cy, c[3], c[4]);
+        const [x1, y1] = proj(cx, cy, c[1], c[2], yRef);
+        const [x, y] = proj(cx, cy, c[3], c[4], yRef);
         return `Q${f(x1)} ${f(y1)} ${f(x)} ${f(y)}`;
       }
-      const [x, y] = proj(cx, cy, c[1], c[2]);
+      const [x, y] = proj(cx, cy, c[1], c[2], yRef);
       return `${c[0]}${f(x)} ${f(y)}`;
     })
     .join(" ");
@@ -114,7 +128,7 @@ function Slab({ id, shape, cx, cy, depth, tone }: { id: string; shape: Cmd[]; cx
   return (
     <g>
       {steps.map((d) => (
-        <path key={d} d={toPath(shape, cx, cy + d)} fill={`url(#${id}-side-${tone})`} />
+        <path key={d} d={toPath(shape, cx, cy + d, cy)} fill={`url(#${id}-side-${tone})`} />
       ))}
       <path
         d={toPath(shape, cx, cy)}
@@ -148,8 +162,8 @@ function Shade({ cx, cy, rx, ry, id, delay = 0, slow = false }: { cx: number; cy
       style={{ animationDelay: `${delay}s` }}
       cx={cx}
       cy={cy}
-      rx={rx}
-      ry={ry}
+      rx={rx * widen(cy)}
+      ry={ry * widen(cy)}
       fill={`url(#${id}-shadow)`}
     />
   );
@@ -159,16 +173,17 @@ function Shade({ cx, cy, rx, ry, id, delay = 0, slow = false }: { cx: number; cy
 function Cylinder({ id, cx, cy, r, depth, tone }: { id: string; cx: number; cy: number; r: number; depth: number; tone: Tone }) {
   const steps: number[] = [];
   for (let d = depth; d > 0; d -= 1.5) steps.push(d);
+  const { rx, ry } = disc(r, cy);
   return (
     <g>
       {steps.map((d) => (
-        <ellipse key={d} cx={cx} cy={cy + d} rx={r} ry={r * Q} fill={`url(#${id}-side-${tone})`} />
+        <ellipse key={d} cx={cx} cy={cy + d} rx={rx} ry={ry} fill={`url(#${id}-side-${tone})`} />
       ))}
       <ellipse
         cx={cx}
         cy={cy}
-        rx={r}
-        ry={r * Q}
+        rx={rx}
+        ry={ry}
         fill={`url(#${id}-top-${tone})`}
         stroke={tone === "brand" ? "#ffb300" : "rgba(255,255,255,0.95)"}
         strokeWidth={1.2}
@@ -177,10 +192,17 @@ function Cylinder({ id, cx, cy, r, depth, tone }: { id: string; cx: number; cy: 
   );
 }
 
+/** A circle of radius r lying flat at drawing height y, as ellipse radii. */
+function disc(r: number, y: number) {
+  const w = widen(y);
+  return { rx: r * w, ry: r * Q * w };
+}
+
 /** A small icon lying flat on a surface at (x, y), squashed by the camera tilt. Drawn in a 24×24 box. */
 function Mark({ x, y, size = 18, color, draw }: { x: number; y: number; size?: number; color: string; draw: (color: string) => React.ReactNode }) {
+  const w = widen(y);
   return (
-    <g transform={`translate(${f(x)} ${f(y)}) scale(1 ${Q.toFixed(3)})`}>
+    <g transform={`translate(${f(x)} ${f(y)}) scale(${w.toFixed(3)} ${(Q * w).toFixed(3)})`}>
       <g transform={`scale(${size / 24}) translate(-12 -12)`}>{draw(color)}</g>
     </g>
   );
@@ -206,7 +228,7 @@ const CHECK = "M20 6 9 17l-5-5";
 const VIEW = "34 44 332 236";
 const BASE = { cx: 200, cy: 172 };
 const PLATE = roundRect(112, 100, 26);
-const WIDE = roundRect(128, 100, 26);
+const WIDE = roundRect(120, 100, 26);
 
 function Base({ id, shape = PLATE }: { id: string; shape?: Cmd[] }) {
   return <Slab id={id} shape={shape} cx={BASE.cx} cy={BASE.cy} depth={14} tone="gray" />;
@@ -328,7 +350,7 @@ export function TodayArt({ className }: { className?: string }) {
             {row.lift ? <Shade cx={cx} cy={cy0 + 2} rx={96} ry={22} id={id} /> : null}
             <g className={row.lift ? "iso-bob" : undefined}>
               <Slab id={id} shape={ROW} cx={cx} cy={cy} depth={10} tone={row.tone} />
-              <ellipse cx={dx} cy={dy} rx={12} ry={12 * Q} fill={brand ? "#ffffff" : "#e4e4e1"} />
+              <ellipse cx={dx} cy={dy} {...disc(12, dy)} fill={brand ? "#ffffff" : "#e4e4e1"} />
               <Mark x={dx} y={dy} size={17} color={brand ? "#fe5000" : "#8a8a87"} draw={label(String(i + 1))} />
               <Line cx={cx} cy={cy} v={0} from={-36} to={brand ? 58 : 34 - i * 14} color={brand ? "rgba(255,255,255,0.85)" : "#e0e0dd"} />
             </g>
@@ -397,12 +419,12 @@ export function ChangedArt({ className }: { className?: string }) {
   const id = "art-changed";
   const C = BASE;
   const sources = [
-    { u: -96, v: -62, glyph: STAR, fill: true },
-    { u: -96, v: 0, glyph: BARS, fill: false },
-    { u: -96, v: 62, glyph: ARROW_UP, fill: false },
+    { u: -92, v: -62, glyph: STAR, fill: true },
+    { u: -92, v: 0, glyph: BARS, fill: false },
+    { u: -92, v: 62, glyph: ARROW_UP, fill: false },
   ];
   const hub = { u: 0, v: 0 };
-  const out = { u: 94, v: 0 };
+  const out = { u: 86, v: 0 };
   const TILE = roundRect(22, 22, 8);
   const [hx, hy0] = proj(C.cx, C.cy, hub.u, hub.v);
   const hy = hy0 - 14 - 6;
@@ -458,7 +480,7 @@ export function ChangedArt({ className }: { className?: string }) {
         const [dx, dy] = proj(ox, oy, -16, 0);
         return (
           <g className="iso-ping">
-            <ellipse cx={dx} cy={dy} rx={9} ry={9 * Q} fill="#fe5000" />
+            <ellipse cx={dx} cy={dy} {...disc(9, dy)} fill="#fe5000" />
             <Mark x={dx} y={dy} size={15} color="#ffffff" draw={label("!", 800)} />
           </g>
         );
@@ -479,13 +501,14 @@ function PressKey({ id, cx, cy, r, depth, icon, travel = 7 }: { id: string; cx: 
     keySplines: "0 0 1 1;0.4 0 0.2 1;0.3 0 0.2 1;0 0 1 1",
   } as const;
   const hold = (from: number, to: number) => `${from};${from};${to};${from};${from}`;
-  const face = <ellipse cx={cx} cy={cy} rx={r} ry={r * Q} fill={`url(#${id}-top-brand)`} stroke="#ffb300" strokeWidth={1.2} />;
-  const base = <ellipse cx={cx} cy={cy + depth} rx={r} ry={r * Q} fill={`url(#${id}-side-brand)`} />;
+  const { rx, ry } = disc(r, cy);
+  const face = <ellipse cx={cx} cy={cy} rx={rx} ry={ry} fill={`url(#${id}-top-brand)`} stroke="#ffb300" strokeWidth={1.2} />;
+  const base = <ellipse cx={cx} cy={cy + depth} rx={rx} ry={ry} fill={`url(#${id}-side-brand)`} />;
   return (
     <g>
       <g className="iso-motion">
         {base}
-        <rect x={cx - r} y={cy} width={r * 2} height={depth} fill={`url(#${id}-side-brand)`}>
+        <rect x={cx - rx} y={cy} width={rx * 2} height={depth} fill={`url(#${id}-side-brand)`}>
           <animate attributeName="y" values={hold(cy, cy + travel)} {...timing} />
           <animate attributeName="height" values={hold(depth, depth - travel)} {...timing} />
         </rect>
@@ -497,7 +520,7 @@ function PressKey({ id, cx, cy, r, depth, icon, travel = 7 }: { id: string; cx: 
       </g>
       <g className="iso-still">
         {base}
-        <rect x={cx - r} y={cy} width={r * 2} height={depth} fill={`url(#${id}-side-brand)`} />
+        <rect x={cx - rx} y={cy} width={rx * 2} height={depth} fill={`url(#${id}-side-brand)`} />
         {face}
         {icon}
       </g>
@@ -581,7 +604,7 @@ function UprightShield({ id, x, y, thickness = 9, children }: { id: string; x: n
 function Badge({ x, y, r = 9, fill, icon, color = "#ffffff", size = 13 }: { x: number; y: number; r?: number; fill: string; icon: (c: string) => React.ReactNode; color?: string; size?: number }) {
   return (
     <g>
-      <ellipse cx={x} cy={y} rx={r} ry={r * Q} fill={fill} />
+      <ellipse cx={x} cy={y} {...disc(r, y)} fill={fill} />
       <Mark x={x} y={y} size={size} color={color} draw={icon} />
     </g>
   );
@@ -591,8 +614,8 @@ function Badge({ x, y, r = 9, fill, icon, color = "#ffffff", size = 13 }: { x: n
 export function ResearchArt({ className }: { className?: string }) {
   const id = "art-research";
   const C = BASE;
-  const idea = { u: -80, v: -46 };
-  const brief = { u: 84, v: -46 };
+  const idea = { u: -76, v: -46 };
+  const brief = { u: 76, v: -46 };
   const cluster = { u: 2, v: 36 };
   const tiles = [
     { du: -25, dv: -25, ok: true },
