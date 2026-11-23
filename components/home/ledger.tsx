@@ -4,7 +4,7 @@ import { FOX_PATH } from "@/components/fox-mark";
 import ScaleToFit from "@/components/mock/scale-to-fit";
 import Container from "@/components/ui/container";
 import Reveal from "@/components/reveal";
-import { Groove, Packet } from "@/components/illustrations/iso-art";
+import { Groove, Packet } from "@/components/illustrations/scene-art";
 
 /** The six surfaces, each with the question it answers (wording from the product page). */
 const SURFACES: { name: string; question: string; icon: LucideIcon }[] = [

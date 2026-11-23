@@ -1,4 +1,4 @@
-import { CustomersArt, MarketArt, TodayArt } from "@/components/illustrations/iso-art";
+import { CustomersArt, MarketArt, TodayArt } from "@/components/illustrations/scene-art";
 import Container from "@/components/ui/container";
 import Reveal from "@/components/reveal";
 
@@ -34,7 +34,7 @@ export default function Surfaces() {
       <Container className="mt-10 grid gap-6 pb-24 md:grid-cols-3 lg:mt-16 lg:pb-40">
         {CARDS.map(({ name, Art, body }, i) => (
           <Reveal key={name} delay={i * 90} className="flex">
-          <div className="soft-card flex w-full flex-col rounded-[24px] text-center">
+          <div className="flex w-full flex-col text-center">
             <div className="flex aspect-[4/3] items-center justify-center px-4 pt-4">
               <Art className="h-auto w-full max-w-[340px]" />
             </div>

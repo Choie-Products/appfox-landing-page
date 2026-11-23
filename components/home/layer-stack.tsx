@@ -16,7 +16,7 @@ import FoxMark, { FOX_PATH } from "@/components/fox-mark";
 import ScaleToFit from "@/components/mock/scale-to-fit";
 import Container from "@/components/ui/container";
 import Reveal from "@/components/reveal";
-import { Groove, Packet } from "@/components/illustrations/iso-art";
+import { Groove, Packet } from "@/components/illustrations/scene-art";
 
 type Layer = { name: string; body: string; icon: LucideIcon | null; side: "left" | "right" };
 

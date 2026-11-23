@@ -1,4 +1,4 @@
-import { ContactArt } from "@/components/illustrations/iso-art";
+import { ContactArt } from "@/components/illustrations/scene-art";
 import { PageJsonLd } from "@/components/json-ld";
 import { RuledList, Section } from "@/components/ui/blocks";
 import { ButtonLink } from "@/components/ui/button";

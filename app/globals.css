@@ -675,7 +675,7 @@ details[open] .faq-icon {
   }
 }
 
-/* Isometric illustration loops (components/illustrations/iso-art.tsx): floating pieces bob and their
+/* Scene loops (components/illustrations/scene-art.tsx): floating pieces bob and their
    shadows breathe in step, columns rise and settle, and the approve key presses now and then. */
 @media (prefers-reduced-motion: no-preference) {
   .iso-bob {

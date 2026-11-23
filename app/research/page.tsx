@@ -1,6 +1,6 @@
 import CtaBand from "@/components/cta-band";
 import { PageJsonLd } from "@/components/json-ld";
-import { ResearchArt } from "@/components/illustrations/iso-art";
+import { ResearchArt } from "@/components/illustrations/scene-art";
 import MarketTable from "@/components/mock/market-table";
 import { CheckList, Section, Split } from "@/components/ui/blocks";
 import { ButtonLink } from "@/components/ui/button";

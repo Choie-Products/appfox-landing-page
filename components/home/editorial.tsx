@@ -1,4 +1,4 @@
-import { ChangedArt, DecisionArt } from "@/components/illustrations/iso-art";
+import { ChangedArt, DecisionArt } from "@/components/illustrations/scene-art";
 import Container from "@/components/ui/container";
 import { MonoLink } from "@/components/ui/blocks";
 import Reveal from "@/components/reveal";

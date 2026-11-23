@@ -1,6 +1,6 @@
 import CtaBand from "@/components/cta-band";
 import { PageJsonLd } from "@/components/json-ld";
-import { SecurityArt } from "@/components/illustrations/iso-art";
+import { SecurityArt } from "@/components/illustrations/scene-art";
 import { CheckList, MonoLabel, MonoLink, SoftCard, Section, Split } from "@/components/ui/blocks";
 import PageIntro from "@/components/ui/page-intro";
 import SectionHeading from "@/components/ui/section-heading";

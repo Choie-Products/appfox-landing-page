@@ -1,4 +1,4 @@
-import { MissingArt } from "@/components/illustrations/iso-art";
+import { MissingArt } from "@/components/illustrations/scene-art";
 import { ButtonLink } from "@/components/ui/button";
 import PageIntro from "@/components/ui/page-intro";
 

@@ -10,7 +10,7 @@ import { APP_URL, CTA_HREF } from "@/lib/site";
 import { pageMetadata } from "@/lib/seo";
 import SectionHeading from "@/components/ui/section-heading";
 import Reveal from "@/components/reveal";
-import { Groove, Packet } from "@/components/illustrations/iso-art";
+import { Groove, Packet } from "@/components/illustrations/scene-art";
 
 const PAGE = {
   path: "/about",
